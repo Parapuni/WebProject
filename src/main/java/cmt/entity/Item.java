@@ -43,16 +43,6 @@ public abstract class Item {
         this.coverImagine = coverImagine;
     }
 
-    /**
-     * 更新评分，在更新stars数组时需要调用
-     */
-    public void updateScore() {
-        int sum = 0;
-        for (int i = 0; i < stars.length; i++)
-            sum += stars[i] * (i + 1);
-        this.score = ((double) sum) / 5.0d;
-    }
-
     public long getIid() {
         return iid;
     }
