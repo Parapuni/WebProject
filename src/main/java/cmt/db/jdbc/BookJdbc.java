@@ -1,6 +1,6 @@
 package cmt.db.jdbc;
 
-import cmt.db.api.BookDataUpdater;
+import cmt.db.api.BookHandler;
 
-public class BookJdbc extends ItemJdbc implements BookDataUpdater {
+public class BookJdbc implements BookHandler {
 }

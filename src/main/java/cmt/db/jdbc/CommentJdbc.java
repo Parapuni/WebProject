@@ -1,6 +1,6 @@
 package cmt.db.jdbc;
 
-import cmt.db.api.CommentDataUpdater;
+import cmt.db.api.CommentHandler;
 
-public class CommentJdbc implements CommentDataUpdater {
+public class CommentJdbc implements CommentHandler {
 }

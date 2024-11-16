@@ -1,6 +1,6 @@
 package cmt.db.jdbc;
 
-import cmt.db.api.MovieDataUpdater;
+import cmt.db.api.MovieHandler;
 
-public class MovieJdbc implements MovieDataUpdater {
+public class MovieJdbc implements MovieHandler {
 }
