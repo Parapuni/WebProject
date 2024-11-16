@@ -16,7 +16,7 @@ public abstract class Item {
     private Date releaseDate;//发行日期
     private int[] stars;//评星级人数
     private String[] categories;//作品分类，存在 Item-Category表中
-    private double score;//电影评分，评星按人数加权平均计算得到
+    private double rating;//电影评分，评星按人数加权平均计算得到
     private URL coverImagine;//封面，存储在服务器中，数据库中只存储其URL
 
     public Item() {
@@ -30,16 +30,16 @@ public abstract class Item {
      * @param releaseDate  发行日期
      * @param stars        评分人数
      * @param categories   分类
-     * @param score        评分
+     * @param rating        评分
      * @param coverImagine 封面
      */
-    public Item(long iid, String title, Date releaseDate, int[] stars, String[] categories, double score, URL coverImagine) {
+    public Item(long iid, String title, Date releaseDate, int[] stars, String[] categories, double rating, URL coverImagine) {
         this.iid = iid;
         this.title = title;
         this.releaseDate = releaseDate;
         this.stars = stars;
         this.categories = categories;
-        this.score = score;
+        this.rating = rating;
         this.coverImagine = coverImagine;
     }
 
@@ -75,12 +75,12 @@ public abstract class Item {
         this.stars = stars;
     }
 
-    public double getScore() {
-        return score;
+    public double getRating() {
+        return rating;
     }
 
-    public void setScore(double score) {
-        this.score = score;
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
     public String[] getCategories() {

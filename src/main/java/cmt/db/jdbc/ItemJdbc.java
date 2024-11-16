@@ -2,7 +2,7 @@ package cmt.db.jdbc;
 
 import cmt.db.api.ItemDataUpdatar;
 
-public class ItemJdbc implements ItemDataUpdatar {
+public abstract class ItemJdbc implements ItemDataUpdatar {
 
     /**
      * 计算新评分，在更新stars数组时需要调用
