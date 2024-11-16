@@ -2,6 +2,8 @@ package cmt.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.ServletContext;
+
 /**
  * 同时创建DispatcherServlet和ContextLoaderListener
  * DispatcherServlet是应用的核心servlet，是一个前端控制器
@@ -38,10 +40,17 @@ public class CommentSystemInitializer extends AbstractAnnotationConfigDispatcher
      */
     @Override
     protected String[] getServletMappings() {
+        return new String[]{"/"};
+    }
+
+    @Override
+    public void onStartup(ServletContext servletContext) {
         /*
         TODO
-
+         启动应用时候的行为
+         启动H2数据库
+         注册Filter
+         见spring实战第7章
          */
-        return new String[]{"/"};
     }
 }

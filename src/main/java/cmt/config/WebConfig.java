@@ -22,9 +22,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setPrefix("/WEB-INF/views/");
         /*
         TODO
-         完成自定义视图解析器Bean
+         后缀考虑有没有html还是纯jsp
          */
         return viewResolver;
     }
