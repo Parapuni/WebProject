@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MovieJdbc implements MovieHandler {
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public MovieJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

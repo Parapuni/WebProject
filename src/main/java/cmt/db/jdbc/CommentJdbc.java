@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class CommentJdbc implements CommentHandler {
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public CommentJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

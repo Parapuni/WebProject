@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MusicJdbc implements MusicHandler {
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public MusicJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

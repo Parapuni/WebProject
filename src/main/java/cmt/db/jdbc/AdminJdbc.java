@@ -10,9 +10,10 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class AdminJdbc implements AdminHandler {
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public AdminJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

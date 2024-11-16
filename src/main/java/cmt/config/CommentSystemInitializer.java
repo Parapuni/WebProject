@@ -3,6 +3,7 @@ package cmt.config;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 /**
  * 同时创建DispatcherServlet和ContextLoaderListener
@@ -44,7 +45,8 @@ public class CommentSystemInitializer extends AbstractAnnotationConfigDispatcher
     }
 
     @Override
-    public void onStartup(ServletContext servletContext) {
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        super.onStartup(servletContext);
         /*
         TODO
          启动应用时候的行为

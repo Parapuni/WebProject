@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class BookJdbc implements BookHandler {
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public BookJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

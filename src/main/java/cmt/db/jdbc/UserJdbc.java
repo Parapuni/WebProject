@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserJdbc implements UserHandler {
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public UserJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

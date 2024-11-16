@@ -10,12 +10,13 @@ import javax.sql.DataSource;
 
 /**
  * 数据源配置类
+ * 数据持久化使用JDBC
  */
 @Configuration
 public class DataSourceConfig {
 
     /**
-     * 数据源使用H2内嵌数据库
+     * 数据源使用内嵌式H2数据库
      */
     @Bean
     public DataSource dataSource() {
