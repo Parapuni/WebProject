@@ -7,8 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -37,6 +35,26 @@ public class AdminJdbc implements AdminHandler {
     }
 
     /**
+     * 根据id删除指定管理员
+     *
+     * @param aid
+     */
+    @Override
+    public void removeAdmin(Long aid) {
+
+    }
+
+    /**
+     * 更新指定Admin的数据
+     *
+     * @param admin
+     */
+    @Override
+    public void updateAdmin(Admin admin) {
+
+    }
+
+    /**
      * 根据id查找管理员
      *
      * @param id 管理员id
@@ -44,6 +62,18 @@ public class AdminJdbc implements AdminHandler {
      */
     @Override
     public Admin findAdminById(long id) {
+        return null;
+    }
+
+    /**
+     * 根据用户名和密码查找管理员
+     *
+     * @param adminName
+     * @param password
+     * @return
+     */
+    @Override
+    public Admin findAdminByNameAndPassword(String adminName, String password) {
         return null;
     }
 
@@ -57,6 +87,18 @@ public class AdminJdbc implements AdminHandler {
         return null;
     }
 
+    /**
+     * 查询指定长度的Admin列表
+     *
+     * @param offset 列表起始Admin在全部Admin中的位置
+     * @param length 列表长度
+     * @return 查询结果
+     */
+    @Override
+    public List<Admin> getAdmins(int offset, int length) {
+        return null;
+    }
+
     private static final class AdminRowMapper implements RowMapper<Admin> {
 
         @Override
@@ -66,11 +108,7 @@ public class AdminJdbc implements AdminHandler {
             admin.setAdminName(resultSet.getString("adminName"));
             admin.setPassword(resultSet.getString("password"));
             admin.setEmail(resultSet.getString("email"));
-            try {
-                admin.setAvatar(new URL(resultSet.getString("avater")));
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
+            admin.setAvatar(resultSet.getURL("avatar"));
             admin.setNumber(resultSet.getString("number"));
             return admin;
         }
