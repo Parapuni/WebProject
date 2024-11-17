@@ -9,7 +9,7 @@ import com.sun.istack.internal.NotNull;
  */
 public class Comment {
     @NotNull
-    private long cid;   //评论的id
+    private long iid;   //评论作品的id
     @NotNull
     private long uid;   //发表评论的用户的id
     @NotNull
@@ -24,22 +24,22 @@ public class Comment {
     /**
      * 有参数的构造函数
      *
-     * @param cid     评论id
+     * @param iid     评论id
      * @param uid     发言者id
      * @param content 内容
      */
-    public Comment(long cid, long uid, String content) {
-        this.cid = cid;
+    public Comment(long iid, long uid, String content) {
+        this.iid = iid;
         this.uid = uid;
         this.content = content;
     }
 
-    public long getCid() {
-        return cid;
+    public long getIid() {
+        return iid;
     }
 
-    public void setCid(long cid) {
-        this.cid = cid;
+    public void setIid(long iid) {
+        this.iid = iid;
     }
 
     public long getUid() {

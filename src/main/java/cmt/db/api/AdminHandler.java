@@ -47,13 +47,6 @@ public interface AdminHandler {
     Admin findAdminByNameAndPassword(String name, String password);
 
     /**
-     * 获取全部管理员的列表
-     *
-     * @return 全体管理员列表
-     */
-    List<Admin> getAllAdmins();
-
-    /**
      * 查询指定长度的Admin列表
      *
      * @param offset 列表起始Admin在全部Admin中的位置
