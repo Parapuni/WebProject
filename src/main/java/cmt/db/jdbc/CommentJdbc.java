@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class CommentJdbc implements CommentHandler {
@@ -18,6 +19,31 @@ public class CommentJdbc implements CommentHandler {
     @Autowired
     public CommentJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public void addComment(Comment comment) {
+
+    }
+
+    @Override
+    public void removeComment(long iid, long uid) {
+
+    }
+
+    @Override
+    public void updateCommentContent(String newContent) {
+
+    }
+
+    @Override
+    public List<Comment> findCommentsByItemId(long iid, int offset, int length) {
+        return null;
+    }
+
+    @Override
+    public List<Comment> findCommentsByUserId(long uid, int offset, int length) {
+        return null;
     }
 
     private static final class CommentRowMapper implements RowMapper<Comment> {

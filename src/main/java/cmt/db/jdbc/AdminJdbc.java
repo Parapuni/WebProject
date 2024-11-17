@@ -77,15 +77,6 @@ public class AdminJdbc implements AdminHandler {
         return null;
     }
 
-    /**
-     * 获取全部管理员的列表
-     *
-     * @return 全体管理员列表
-     */
-    @Override
-    public List<Admin> getAllAdmins() {
-        return null;
-    }
 
     /**
      * 查询指定长度的Admin列表
