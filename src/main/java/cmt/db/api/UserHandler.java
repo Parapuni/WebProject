@@ -12,8 +12,9 @@ public interface UserHandler {
      * 添加一个User
      *
      * @param user
+     * @return
      */
-    void addUser(User user);
+    User addUser(User user);
 
     /**
      * 删除一个User

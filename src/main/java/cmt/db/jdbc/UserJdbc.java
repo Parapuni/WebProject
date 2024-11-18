@@ -5,15 +5,25 @@ import cmt.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
 public class UserJdbc implements UserHandler {
 
+    private final String INSERT_USER = "insert into User(uid,password,nickname,firstName,lastName,email,number,birthday,avatar) values(?,?,?,?,?,?,?,?);";
+    private final String DELETE_USER = "delete from User where uid = ?;";
+    private final String UPDATE_USER = "update User set uid = ?,password = ?,nickname = ?,firstName = ?,lastname = ?,email = ?,number = ?,birthday = ?,avatar = ? where uid = ?;";
+    private final String SELECT_USER_BY_ID = "select * from User where uid = ?;";
+    private final String SELECT_USER_BY_NAME_AND_PASSWORD = "select * from User where nickname = ? and password = ?;";
+    private final String SELECT_USERS = "select * from User limit ? offset ?;";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -25,20 +35,35 @@ public class UserJdbc implements UserHandler {
      * 添加一个User
      *
      * @param user
+     * @return
      */
     @Override
-    public void addUser(User user) {
-
+    public User addUser(User user) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, user.getNickname());
+            ps.setString(2, user.getFirstName());
+            ps.setString(3, user.getLastName());
+            ps.setString(4, user.getPassword());
+            ps.setString(5, user.getEmail());
+            ps.setString(6, user.getNumber());
+            ps.setDate(7, user.getBirthday());
+            ps.setString(8, user.getAvatar().toString());
+            return ps;
+        }, keyHolder);
+        user.setUid((Long) keyHolder.getKey());
+        return user;
     }
 
     /**
      * 删除一个User
      *
-     * @param id
+     * @param uid
      */
     @Override
-    public void removeUser(long id) {
-
+    public void removeUser(long uid) {
+        jdbcTemplate.update(DELETE_USER, uid);
     }
 
     /**
@@ -48,18 +73,27 @@ public class UserJdbc implements UserHandler {
      */
     @Override
     public void updateUser(User user) {
-
+        jdbcTemplate.update(UPDATE_USER,
+                user.getUid(),
+                user.getNickname(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPassword(),
+                user.getEmail(),
+                user.getNumber(),
+                user.getBirthday(),
+                user.getAvatar().toString());
     }
 
     /**
      * 根据id查找User
      *
-     * @param id
+     * @param uid
      * @return
      */
     @Override
-    public User findUserById(long id) {
-        return null;
+    public User findUserById(long uid) {
+        return jdbcTemplate.queryForObject(SELECT_USER_BY_ID, new UserRowMapper(), uid);
     }
 
     /**
@@ -71,7 +105,7 @@ public class UserJdbc implements UserHandler {
      */
     @Override
     public User findUserByNameAndPassword(String nickname, String password) {
-        return null;
+        return jdbcTemplate.queryForObject(SELECT_USER_BY_NAME_AND_PASSWORD, new UserRowMapper(), nickname, password);
     }
 
     /**
@@ -83,7 +117,7 @@ public class UserJdbc implements UserHandler {
      */
     @Override
     public List<User> findUsers(int offset, int length) {
-        return null;
+        return jdbcTemplate.query(SELECT_USERS, new UserRowMapper(), offset, length);
     }
 
     private static final class UserRowMapper implements RowMapper<User> {
