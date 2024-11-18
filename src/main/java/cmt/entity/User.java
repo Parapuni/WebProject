@@ -3,7 +3,7 @@ package cmt.entity;
 import com.sun.istack.internal.NotNull;
 
 import java.net.URL;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * User类，存储用户信息
@@ -44,7 +44,7 @@ public class User {
      * @param birthday  生日
      * @param avatar    头像的URL
      */
-    public User(long uid, String password, String nickname, String firstName, String lastName, String email, String number, Date birthday, URL avatar) {
+    public User(long uid, String password, String nickname, String firstName, String lastName, String email, String number, java.sql.Date birthday, URL avatar) {
         this.uid = uid;
         this.password = password;
         this.nickname = nickname;
@@ -116,7 +116,7 @@ public class User {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(java.sql.Date birthday) {
         this.birthday = birthday;
     }
 
