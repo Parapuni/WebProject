@@ -24,7 +24,11 @@ public class DataSourceConfig {
                 setType(EmbeddedDatabaseType.H2).
                 setName("csdb").
                 setScriptEncoding("UTF-8").
-                addScript("classpath:schema.sql").
+                /*
+                TODO
+                由于启动db的代码还未完成，暂时不能运行sql脚本
+                 */
+                //addScript("classpath:schema.sql").
                 build();
     }
 

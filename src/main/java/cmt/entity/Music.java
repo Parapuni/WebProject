@@ -1,7 +1,7 @@
 package cmt.entity;
 
 import java.net.URL;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class Music extends Item {

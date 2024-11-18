@@ -1,19 +1,17 @@
 package cmt.web;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
-import javax.servlet.http.HttpSession;
-
+import cmt.db.jdbc.UserJdbc;
+import cmt.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import cmt.db.jdbc.UserJdbc;
-import cmt.entity.User;
+import javax.servlet.http.HttpSession;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping("/")
@@ -33,7 +31,7 @@ public class HomeController {
 
     @RequestMapping(value = "/login", method = POST)
     public String login(@RequestParam String userName, @RequestParam String password, HttpSession session) {
-        User user = userJdbc.findUserByName(userName, password);
+        User user = userJdbc.findUserByNameAndPassword(userName, password);
         if ("admin".equals(userName) && "admin".equals(password)) {
             session.setAttribute("manager", userName);
             return "redirect:/manager";
