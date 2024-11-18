@@ -14,23 +14,23 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="home.jsp">Home</a>
+        <a class="nav-link" href="/home.jsp">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="submit-review.jsp">Submit Review</a>
+        <a class="nav-link" href="/submit-review.jsp">Submit Review</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="reviews.jsp">View Reviews</a>
+        <a class="nav-link" href="/reviews.jsp">View Reviews</a>
       </li>
       <c:choose>
         <c:when test="${not empty session.user}">
           <li class="nav-item">
-            <a class="nav-link" href="logout.jsp">Logout</a>
+            <a class="nav-link" href="/logout.jsp">Logout</a>
           </li>
         </c:when>
         <c:otherwise>
           <li class="nav-item">
-            <a class="nav-link" href="login.jsp">Login</a>
+            <a class="nav-link" href="/login.jsp">Login</a>
           </li>
         </c:otherwise>
       </c:choose>

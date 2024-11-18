@@ -1,14 +1,16 @@
 <%@ include file="header.jsp" %>
 <div class="container mt-5">
-  <h1>Welcome to the Reviews System!</h1>
-  <p>This platform allows you to submit reviews for books, movies, and music.</p>
+  <h1>${welcomeMessage}</h1>
+  <p>${platformDescription}</p>
   <div class="row">
-    <div class="col-md-6">
-      <a href="submit-review.jsp" class="btn btn-primary btn-lg btn-block">Submit a Review</a>
-    </div>
-    <div class="col-md-6">
-      <a href="reviews.jsp" class="btn btn-secondary btn-lg btn-block">View Reviews</a>
-    </div>
+      <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <a href="/submit-review.jsp" class="btn btn-primary btn-block">Submit a Review</a>
+            <a href="/reviews.jsp" class="btn btn-secondary btn-block">View Reviews</a>
+          </div>
+        </div>
+      </div>
   </div>
 </div>
 <%@ include file="footer.jsp" %>
