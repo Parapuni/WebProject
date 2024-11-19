@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Arrays;
 
+@Repository
 public class ItemJdbc implements ItemHandler {
     private final String INSERT_ITEM = "insert into Item(`title`,`releaseDate`,`stars`,`rating`,`coverimagine`) values(?,?,?,?,?)";
     private final String DELETE_ITEM = "delete from Item where iid = ?";
