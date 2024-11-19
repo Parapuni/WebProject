@@ -5,17 +5,25 @@ import cmt.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
-/**
- * Admin数据操作接口的实现，使用Jdbc
- */
 @Repository
 public class AdminJdbc implements AdminHandler {
+
+    private final String INSERT_ADMIN = "insert into Admin(adminName, email, password, number, avatar) values(?, ?, ?, ?, ?);";
+    private final String DELETE_ADMIN = "delete from Admin where aid = ?;";
+    private final String UPDATE_ADMIN = "update Admin set adminName = ?, email = ?, password = ?, number = ?, avatar = ? where aid = ?;";
+    private final String SELECT_ADMIN_BY_ID = "select * from Admin where aid = ?;";
+    private final String SELECT_ADMIN_BY_NAME_AND_PASSWORD = "select * from Admin where adminName = ? and password = ?;";
+    private final String SELECT_ADMINS = "select * from Admin limit ? offset ?;";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -24,74 +32,53 @@ public class AdminJdbc implements AdminHandler {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    /**
-     * 添加一名管理员
-     *
-     * @param admin 待添加的管理员对象
-     */
     @Override
     public void addAdmin(Admin admin) {
-
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(INSERT_ADMIN, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, admin.getAdminName());
+            ps.setString(2, admin.getEmail());
+            ps.setString(3, admin.getPassword());
+            ps.setString(4, admin.getNumber());
+            ps.setString(5, admin.getAvatar() != null ? admin.getAvatar().toString() : null);
+            return ps;
+        }, keyHolder);
+        admin.setAid((Long) keyHolder.getKey());
     }
 
-    /**
-     * 根据id删除指定管理员
-     *
-     * @param aid
-     */
     @Override
     public void removeAdmin(Long aid) {
-
+        jdbcTemplate.update(DELETE_ADMIN, aid);
     }
 
-    /**
-     * 更新指定Admin的数据
-     *
-     * @param admin
-     */
     @Override
     public void updateAdmin(Admin admin) {
-
+        jdbcTemplate.update(UPDATE_ADMIN,
+                admin.getAdminName(),
+                admin.getEmail(),
+                admin.getPassword(),
+                admin.getNumber(),
+                admin.getAvatar() != null ? admin.getAvatar().toString() : null,
+                admin.getAid());
     }
 
-    /**
-     * 根据id查找管理员
-     *
-     * @param id 管理员id
-     * @return id对应的管理员对象
-     */
     @Override
     public Admin findAdminById(long id) {
-        return null;
+        return jdbcTemplate.queryForObject(SELECT_ADMIN_BY_ID, new AdminRowMapper(), id);
     }
 
-    /**
-     * 根据用户名和密码查找管理员
-     *
-     * @param adminName
-     * @param password
-     * @return
-     */
     @Override
     public Admin findAdminByNameAndPassword(String adminName, String password) {
-        return null;
+        return jdbcTemplate.queryForObject(SELECT_ADMIN_BY_NAME_AND_PASSWORD, new AdminRowMapper(), adminName, password);
     }
 
-
-    /**
-     * 查询指定长度的Admin列表
-     *
-     * @param offset 列表起始Admin在全部Admin中的位置
-     * @param length 列表长度
-     * @return 查询结果
-     */
     @Override
     public List<Admin> getAdmins(int offset, int length) {
-        return null;
+        return jdbcTemplate.query(SELECT_ADMINS, new AdminRowMapper(), length, offset);
     }
 
     private static final class AdminRowMapper implements RowMapper<Admin> {
-
         @Override
         public Admin mapRow(ResultSet resultSet, int i) throws SQLException {
             Admin admin = new Admin();
@@ -105,4 +92,3 @@ public class AdminJdbc implements AdminHandler {
         }
     }
 }
-
