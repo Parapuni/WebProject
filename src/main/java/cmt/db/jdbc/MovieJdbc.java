@@ -5,15 +5,10 @@ import cmt.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -23,15 +18,17 @@ TODO
  */
 @Repository
 public class MovieJdbc implements MovieHandler {
-    private final String INSERT_ITEM = "insert into Item(`title`,`releaseDate`,`stars`,`rating`,`coverimagine`) values(?,?,?,?,?)";
+
     private final String INSERT_MOVIE = "insert into Movie values(?,?,?,?,?)";
-    private final String DELETE_ITEM = "delete from Item where iid = ?";
+
     private final String DELETE_MOVIE = "delete from Movie where iid = ?";
-    private final String SELECT_STARS = "select stars from Item where iid = ?";
-    private final String UPDATE_STARS = "update Item set stars = ?,rating =? where iid = ?";
+
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private CategoryJdbc categoryJdbc;
+    @Autowired
+    private ItemJdbc itemJdbc;
+
     @Autowired
     public MovieJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -39,18 +36,9 @@ public class MovieJdbc implements MovieHandler {
 
     @Override
     public void addMovie(Movie movie) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(INSERT_ITEM, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, movie.getTitle());
-            ps.setDate(2, movie.getReleaseDate());
-            ps.setString(3, Arrays.toString(movie.getStars()));
-            ps.setDouble(4, movie.getRating());
-            ps.setString(5, movie.getCoverImagine().toString());
-            return ps;
-        }, keyHolder);
-        jdbcTemplate.update(INSERT_MOVIE, keyHolder.getKey().longValue(), movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntoduction());
-        categoryJdbc.addItemCategories(keyHolder.getKey().longValue(), movie.getCategories());
+        long iid = itemJdbc.addItemReturnPrimaryKey(movie);
+        jdbcTemplate.update(INSERT_MOVIE, iid, movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntoduction());
+        categoryJdbc.addItemCategories(iid, movie.getCategories());
     }
 
     @Override
@@ -58,12 +46,15 @@ public class MovieJdbc implements MovieHandler {
         //由于Movie中的iid是参照Item中iid的外键，不能先删除Item中的记录
         jdbcTemplate.update(DELETE_MOVIE, iid);
         categoryJdbc.removeItem(iid);
-        jdbcTemplate.update(DELETE_ITEM, iid);
+        itemJdbc.removeItem(iid);
     }
 
     @Override
     public void updateMovie(Movie movie) {
-
+        itemJdbc.updateItem(movie);
+        /*
+        TODO
+         */
     }
 
     /**
@@ -74,21 +65,7 @@ public class MovieJdbc implements MovieHandler {
      */
     @Override
     public void updateRating(long iid, int star) {
-        String sStars = jdbcTemplate.queryForObject(SELECT_STARS, String.class, iid);
-        sStars.substring(1, sStars.length() - 1);
-        int[] stars = new int[5];
-        String[] s = sStars.split(",");
-        double rating = 0.0;
-        long sum = 0;
-        for (int i = 0; i < 5; i++) {
-            stars[i] = Integer.parseInt(s[i]);
-            if (i == star)
-                stars[i]++;
-            sum += stars[i];
-            rating += (i + 1) * stars[i];
-        }
-        rating = rating / sum;
-        jdbcTemplate.update(UPDATE_STARS, Arrays.toString(stars), rating);
+        itemJdbc.updateRating(iid, star);
     }
 
     @Override

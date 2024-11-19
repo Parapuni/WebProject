@@ -43,12 +43,16 @@ public class CategoryJdbc implements CategoryHandler {
      */
     @Override
     public void addItemCategories(long iid, List<String> categories) {
-
+        /*
+        TODO
+         */
     }
 
     @Override
     public void removeItem(long iid) {
-
+        /*
+        TODO
+         */
     }
 
     private static final class StringRowMapper implements RowMapper<String> {

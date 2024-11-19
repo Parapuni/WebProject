@@ -4,19 +4,21 @@ import cmt.db.api.MusicHandler;
 import cmt.entity.Music;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
 public class MusicJdbc implements MusicHandler {
 
     private JdbcTemplate jdbcTemplate;
-
+    @Autowired
+    private CategoryJdbc categoryJdbc;
+    @Autowired
+    private ItemJdbc itemJdbc;
     @Autowired
     public MusicJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -24,45 +26,39 @@ public class MusicJdbc implements MusicHandler {
 
     @Override
     public void addMusic(Music music) {
-
-        private final String INSERT_MUSIC = "insert into Music(`iid`,`album`,`artists`,`lyrics`) values(?,?,?,?);";
-
-
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(INSERT_MUSIC, Statement.RETURN_GENERATED_KEYS);
-            ps.setLong(1, music.getIid());
-            ps.setString(2, user.getFirstName());
-            ps.setString(3, user.getLastName());
-            ps.setString(4, user.getPassword());
-            ps.setString(5, user.getEmail());
-            ps.setString(6, user.getNumber());
-            ps.setDate(7, user.getBirthday());
-            ps.setString(8, user.getAvatar().toString());
-            return ps;
-        }, keyHolder);
-        user.setUid((Long) keyHolder.getKey());
-        return user;
-    }
-
-
+        long iid = itemJdbc.addItemReturnPrimaryKey(music);
+        /*
+        TODO
+         */
+        categoryJdbc.addItemCategories(iid, music.getCategories());
     }
 
     @Override
     public void removeMusic(long iid) {
-
+        /*
+        TODO
+         */
+        categoryJdbc.removeItem(iid);
+        itemJdbc.removeItem(iid);
     }
 
     @Override
     public void updateMusic(Music music) {
-
+        itemJdbc.updateItem(music);
+        /*
+        TODO
+         */
     }
 
     @Override
     public void updateRating(long iid, int rating) {
-
+        itemJdbc.updateRating(iid, rating);
     }
 
+    /*
+    TODO
+      完成查找
+     */
     @Override
     public Music findMusicById(long iid) {
         return null;
@@ -91,5 +87,17 @@ public class MusicJdbc implements MusicHandler {
     @Override
     public List<Music> findMusicsByAlbum(int offset, int length, String Album) {
         return null;
+    }
+
+    private static final class MusicRowMapper implements RowMapper<Music> {
+
+        @Override
+        public Music mapRow(ResultSet resultSet, int i) throws SQLException {
+            Music music = new Music();
+            /*
+            TODO
+             */
+            return music;
+        }
     }
 }
