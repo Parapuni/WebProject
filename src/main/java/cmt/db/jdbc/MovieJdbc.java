@@ -1,7 +1,6 @@
 package cmt.db.jdbc;
 
 import cmt.db.api.MovieHandler;
-import cmt.entity.Item;
 import cmt.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,12 +18,12 @@ public class MovieJdbc implements MovieHandler {
     private final String DELETE_MOVIE = "delete from Movie where iid = ?";
     private final String SELECT_MOVIE_BY_ID = "select * from Movie where iid = ?";
     private final String SELECT_MOVIES = "select * from Movie limit ? offset ?";
-    private final String SELECT_MOVIES_BY_CATEGORY = "select * from Movie m join Category_Item ci on m.iid = ci.iid where ci.name in (?) limit ? offset ?";
-    private final String SELECT_MOVIES_BY_TITLE = "select * from Movie where title like ? limit ? offset ?";
-    private final String SELECT_MOVIES_BY_DIRECTOR = "select * from Movie where director like ? limit ? offset ?";
-    private final String SELECT_MOVIES_BY_CAST = "select * from Movie where cast like ? limit ? offset ?";
-    private final String SELECT_MOVIES_BY_WRITERS = "select * from Movie where writers like ? limit ? offset ?";
-
+    private final String SELECT_MOVIES_BY_CATEGORY = "select m.* from Movie m natural join Category_Item ci where ci.name in (?) limit ? offset ?";
+    private final String SELECT_MOVIES_BY_TITLE = "select * from Movie m natural join Item i where i.title like ? limit ? offset ?";
+    private final String SELECT_MOVIES_BY_DIRECTOR = "select * from Movie m natural join Item i where m.director like ? limit ? offset ?";
+    private final String SELECT_MOVIES_BY_CAST = "select * from Movie m natural join Item i where m.cast like ? limit ? offset ?";
+    private final String SELECT_MOVIES_BY_WRITERS = "select * from Movie m natural join Item i where m.writers like ? limit ? offset ?";
+    private final String UPDATE_MOVIE = "update Movie set director = ?, writers = ?, cast = ?, introduction = ? where iid = ?";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private CategoryJdbc categoryJdbc;
@@ -53,10 +52,8 @@ public class MovieJdbc implements MovieHandler {
     @Override
     public void updateMovie(Movie movie) {
         itemJdbc.updateItem(movie);
-        String UPDATE_MOVIE = "update Movie set director = ?, writers = ?, cast = ?, introduction = ? where iid = ?";
         jdbcTemplate.update(UPDATE_MOVIE, movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntoduction(), movie.getIid());
-        categoryJdbc.removeItem(movie.getIid());
-        categoryJdbc.addItemCategories(movie.getIid(), movie.getCategories());
+        categoryJdbc.updateItemCategories(movie);
     }
 
     @Override
@@ -72,7 +69,7 @@ public class MovieJdbc implements MovieHandler {
     @Override
     public List<Movie> findMovies(int offset, int length) {
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES, new MovieRowMapper(), length, offset);
-        categoryJdbc.setCategory((Item) movies);
+        categoryJdbc.setCategory(movies);
         return movies;
     }
 
@@ -80,35 +77,35 @@ public class MovieJdbc implements MovieHandler {
     public List<Movie> findMoviesByCategories(int offset, int length, List<String> NameOfCategories) {
         String categories = String.join(",", NameOfCategories);
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_CATEGORY, new MovieRowMapper(), categories, length, offset);
-        categoryJdbc.setCategory((Item) movies);
+        categoryJdbc.setCategory(movies);
         return movies;
     }
 
     @Override
     public List<Movie> findMoviesByTitle(int offset, int length, String title) {
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_TITLE, new MovieRowMapper(), "%" + title + "%", length, offset);
-        categoryJdbc.setCategory((Item) movies);
+        categoryJdbc.setCategory(movies);
         return movies;
     }
 
     @Override
     public List<Movie> findMoviesByDirector(int offset, int length, String director) {
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_DIRECTOR, new MovieRowMapper(), "%" + director + "%", length, offset);
-        categoryJdbc.setCategory((Item) movies);
+        categoryJdbc.setCategory(movies);
         return movies;
     }
 
     @Override
     public List<Movie> findMoviesByCast(int offset, int length, String cast) {
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_CAST, new MovieRowMapper(), "%" + cast + "%", length, offset);
-        categoryJdbc.setCategory((Item) movies);
+        categoryJdbc.setCategory(movies);
         return movies;
     }
 
     @Override
     public List<Movie> findMoviesByWriters(int offset, int length, String writers) {
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_WRITERS, new MovieRowMapper(), "%" + writers + "%", length, offset);
-        categoryJdbc.setCategory((Item) movies);
+        categoryJdbc.setCategory(movies);
         return movies;
     }
 

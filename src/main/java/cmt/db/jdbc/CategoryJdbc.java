@@ -25,7 +25,7 @@ public class CategoryJdbc implements CategoryHandler {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void setCategory(List<Item> list) {
+    public void setCategory(List<? extends Item> list) {
         for (Item item : list) {
             item.setCategories(getCategories(item.getIid()));
         }
