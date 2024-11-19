@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public class CommentJdbc implements CommentHandler {
 
-    private final String INSERT_COMMENT = "insert into Comment(`iid`, `uid`, `content`) values(?, ?, ?);";
+    private final String INSERT_COMMENT = "insert into Comment(`iid`, `uid`,`cdate`, `content`) values(?, ?, ?, ?);";
     private final String DELETE_COMMENT = "delete from Comment where `iid` = ? and `uid` = ?;";
     private final String UPDATE_COMMENT_CONTENT = "update Comment set `content` = ? where iid = ? and uid = ?;";
     private final String SELECT_COMMENTS_BY_ITEM_ID = "select * from Comment where iid = ? limit ? offset ?;";
@@ -29,7 +29,7 @@ public class CommentJdbc implements CommentHandler {
 
     @Override
     public void addComment(Comment comment) {
-        jdbcTemplate.update(INSERT_COMMENT, comment.getIid(), comment.getUid(), comment.getContent());
+        jdbcTemplate.update(INSERT_COMMENT, comment.getIid(), comment.getUid(), comment.getCdate(), comment.getContent());
     }
 
     @Override
@@ -59,6 +59,7 @@ public class CommentJdbc implements CommentHandler {
             Comment comment = new Comment();
             comment.setIid(resultSet.getLong("iid"));
             comment.setUid(resultSet.getLong("uid"));
+            comment.setCdate(resultSet.getDate("cdate"));
             comment.setContent(resultSet.getString("content"));
             return comment;
         }
