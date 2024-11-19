@@ -1,7 +1,9 @@
 <%@ include file="header.jsp" %>
 <div class="container mt-5">
-  <h2>Reviews</h2>
-  <form action="filter-reviews.jsp" method="post">
+  <h2 class="text-center mb-4">Reviews</h2>
+
+  <!-- 筛选表单 -->
+  <form action="filter-reviews.jsp" method="post" class="mb-4">
     <div class="form-group">
       <label for="type">Select Content Type</label>
       <select id="type" name="type" class="form-control">
@@ -10,13 +12,14 @@
         <option value="music">Music</option>
       </select>
     </div>
-    <button type="submit" class="btn btn-primary">Filter</button>
+    <button type="submit" class="btn btn-primary mt-2">Filter</button>
   </form>
 
-  <div class="mt-4">
-    <h3>Reviews List</h3>
-    <table class="table table-bordered">
-      <thead>
+  <!-- 评论列表 -->
+  <div>
+    <h3 class="mb-3">Reviews List</h3>
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
       <tr>
         <th>Title</th>
         <th>Review</th>

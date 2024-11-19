@@ -21,6 +21,7 @@ public class HomeController {
 
     @RequestMapping(method = GET)
     public String home(Model model) {
+        System.out.println("Home method called"); // 调试输出
         return "home";
     }
 

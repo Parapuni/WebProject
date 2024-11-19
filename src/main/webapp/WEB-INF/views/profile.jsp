@@ -7,6 +7,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Profile</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* 页面整体背景色 */
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+    /* 容器样式 */
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+    h4 {
+      margin-top: 30px;
+      color: #333;
+    }
+    /* 表单控件样式 */
+    .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+    /* 按钮样式 */
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+    }
+    .btn-warning {
+      color: #fff;
+    }
+    /* 表格样式 */
+    .table {
+      margin-top: 20px;
+      background-color: #ffffff;
+    }
+  </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -32,7 +77,7 @@
 
   <!-- Reviews Section -->
   <h4 class="mt-5">Your Reviews</h4>
-  <table class="table">
+  <table class="table table-striped">
     <thead>
     <tr>
       <th scope="col">Content Type</th>

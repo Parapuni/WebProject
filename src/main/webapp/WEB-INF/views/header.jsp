@@ -1,50 +1,75 @@
-<%--suppress ALL --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-  <title>Book, Movie, and Music Reviews</title>
+  <title>Edit Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* 自定义容器样式 */
+    .container {
+      max-width: 800px;
+      padding: 20px;
+      background-color: #f8f9fa; /* 柔和的背景色，减少单调感 */
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    /* 标题样式 */
+    h2 {
+      color: #007bff; /* 使用鲜明的蓝色标题 */
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    /* 表单控件的样式 */
+    .form-label {
+      font-weight: bold;
+      color: #495057;
+    }
+    .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    /* 提交按钮样式 */
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+    }
+  </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Reviews System</a>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="home.jsp">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="submit-review.jsp">Submit Review</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="reviews.jsp">View Reviews</a>
-      </li>
-      <c:choose>
-        <c:when test="${not empty session.user}">
-          <li class="nav-item">
-            <a class="nav-link" href="logout.jsp">Logout</a>
-          </li>
-        </c:when>
-        <c:otherwise>
-          <li class="nav-item">
-            <a class="nav-link" href="login.jsp">Login</a>
-          </li>
-        </c:otherwise>
-      </c:choose>
-      <c:choose>
-        <c:when test="${not empty session.user}">
-          <p>Welcome, ${session.user.username}!</p>
-        </c:when>
-        <c:otherwise>
-          <p>Welcome, Guest!</p>
-        </c:otherwise>
-      </c:choose>
-
-    </ul>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <h2>Edit Profile</h2>
+      <form action="/updateProfile" method="post">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" name="username" value="${user.username}" disabled />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" value="${user.email}" required />
+        </div>
+        <div class="mb-3">
+          <label for="phoneNo" class="form-label">Phone Number</label>
+          <input type="text" class="form-control" id="phoneNo" name="phoneNo" value="${user.phoneNo}" />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">New Password</label>
+          <input type="password" class="form-control" id="password" name="password" />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+      </form>
+    </div>
   </div>
-</nav>
+</div>
 </body>
 </html>

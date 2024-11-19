@@ -6,6 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* 背景样式 */
+        body {
+            background: linear-gradient(135deg, #73a5ff 0%, #5477f5 100%);
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        /* 表单容器样式 */
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            color: #000;
+            max-width: 500px;
+            margin: auto;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        /* 按钮样式 */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+        }
+        /* 链接样式 */
+        a {
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -29,7 +68,7 @@
         </div>
         <button type="submit" class="btn btn-primary btn-block">Register</button>
     </form>
-    <div class="mt-3">
+    <div class="mt-3 text-center">
         <a href="login.jsp">Already have an account? Login here</a>
     </div>
 </div>

@@ -5,10 +5,39 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* 背景样式 */
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        /* 表单容器样式 */
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-width: 400px;
+            color: #000;
+        }
+        h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #6a11cb;
+            border-color: #6a11cb;
+        }
+        .btn-primary:hover {
+            background-color: #4a0dab;
+            border-color: #4a0dab;
+        }
+    </style>
 </head>
 <body>
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="col-md-4">
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="container">
         <h3 class="text-center">Login</h3>
         <form action="login" method="post">
             <div class="mb-3">
