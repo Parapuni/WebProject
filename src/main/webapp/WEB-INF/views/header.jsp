@@ -30,7 +30,7 @@
         </c:when>
         <c:otherwise>
           <li class="nav-item">
-            <a class="nav-link" href="/login.jsp">Login</a>
+              <a class="nav-link" href="<c:url value="/login" />">Login</a>
           </li>
         </c:otherwise>
       </c:choose>
