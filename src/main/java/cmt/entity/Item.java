@@ -76,6 +76,13 @@ public abstract class Item {
         this.stars = stars;
     }
 
+    public void setStars(String s) {
+        String[] ss = s.substring(1, s.length() - 1).split(",");
+        for (int i = 0; i < 5; i++) {
+            this.stars[i] = Integer.parseInt(ss[i]);
+        }
+    }
+
     public double getRating() {
         return rating;
     }

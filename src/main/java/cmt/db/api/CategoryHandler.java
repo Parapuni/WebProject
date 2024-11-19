@@ -1,5 +1,7 @@
 package cmt.db.api;
 
+import cmt.entity.Item;
+
 import java.util.List;
 
 public interface CategoryHandler {
@@ -18,4 +20,8 @@ public interface CategoryHandler {
      * @param categories
      */
     void addItemCategories(long iid, List<String> categories);
+
+    void removeItem(long iid);
+
+    void updateItemCategories(Item item);
 }

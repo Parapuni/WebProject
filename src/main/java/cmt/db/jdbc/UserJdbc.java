@@ -18,11 +18,11 @@ import java.util.List;
 @Repository
 public class UserJdbc implements UserHandler {
 
-    private final String INSERT_USER = "insert into User(uid,password,nickname,firstName,lastName,email,number,birthday,avatar) values(?,?,?,?,?,?,?,?);";
+    private final String INSERT_USER = "insert into User(uid,`password`,nickname,firstName,lastName,email,`number`,birthday,avatar) values(?,?,?,?,?,?,?,?);";
     private final String DELETE_USER = "delete from User where uid = ?;";
-    private final String UPDATE_USER = "update User set uid = ?,password = ?,nickname = ?,firstName = ?,lastname = ?,email = ?,number = ?,birthday = ?,avatar = ? where uid = ?;";
+    private final String UPDATE_USER = "update User set uid = ?,`password` = ?,nickname = ?,firstName = ?,lastname = ?,email = ?,`number` = ?,birthday = ?,avatar = ? where uid = ?;";
     private final String SELECT_USER_BY_ID = "select * from User where uid = ?;";
-    private final String SELECT_USER_BY_NAME_AND_PASSWORD = "select * from User where nickname = ? and password = ?;";
+    private final String SELECT_USER_BY_NAME_AND_PASSWORD = "select * from User where nickname = ? and `password` = ?;";
     private final String SELECT_USERS = "select * from User limit ? offset ?;";
     private JdbcTemplate jdbcTemplate;
 
@@ -52,7 +52,7 @@ public class UserJdbc implements UserHandler {
             ps.setString(8, user.getAvatar().toString());
             return ps;
         }, keyHolder);
-        user.setUid((Long) keyHolder.getKey());
+        user.setUid(keyHolder.getKey().longValue());
         return user;
     }
 
@@ -117,7 +117,7 @@ public class UserJdbc implements UserHandler {
      */
     @Override
     public List<User> findUsers(int offset, int length) {
-        return jdbcTemplate.query(SELECT_USERS, new UserRowMapper(), offset, length);
+        return jdbcTemplate.query(SELECT_USERS, new UserRowMapper(), length, offset);
     }
 
     private static final class UserRowMapper implements RowMapper<User> {
