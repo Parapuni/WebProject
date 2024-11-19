@@ -16,9 +16,11 @@ public class MovieJdbc implements MovieHandler {
 
     private final String INSERT_MOVIE = "insert into Movie values(?,?,?,?,?)";
     private final String DELETE_MOVIE = "delete from Movie where iid = ?";
-    private final String SELECT_MOVIE_BY_ID = "select * from Movie where iid = ?";
-    private final String SELECT_MOVIES = "select * from Movie limit ? offset ?";
-    private final String SELECT_MOVIES_BY_CATEGORY = "select m.* from Movie m natural join Category_Item ci where ci.name in (?) limit ? offset ?";
+    private final String SELECT_MOVIE_BY_ID = "select * from Movie natural join Item where iid = ?";
+    private final String SELECT_MOVIES = "select * from Movie natural join Item limit ? offset ?";
+    private final String SELECT_MOVIES_BY_CATEGORY = "select * from " +
+            "(select m.* from Movie m natural join Category_Item ci where ci.name in (?) limit ? offset ?) " +
+            "as cm natural join Item i";
     private final String SELECT_MOVIES_BY_TITLE = "select * from Movie m natural join Item i where i.title like ? limit ? offset ?";
     private final String SELECT_MOVIES_BY_DIRECTOR = "select * from Movie m natural join Item i where m.director like ? limit ? offset ?";
     private final String SELECT_MOVIES_BY_CAST = "select * from Movie m natural join Item i where m.cast like ? limit ? offset ?";
@@ -63,7 +65,9 @@ public class MovieJdbc implements MovieHandler {
 
     @Override
     public Movie findMovieById(long iid) {
-        return jdbcTemplate.queryForObject(SELECT_MOVIE_BY_ID, new MovieRowMapper(), iid);
+        Movie movie = jdbcTemplate.queryForObject(SELECT_MOVIE_BY_ID, new MovieRowMapper(), iid);
+        categoryJdbc.setCategory(movie);
+        return movie;
     }
 
     @Override
