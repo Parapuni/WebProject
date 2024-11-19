@@ -35,7 +35,7 @@ create table `Item`
 
 create table `Book`
 (
-    `iid`          int primary key,
+    `iid` bigint primary key,
     `authors`      varchar(100),
     `publisher`    varchar(100),
     `introduction` varchar(255),
@@ -44,7 +44,7 @@ create table `Book`
 
 create table `Movie`
 (
-    `iid`          int primary key,
+    `iid` bigint primary key,
     `director`     varchar(100),
     `writers`      varchar(100),
     `cast`         varchar(255),
@@ -54,16 +54,17 @@ create table `Movie`
 
 create table `Music`
 (
-    `iid`     int primary key,
+    `iid`   bigint primary key,
     `artists` varchar(100),
     `lyrics`  varchar(1000),
+    `album` varchar(100),
     foreign key (iid) references Item (iid)
 );
 
 create table `Comment`
 (
-    `uid`     int,
-    `iid`     int,
+    `uid` bigint,
+    `iid` bigint,
     `content` varchar(255),
     primary key (uid, iid),
     foreign key (uid) references `User` (uid),
@@ -72,7 +73,7 @@ create table `Comment`
 
 create table Category_Item
 (
-    iid    integer,
+    iid bigint,
     `name` varchar(20),
     primary key (iid, `name`),
     foreign key (iid) references Item (iid)

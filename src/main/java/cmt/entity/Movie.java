@@ -36,4 +36,36 @@ public class Movie extends Item {
         this.cast = cast;
         this.intoduction = intoduction;
     }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public String getWriters() {
+        return writers;
+    }
+
+    public void setWriters(String writers) {
+        this.writers = writers;
+    }
+
+    public String getCast() {
+        return cast;
+    }
+
+    public void setCast(String cast) {
+        this.cast = cast;
+    }
+
+    public String getIntoduction() {
+        return intoduction;
+    }
+
+    public void setIntoduction(String intoduction) {
+        this.intoduction = intoduction;
+    }
 }

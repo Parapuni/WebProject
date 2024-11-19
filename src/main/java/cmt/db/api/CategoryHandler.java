@@ -18,4 +18,7 @@ public interface CategoryHandler {
      * @param categories
      */
     void addItemCategories(long iid, List<String> categories);
+
+    void removeItem(long iid);
+
 }

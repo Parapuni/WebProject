@@ -1,6 +1,7 @@
 package cmt.db.jdbc;
 
 import cmt.db.api.CategoryHandler;
+import cmt.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,6 +21,16 @@ public class CategoryJdbc implements CategoryHandler {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public void setCategory(List<Item> list) {
+        for (Item item : list) {
+            item.setCategories(getCategories(item.getIid()));
+        }
+    }
+
+    public void setCategory(Item item) {
+        item.setCategories(getCategories(item.getIid()));
+    }
+
     public List<String> getCategories(long iid) {
         return jdbcTemplate.query(SELECT_CATEGORIES_BY_ID, new StringRowMapper());
     }
@@ -32,6 +43,11 @@ public class CategoryJdbc implements CategoryHandler {
      */
     @Override
     public void addItemCategories(long iid, List<String> categories) {
+
+    }
+
+    @Override
+    public void removeItem(long iid) {
 
     }
 
