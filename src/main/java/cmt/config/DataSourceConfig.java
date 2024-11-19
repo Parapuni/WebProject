@@ -21,14 +21,10 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder().
-                setType(EmbeddedDatabaseType.H2).
                 setName("csdb").
+                setType(EmbeddedDatabaseType.H2).
                 setScriptEncoding("UTF-8").
-                /*
-                TODO
-                由于启动db的代码还未完成，暂时不能运行sql脚本
-                 */
-                //addScript("classpath:schema.sql").
+                addScript("classpath:schema.sql").
                 build();
     }
 

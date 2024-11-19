@@ -1,9 +1,11 @@
 package cmt.config;
 
+import org.h2.server.web.WebServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 
 /**
  * 同时创建DispatcherServlet和ContextLoaderListener
@@ -47,10 +49,12 @@ public class CommentSystemInitializer extends AbstractAnnotationConfigDispatcher
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
+        //注册H2的servlet，启动H2数据库，默认使用数据库URL jdbc:h2:mem:csdb 用户名sa 密码 空
+        ServletRegistration.Dynamic servlet = servletContext.addServlet("h2-console", new WebServlet());
+        servlet.setLoadOnStartup(1);
+        servlet.addMapping("/console/*");
         /*
         TODO
-         启动应用时候的行为
-         启动H2数据库
          注册Filter
          见spring实战第7章
          */
