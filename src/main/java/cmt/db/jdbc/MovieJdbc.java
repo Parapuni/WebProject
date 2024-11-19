@@ -11,18 +11,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
-/*
-TODO
-  需要同时维护Item 和 Movie 和 Category_Item
- */
 @Repository
 public class MovieJdbc implements MovieHandler {
 
     private final String INSERT_MOVIE = "insert into Movie values(?,?,?,?,?)";
-
     private final String DELETE_MOVIE = "delete from Movie where iid = ?";
-
+    private final String SELECT_MOVIE_BY_ID = "select * from Movie where iid = ?";
+    private final String SELECT_MOVIES = "select * from Movie limit ? offset ?";
+    private final String SELECT_MOVIES_BY_CATEGORY = "select m.* from Movie m natural join Category_Item ci where ci.name in (?) limit ? offset ?";
+    private final String SELECT_MOVIES_BY_TITLE = "select * from Movie m natural join Item i where i.title like ? limit ? offset ?";
+    private final String SELECT_MOVIES_BY_DIRECTOR = "select * from Movie m natural join Item i where m.director like ? limit ? offset ?";
+    private final String SELECT_MOVIES_BY_CAST = "select * from Movie m natural join Item i where m.cast like ? limit ? offset ?";
+    private final String SELECT_MOVIES_BY_WRITERS = "select * from Movie m natural join Item i where m.writers like ? limit ? offset ?";
+    private final String UPDATE_MOVIE = "update Movie set director = ?, writers = ?, cast = ?, introduction = ? where iid = ?";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private CategoryJdbc categoryJdbc;
@@ -43,7 +44,6 @@ public class MovieJdbc implements MovieHandler {
 
     @Override
     public void removeMovie(long iid) {
-        //由于Movie中的iid是参照Item中iid的外键，不能先删除Item中的记录
         jdbcTemplate.update(DELETE_MOVIE, iid);
         categoryJdbc.removeItem(iid);
         itemJdbc.removeItem(iid);
@@ -52,17 +52,10 @@ public class MovieJdbc implements MovieHandler {
     @Override
     public void updateMovie(Movie movie) {
         itemJdbc.updateItem(movie);
-        /*
-        TODO
-         */
+        jdbcTemplate.update(UPDATE_MOVIE, movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntoduction(), movie.getIid());
+        categoryJdbc.updateItemCategories(movie);
     }
 
-    /**
-     * 更新评分
-     *
-     * @param iid
-     * @param star
-     */
     @Override
     public void updateRating(long iid, int star) {
         itemJdbc.updateRating(iid, star);
@@ -70,37 +63,50 @@ public class MovieJdbc implements MovieHandler {
 
     @Override
     public Movie findMovieById(long iid) {
-        return null;
+        return jdbcTemplate.queryForObject(SELECT_MOVIE_BY_ID, new MovieRowMapper(), iid);
     }
 
     @Override
     public List<Movie> findMovies(int offset, int length) {
-        return null;
+        List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES, new MovieRowMapper(), length, offset);
+        categoryJdbc.setCategory(movies);
+        return movies;
     }
 
     @Override
     public List<Movie> findMoviesByCategories(int offset, int length, List<String> NameOfCategories) {
-        return null;
+        String categories = String.join(",", NameOfCategories);
+        List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_CATEGORY, new MovieRowMapper(), categories, length, offset);
+        categoryJdbc.setCategory(movies);
+        return movies;
     }
 
     @Override
     public List<Movie> findMoviesByTitle(int offset, int length, String title) {
-        return null;
+        List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_TITLE, new MovieRowMapper(), "%" + title + "%", length, offset);
+        categoryJdbc.setCategory(movies);
+        return movies;
     }
 
     @Override
     public List<Movie> findMoviesByDirector(int offset, int length, String director) {
-        return null;
+        List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_DIRECTOR, new MovieRowMapper(), "%" + director + "%", length, offset);
+        categoryJdbc.setCategory(movies);
+        return movies;
     }
 
     @Override
     public List<Movie> findMoviesByCast(int offset, int length, String cast) {
-        return null;
+        List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_CAST, new MovieRowMapper(), "%" + cast + "%", length, offset);
+        categoryJdbc.setCategory(movies);
+        return movies;
     }
 
     @Override
     public List<Movie> findMoviesByWriters(int offset, int length, String writers) {
-        return null;
+        List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_WRITERS, new MovieRowMapper(), "%" + writers + "%", length, offset);
+        categoryJdbc.setCategory(movies);
+        return movies;
     }
 
     private static final class MovieRowMapper implements RowMapper<Movie> {
@@ -113,7 +119,7 @@ public class MovieJdbc implements MovieHandler {
             movie.setStars(resultSet.getString("stars"));
             movie.setRating(resultSet.getDouble("rating"));
             movie.setCoverImagine(resultSet.getURL("coverImagine"));
-            movie.setDirector(resultSet.getString("directors"));
+            movie.setDirector(resultSet.getString("director"));
             movie.setWriters(resultSet.getString("writers"));
             movie.setCast(resultSet.getString("cast"));
             movie.setIntoduction(resultSet.getString("introduction"));

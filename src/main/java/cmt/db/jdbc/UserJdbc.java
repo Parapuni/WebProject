@@ -117,7 +117,7 @@ public class UserJdbc implements UserHandler {
      */
     @Override
     public List<User> findUsers(int offset, int length) {
-        return jdbcTemplate.query(SELECT_USERS, new UserRowMapper(), offset, length);
+        return jdbcTemplate.query(SELECT_USERS, new UserRowMapper(), length, offset);
     }
 
     private static final class UserRowMapper implements RowMapper<User> {

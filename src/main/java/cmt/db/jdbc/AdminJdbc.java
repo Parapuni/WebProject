@@ -18,11 +18,11 @@ import java.util.List;
 @Repository
 public class AdminJdbc implements AdminHandler {
 
-    private final String INSERT_ADMIN = "insert into Admin(adminName, email, password, number, avatar) values(?, ?, ?, ?, ?);";
+    private final String INSERT_ADMIN = "insert into Admin(`adminName`, `email`, `password`, `number`, `avatar`) values(?, ?, ?, ?, ?);";
     private final String DELETE_ADMIN = "delete from Admin where aid = ?;";
-    private final String UPDATE_ADMIN = "update Admin set adminName = ?, email = ?, password = ?, number = ?, avatar = ? where aid = ?;";
+    private final String UPDATE_ADMIN = "update Admin set `adminName` = ?, `email` = ?, `password` = ?, `number` = ?, `avatar` = ? where aid = ?;";
     private final String SELECT_ADMIN_BY_ID = "select * from Admin where aid = ?;";
-    private final String SELECT_ADMIN_BY_NAME_AND_PASSWORD = "select * from Admin where adminName = ? and password = ?;";
+    private final String SELECT_ADMIN_BY_NAME_AND_PASSWORD = "select * from Admin where `adminName` = ? and `password` = ?;";
     private final String SELECT_ADMINS = "select * from Admin limit ? offset ?;";
 
     private JdbcTemplate jdbcTemplate;
