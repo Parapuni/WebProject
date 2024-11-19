@@ -50,7 +50,7 @@ public class CommentJdbc implements CommentHandler {
 
         @Override
         public Comment mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Comment(resultSet.getLong("cid"), resultSet.getLong("uid"), resultSet.getString("content"));
+            return new Comment(resultSet.getLong("iid"), resultSet.getLong("uid"), resultSet.getString("content"));
         }
     }
 }

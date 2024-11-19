@@ -15,28 +15,44 @@ import java.util.List;
 public class BookJdbc implements BookHandler {
     private JdbcTemplate jdbcTemplate;
     @Autowired
+    private CategoryJdbc categoryJdbc;
+    @Autowired
+    private ItemJdbc itemJdbc;
+
+    @Autowired
     public BookJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public void addBook(Book book) {
-
+        long iid = itemJdbc.addItemReturnPrimaryKey(book);
+        /*
+        TODO
+         */
+        categoryJdbc.addItemCategories(iid, book.getCategories());
     }
 
     @Override
     public void removeBook(long iid) {
-
+        /*
+        TODO
+         */
+        categoryJdbc.removeItem(iid);
+        itemJdbc.removeItem(iid);
     }
 
     @Override
     public void updateBook(Book book) {
-
+        itemJdbc.updateItem(book);
+        /*
+        TODO
+         */
     }
 
     @Override
     public void updateRating(long iid, int rating) {
-
+        itemJdbc.updateRating(iid, rating);
     }
 
     @Override
@@ -44,6 +60,11 @@ public class BookJdbc implements BookHandler {
         return null;
     }
 
+
+    /*
+    TODO
+        完成查找
+     */
     @Override
     public List<Book> findBooks(int offset, int length) {
         return null;
@@ -73,7 +94,9 @@ public class BookJdbc implements BookHandler {
         @Override
         public Book mapRow(ResultSet resultSet, int i) throws SQLException {
             Book book = new Book();
-
+            /*
+            TODO
+             */
             return book;
         }
     }
