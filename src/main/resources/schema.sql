@@ -79,3 +79,5 @@ create table Category_Item
     foreign key (iid) references Item (iid)
 );
 
+INSERT INTO `User` (`nickname`, `password`, `firstName`, `lastName`, `birthday`, `email`, `number`, `avatar`)
+            VALUES ('FuckGLP', '1', 'G', 'LP', '2000-02-29', 'Fuck@GLP.com', '123456789', 'https://www.baidu.com');

@@ -1,7 +1,7 @@
 package cmt.web;
 
-import cmt.db.jdbc.UserJdbc;
-import cmt.entity.User;
+import cmt.db.jdbc.*;
+import cmt.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

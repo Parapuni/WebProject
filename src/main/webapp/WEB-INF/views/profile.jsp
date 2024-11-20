@@ -59,14 +59,14 @@
 
   <!-- Profile Information -->
   <h4>Account Information</h4>
-  <form action="update-profile" method="POST">
+  <form action="<c:url value="/profile/update-profile"/>" method="POST">
     <div class="form-group">
       <label for="username">Username</label>
-      <input type="text" class="form-control" id="username" name="username" value="${sessionScope.username}" readonly>
+      <input type="text" class="form-control" id="username" name="username" value="${sessionScope.user.nickname}" readonly>
     </div>
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" name="email" value="${sessionScope.email}" required>
+      <input type="email" class="form-control" id="email" name="email" value="${sessionScope.user.email}" required>
     </div>
     <div class="form-group">
       <label for="password">Password</label>

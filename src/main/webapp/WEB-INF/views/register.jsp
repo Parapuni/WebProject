@@ -69,7 +69,7 @@
         <button type="submit" class="btn btn-primary btn-block">Register</button>
     </form>
     <div class="mt-3 text-center">
-        <a href="login.jsp">Already have an account? Login here</a>
+        <a href="<c:url value="/login"/>">Already have an account? Login here</a>
     </div>
 </div>
 
