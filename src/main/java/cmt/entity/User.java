@@ -2,6 +2,7 @@ package cmt.entity;
 
 import com.sun.istack.internal.NotNull;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Date;
 
@@ -54,6 +55,17 @@ public class User {
         this.number = number;
         this.birthday = birthday;
         this.avatar = avatar;
+    }
+
+    public User (String nickname, String password, String email) throws MalformedURLException {
+        this.nickname = nickname;
+        this.password = password;
+        this.email = email;
+        this.avatar = new URL("http://localhost:8080/imagines/presplash_background.png");
+        this.birthday = new Date(0);
+        this.firstName = "";
+        this.lastName = "";
+        this.number = "";
     }
 
     public long getUid() {

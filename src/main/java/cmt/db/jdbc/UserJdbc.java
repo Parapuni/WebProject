@@ -9,6 +9,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +20,7 @@ import java.util.List;
 @Repository
 public class UserJdbc implements UserHandler {
 
-    private final String INSERT_USER = "insert into User(uid,`password`,nickname,firstName,lastName,email,`number`,birthday,avatar) values(?,?,?,?,?,?,?,?);";
+    private final String INSERT_USER = "insert into User(nickname,firstName,lastName,`password`,email,`number`,birthday,avatar) values(?,?,?,?,?,?,?,?);";
     private final String DELETE_USER = "delete from User where uid = ?;";
     private final String UPDATE_USER = "update User set uid = ?,`password` = ?,nickname = ?,firstName = ?,lastname = ?,email = ?,`number` = ?,birthday = ?,avatar = ? where uid = ?;";
     private final String SELECT_USER_BY_ID = "select * from User where uid = ?;";
@@ -126,7 +128,11 @@ public class UserJdbc implements UserHandler {
         public User mapRow(ResultSet resultSet, int i) throws SQLException {
             User user = new User();
             user.setUid(resultSet.getLong("uid"));
-            user.setAvatar(resultSet.getURL("avatar"));
+            try {
+                user.setAvatar(new URL(resultSet.getString("avatar")));
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
             user.setNickname(resultSet.getString("nickname"));
             user.setFirstName(resultSet.getString("firstName"));
             user.setLastName(resultSet.getString("lastName"));
@@ -137,4 +143,7 @@ public class UserJdbc implements UserHandler {
             return user;
         }
     }
+
+    // TODO: 2024/11/20 0020 未实现的方法
+    //检查顺序，检查url
 }
