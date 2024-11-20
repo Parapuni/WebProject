@@ -3,7 +3,7 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-      <a class="navbar-brand" href="/">Book, Movie, Music Reviews</a>
+      <a class="navbar-brand" href="<c:url value="/home"/>">Book, Movie, Music Reviews</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -21,7 +21,7 @@
                 <a class="nav-link" href="<c:url value="/profile"/>">Profile</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-danger" href="/simulateLogout">Logout</a>
+                <a class="nav-link text-danger" href="<c:url value="/logout"/>">Logout</a>
               </li>
             </c:when>
 
@@ -36,7 +36,7 @@
                 <a class="nav-link" href="/content-management.jsp">Manage Content</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-danger" href="/simulateLogout">Logout</a>
+                <a class="nav-link text-danger" href="<c:url value="/logout"/>">Logout</a>
               </li>
             </c:when>
 
