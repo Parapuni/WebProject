@@ -22,7 +22,7 @@ public class UserJdbc implements UserHandler {
 
     private final String INSERT_USER = "insert into User(nickname,firstName,lastName,`password`,email,`number`,birthday,avatar) values(?,?,?,?,?,?,?,?);";
     private final String DELETE_USER = "delete from User where uid = ?;";
-    private final String UPDATE_USER = "update User set uid = ?,`password` = ?,nickname = ?,firstName = ?,lastname = ?,email = ?,`number` = ?,birthday = ?,avatar = ? where uid = ?;";
+    private final String UPDATE_USER = "update User set uid = ?,nickname = ?,firstName = ?,lastname = ?,`password` = ?,email = ?,`number` = ?,birthday = ?,avatar = ? where uid = ?;";
     private final String SELECT_USER_BY_ID = "select * from User where uid = ?;";
     private final String SELECT_USER_BY_NAME_AND_PASSWORD = "select * from User where nickname = ? and `password` = ?;";
     private final String SELECT_USERS = "select * from User limit ? offset ?;";
