@@ -1,55 +1,63 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to the Reviews System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: linear-gradient(to right, #ffffff, #f4f4f4);
+      color: #333;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container-fluid {
+      padding: 50px 20px;
+      margin-top: 40px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-size: 16px;
+      transition: background-color 0.3s, border-color 0.3s;
+      width: 100%;
+    }
+
+    .btn-primary:hover, .btn-secondary:hover {
+      opacity: 0.9;
+    }
+
+    .text-danger a {
+      color: #e74c3c;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
 <%@ include file="header.jsp" %>
 <div class="container-fluid mt-5">
   <h1 class="text-center mb-4" style="color: #4a90e2;">Welcome to the Reviews System!</h1>
-
-  <c:choose>
-    <c:when test="${empty sessionScope.user && empty sessionScope.admin}">
-      <p class="text-center text-danger">You need to <a href="login.jsp" class="text-decoration-none">log in</a> to access this feature.</p>
-      <div class="row mt-4">
-        <div class="col-md-12">
-          <h4 class="text-center" style="color: #7f8c8d;">Explore Reviews</h4>
-          <a href="reviews.jsp" class="btn btn-secondary btn-lg w-100">View Reviews</a>
-        </div>
-      </div>
-    </c:when>
-
-
-    <c:when test="${not empty sessionScope.admin}">
-      <div class="admin-dashboard text-center">
-        <h3 style="color: #27ae60;">Admin Dashboard</h3>
-        <div class="row mt-4">
-          <div class="col-sm-6 col-md-4 mb-3">
-            <a href="user-management.jsp" class="btn btn-success w-100">Manage Users</a>
-          </div>
-          <div class="col-sm-6 col-md-4 mb-3">
-            <a href="item-management.jsp" class="btn btn-info w-100">Manage Items</a>
-          </div>
-          <div class="col-sm-12 col-md-4 mb-3">
-            <a href="review-management.jsp" class="btn btn-warning w-100">Manage Reviews</a>
-          </div>
-        </div>
-      </div>
-    </c:when>
-
-
-    <c:otherwise>
-      <div class="user-dashboard text-center">
-        <h3 style="color: #e74c3c;">User Dashboard</h3>
-        <div class="row mt-4">
-          <div class="col-sm-6 mb-3">
-            <a href="submit-review.jsp" class="btn btn-primary w-100">Submit a Review</a>
-          </div>
-          <div class="col-sm-6 mb-3">
-            <a href="reviews.jsp" class="btn btn-secondary w-100">Manage Your Reviews</a>
-          </div>
-        </div>
-        <div class="mt-3">
-          <a href="profile.jsp" class="btn btn-outline-info w-100">Edit Your Profile</a>
-        </div>
-      </div>
-    </c:otherwise>
-  </c:choose>
+  <p class="text-center text-danger">You need to <a href="<c:url value='/login'/>">log in</a> or <a href="<c:url value='/register'/>">register</a> to access full features.</p>
+  <div class="row mt-4 justify-content-center">
+    <div class="col-md-6">
+      <a href="<c:url value='/login'/>" class="btn btn-primary btn-lg w-100">Login</a>
+    </div>
+    <div class="col-md-6">
+      <a href="<c:url value='/register'/>" class="btn btn-secondary btn-lg w-100">Register</a>
+    </div>
+  </div>
 </div>
 <%@ include file="footer.jsp" %>
+</body>
+</html>

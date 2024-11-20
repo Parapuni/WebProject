@@ -7,39 +7,44 @@
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* 响应式设计 */
-        .container {
-            max-width: 1200px;
-        }
-        /* 自定义渐变背景 */
+        /* 引入Google字体 */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
         body {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            background: linear-gradient(135deg, #f8f9fa, #dfe3e8);
             color: #343a40;
+            font-family: 'Roboto', sans-serif;
             min-height: 100vh;
             margin: 0;
             padding: 0;
         }
-        /* 卡片样式优化 */
+
+        .container {
+            max-width: 1200px;
+            padding: 20px;
+        }
+
         .card {
-            border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            border-radius: 8px; /* 添加圆角 */
+            border: 1px solid #e0e0e0; /* 添加轻微边框 */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05); /* 调整阴影效果 */
         }
-        /* 按钮颜色调整 */
-        .btn-warning {
-            background-color: #ffcc00;
-            border: none;
+
+        .btn-warning, .btn-danger {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 为按钮添加阴影 */
+            border-radius: 4px; /* 统一按钮圆角 */
         }
-        .btn-danger {
-            background-color: #ff4d4d;
-            border: none;
-        }
+
         .btn-warning:hover {
-            background-color: #e6b800;
+            background-color: #f0b800;
         }
+
         .btn-danger:hover {
-            background-color: #cc0000;
+            background-color: #e60000;
         }
     </style>
+
 </head>
 <body>
 <div class="container my-5">

@@ -8,12 +8,10 @@
   <title>Your Profile</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* 页面整体背景色 */
     body {
       background-color: #f8f9fa;
       font-family: Arial, sans-serif;
     }
-    /* 容器样式 */
     .container {
       background-color: #ffffff;
       padding: 30px;
@@ -24,20 +22,9 @@
       color: #007bff;
       margin-bottom: 20px;
     }
-    h4 {
-      margin-top: 30px;
-      color: #333;
-    }
-    /* 表单控件样式 */
     .form-control:focus {
       border-color: #007bff;
       box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-    }
-    /* 按钮样式 */
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
-      transition: background-color 0.3s, box-shadow 0.3s;
     }
     .btn-primary:hover {
       background-color: #0056b3;
@@ -46,7 +33,6 @@
     .btn-warning {
       color: #fff;
     }
-    /* 表格样式 */
     .table {
       margin-top: 20px;
       background-color: #ffffff;
@@ -59,18 +45,19 @@
 
   <!-- Profile Information -->
   <h4>Account Information</h4>
-  <form action="update-profile" method="POST">
+  <form action="<c:url value='/update-profile'/>" method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label for="username">Username</label>
-      <input type="text" class="form-control" id="username" name="username" value="${sessionScope.username}" readonly>
+      <input type="text" class="form-control" id="username" name="username" value="${sessionScope.user.username}" readonly>
     </div>
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" name="email" value="${sessionScope.email}" required>
+      <input type="email" class="form-control" id="email" name="email" value="${sessionScope.user.email}" required>
     </div>
     <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" name="password">
+      <label for="avatar">Avatar</label>
+      <input type="file" class="form-control-file" id="avatar" name="avatar">
+      <img src="<c:url value='/images/${sessionScope.user.avatar}'/>" alt="Your Avatar" style="width: 100px; height: 100px; border-radius: 50%;">
     </div>
     <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
   </form>
@@ -93,8 +80,8 @@
         <td>${review.contentTitle}</td>
         <td>${review.rating}</td>
         <td>
-          <a href="edit-review?id=${review.id}" class="btn btn-warning">Edit</a>
-          <a href="delete-review?id=${review.id}" class="btn btn-danger">Delete</a>
+          <a href="<c:url value='/edit-review?id=${review.id}'/>" class="btn btn-warning">Edit</a>
+          <a href="<c:url value='/delete-review?id=${review.id}'/>" class="btn btn-danger">Delete</a>
         </td>
       </tr>
     </c:forEach>
