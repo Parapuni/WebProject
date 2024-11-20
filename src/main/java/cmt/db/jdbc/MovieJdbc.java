@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -122,7 +124,11 @@ public class MovieJdbc implements MovieHandler {
             movie.setReleaseDate(resultSet.getDate("releaseDate"));
             movie.setStars(resultSet.getString("stars"));
             movie.setRating(resultSet.getDouble("rating"));
-            movie.setCoverImagine(resultSet.getURL("coverImagine"));
+            try {
+                movie.setCoverImagine(new URL(resultSet.getString("coverImagine")));
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
             movie.setDirector(resultSet.getString("director"));
             movie.setWriters(resultSet.getString("writers"));
             movie.setCast(resultSet.getString("cast"));

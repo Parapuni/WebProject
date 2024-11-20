@@ -9,6 +9,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -86,7 +88,11 @@ public class AdminJdbc implements AdminHandler {
             admin.setAdminName(resultSet.getString("adminName"));
             admin.setPassword(resultSet.getString("password"));
             admin.setEmail(resultSet.getString("email"));
-            admin.setAvatar(resultSet.getURL("avatar"));
+            try {
+                admin.setAvatar(new URL(resultSet.getString("avatar")));
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
             admin.setNumber(resultSet.getString("number"));
             return admin;
         }

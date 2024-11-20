@@ -2,10 +2,7 @@ package cmt.db.jdbc;
 
 import cmt.db.api.BookHandler;
 import cmt.entity.Book;
-import cmt.entity.Movie;
-import cmt.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -119,8 +116,12 @@ public class BookJdbc implements BookHandler {
                 book.setReleaseDate(resultSet.getDate("releaseDate"));
                 book.setStars(resultSet.getString("stars"));
                 book.setRating(resultSet.getDouble("rating"));
-                book.setCoverImagine(resultSet.getURL("coverImagine"));
-                book.setAuthors(resultSet.getString("authors"));
+            try {
+                book.setCoverImagine(new URL(resultSet.getString("coverImagine")));
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+            book.setAuthors(resultSet.getString("authors"));
                 book.setPublisher(resultSet.getString("publisher"));
                 book.setIntroduction(resultSet.getString("introduction"));
             return book;

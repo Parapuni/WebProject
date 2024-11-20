@@ -16,6 +16,7 @@ public class Comment {
     private long uid;   //发表评论的用户的id
     @NotNull
     private Date cdate;
+    private String uname;
     @NotNull
     private String content;  //评论内容
 
@@ -70,5 +71,13 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 }

@@ -1,13 +1,14 @@
 package cmt.db.jdbc;
 
 import cmt.db.api.MusicHandler;
-import cmt.entity.Book;
 import cmt.entity.Music;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -120,7 +121,11 @@ public class MusicJdbc implements MusicHandler {
             music.setReleaseDate(resultSet.getDate("releaseDate"));
             music.setStars(resultSet.getString("stars"));
             music.setRating(resultSet.getDouble("rating"));
-            music.setCoverImagine(resultSet.getURL("coverImagine"));
+            try {
+                music.setCoverImagine(new URL(resultSet.getString("coverImagine")));
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
             music.setArtists(resultSet.getString("artists"));
             music.setLyrics(resultSet.getString("lyrics"));
             music.setAlbum(resultSet.getString("album"));
