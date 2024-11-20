@@ -63,8 +63,10 @@ create table `Music`
 
 create table `Comment`
 (
-    `uid` bigint,
     `iid` bigint,
+    `uid` bigint,
+    uname varchar(30) not null,
+    cdate date        not null,
     `content` varchar(255),
     primary key (uid, iid),
     foreign key (uid) references `User` (uid),

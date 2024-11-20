@@ -2,6 +2,8 @@ package cmt.entity;
 
 import com.sun.istack.internal.NotNull;
 
+import java.sql.Date;
+
 /**
  * 评论类
  *
@@ -12,6 +14,9 @@ public class Comment {
     private long iid;   //评论作品的id
     @NotNull
     private long uid;   //发表评论的用户的id
+    @NotNull
+    private Date cdate;
+    private String uname;
     @NotNull
     private String content;  //评论内容
 
@@ -26,11 +31,13 @@ public class Comment {
      *
      * @param iid     评论id
      * @param uid     发言者id
+     * @param cdate 发言时间
      * @param content 内容
      */
-    public Comment(long iid, long uid, String content) {
+    public Comment(long iid, long uid, String uname, Date cdate, String content) {
         this.iid = iid;
         this.uid = uid;
+        this.cdate = cdate;
         this.content = content;
     }
 
@@ -50,11 +57,27 @@ public class Comment {
         this.uid = uid;
     }
 
+    public Date getCdate() {
+        return cdate;
+    }
+
+    public void setCdate(Date cdate) {
+        this.cdate = cdate;
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 }

@@ -16,6 +16,7 @@ import java.util.Arrays;
 public class ItemJdbc implements ItemHandler {
     private final String INSERT_ITEM = "insert into Item(`title`,`releaseDate`,`stars`,`rating`,`coverimagine`) values(?,?,?,?,?)";
     private final String DELETE_ITEM = "delete from Item where iid = ?";
+    private final String UPDATE_ITEM = "update Item set title = ?,releaseDate = ?,stars = ?,rating = ?,coverImagine = ? where iid = ?";
     private final String SELECT_STARS = "select stars from Item where iid = ?";
     private final String UPDATE_STARS = "update Item set stars = ?,rating =? where iid = ?";
     private JdbcTemplate jdbcTemplate;
@@ -44,11 +45,14 @@ public class ItemJdbc implements ItemHandler {
         jdbcTemplate.update(DELETE_ITEM, iid);
     }
 
+    /**
+     * 更新item记录，不允许更改iid
+     *
+     * @param item
+     */
     @Override
     public void updateItem(Item item) {
-        /*
-        TODO
-         */
+        jdbcTemplate.update(UPDATE_ITEM, item.getTitle(), item.getReleaseDate(), item.getStars(), item.getRating(), item.getCoverImagine());
     }
 
     @Override
