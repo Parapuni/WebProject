@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Books</title>
+  <title>${pageTitle}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
@@ -69,7 +69,7 @@
         <h4>Categories</h4>
         <ul>
           <c:forEach var="category" items="${categories}">
-            <li onclick="location.href='<c:url value='/books?category=${category}' />'">
+            <li onclick="location.href='<c:url value='/items?category=${category}' />'">
                 ${category}
             </li>
           </c:forEach>
@@ -77,19 +77,18 @@
       </div>
     </div>
 
-    <!-- Book List -->
+    <!-- Item List -->
     <div class="col-md-9">
       <div class="row">
-        <!-- Dynamic Book Data -->
-        <c:forEach var="book" items="${books}">
+        <c:forEach var="item" items="${items}">
           <div class="col-md-4">
             <div class="card">
-              <img src="<c:url value='/images/${book.image}' />" alt="${book.title}" class="card-img-top">
+              <img src="<c:url value='/images/${item.coverImagine}' />" alt="${item.title}" class="card-img-top">
               <div class="card-body">
-                <h5><a href="<c:url value='/book-details?id=${book.id}' />" class="text-dark">${book.title}</a></h5>
-                <p>${book.description}</p>
+                <h5><a href="<c:url value='/item-details?id=${item.iid}' />" class="text-dark">${item.title}</a></h5>
+                <p>${item.description}</p>
                 <!-- Display Rating -->
-                <div class="rating"> ${book.rating}</div>
+                <div class="rating">${item.rating.toFixed(1)} / 5</div>
               </div>
             </div>
           </div>

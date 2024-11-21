@@ -17,6 +17,7 @@ public class TestController {
         mockUser.setPassword("userPassword");
         mockUser.setNickname("testUser");
         mockUser.setEmail("user@example.com");
+        mockUser.setNumber("1141514");
 
         session.setAttribute("user", mockUser);
         session.removeAttribute("admin");  // 确保 admin 属性被清除

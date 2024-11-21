@@ -53,6 +53,11 @@
             font-size: 14px;
             color: #666;
         }
+        .rating {
+            font-size: 16px;
+            color: #ffc107;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -83,6 +88,8 @@
                             <div class="card-body">
                                 <h5><a href="<c:url value='/movie-details?id=${movie.id}' />" class="text-dark">${movie.title}</a></h5>
                                 <p>${movie.description}</p>
+                                <!-- Display Rating -->
+                                <div class="rating"> ${movie.rating}</div>
                             </div>
                         </div>
                     </div>

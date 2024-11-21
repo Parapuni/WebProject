@@ -38,11 +38,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="<c:url value='/books' />">Books</a>
+          <a class="nav-link" href="<c:url value='/items?category=Movies' />">Movies</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<c:url value='/movies' />">Movies</a>
+          <a class="nav-link" href="<c:url value='/items?category=Books' />">Books</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<c:url value='/items?category=Music' />">Music</a>
+        </li>
+
       </ul>
       <form class="d-flex" action="<c:url value='/search' />" method="get">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
@@ -52,7 +56,7 @@
         <c:choose>
           <c:when test="${not empty sessionScope.user}">
             <li class="nav-item">
-              <a class="nav-link" href="<c:url value='/profile' />">${sessionScope.user.username}</a>
+              <a class="nav-link" href="<c:url value='/profile' />">${sessionScope.user.nickname}</a>
             </li>
           </c:when>
           <c:when test="${not empty sessionScope.admin}">

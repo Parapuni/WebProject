@@ -42,7 +42,7 @@
     }
     .card {
       text-align: center;
-      cursor: pointer; /* 使鼠标悬停时显示手形指针 */
+      cursor: pointer; /* 鼠标悬停时显示手形指针 */
     }
     .card img {
       width: 100%;
@@ -50,6 +50,10 @@
       display: block;
     }
     .book-section {
+      margin-bottom: 40px; /* 增加间距 */
+    }
+
+    .movie-section {
       margin-bottom: 40px; /* 增加间距 */
     }
     .sidebar {
@@ -66,18 +70,22 @@
       cursor: pointer;
     }
   </style>
-</head><body>
+</head>
+<body>
 <div class="container mt-5">
   <div class="row">
+    <!-- Main Content -->
     <div class="col-md-9">
       <!-- New Books Section -->
       <div class="book-section">
-        <div class="section-header">New Books<a href="<c:url value='/books' />" class="more-link">More...</a></div>
+        <div class="section-header">New Books
+          <a href="<c:url value='/items?category=Books' />" class="more-link">More...</a>
+        </div>
         <div class="row">
           <c:forEach items="${books}" var="book">
             <div class="col-md-3">
-              <div class="card" onclick="location.href='<c:url value='/itemReview?type=book&id=${book.id}' />'">
-                <img src="${book.imageUrl}" alt="${book.title}">
+              <div class="card" onclick="location.href='<c:url value='/itemReview?type=book&id=${book.iid}' />'">
+                <img src="${book.coverImagine}" alt="${book.title}">
               </div>
             </div>
           </c:forEach>
@@ -85,24 +93,42 @@
       </div>
 
       <!-- Now Showing Section -->
-      <div class="section-header">Now Showing<a href="<c:url value='/movies' />" class="more-link">More...</a></div>
+      <div class="movie-section">
+      <div class="section-header">Now Showing
+        <a href="<c:url value='/items?category=Movies' />" class="more-link">More...</a>
+      </div>
       <div class="row">
         <c:forEach items="${movies}" var="movie">
           <div class="col-md-3">
-            <div class="card" onclick="location.href='<c:url value='/itemReview?type=movie&id=${movie.id}' />'">
-              <img src="${movie.imageUrl}" alt="${movie.title}">
+            <div class="card" onclick="location.href='<c:url value='/itemReview?type=movie&id=${movie.iid}' />'">
+              <img src="${movie.coverImagine}" alt="${movie.title}">
+            </div>
+          </div>
+        </c:forEach>
+      </div>
+      </div>
+
+      <!-- New Music Section -->
+      <div class="section-header">New Music
+        <a href="<c:url value='/items?category=Music' />" class="more-link">More...</a>
+      </div>
+      <div class="row">
+        <c:forEach items="${music}" var="track">
+          <div class="col-md-3">
+            <div class="card" onclick="location.href='<c:url value='/itemReview?type=music&id=${track.iid}' />'">
+              <img src="${track.coverImagine}" alt="${track.title}">
             </div>
           </div>
         </c:forEach>
       </div>
     </div>
 
-    <!-- Sidebar for Weekly Recommendations, assuming dynamic data is available -->
+    <!-- Sidebar for Weekly Recommendations -->
     <div class="col-md-3 sidebar">
       <h3>This Week's Top Picks</h3>
       <ul class="list-group">
         <c:forEach items="${topPicks}" var="pick">
-          <li class="list-group-item" onclick="location.href='<c:url value='/itemReview?id=${pick.id}' />'">
+          <li class="list-group-item" onclick="location.href='<c:url value='/itemReview?id=${pick.iid}' />'">
               ${pick.title}
           </li>
         </c:forEach>
