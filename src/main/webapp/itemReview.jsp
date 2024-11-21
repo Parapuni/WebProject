@@ -111,7 +111,16 @@
           </div>
         </c:forEach>
       </div>
-      <a href="<c:url value='/editreview?itemId=${item.iid}' />" class="rate-button">Rate</a>
+      <c:choose>
+        <c:when test="${empty sessionScope.user}">
+          <!-- If user is not logged in -->
+          <button class="rate-button" onclick="alert('Please log in to rate this item'); location.href='<c:url value='/login' />';">Rate</button>
+        </c:when>
+        <c:otherwise>
+          <!-- If user is logged in -->
+          <a href="<c:url value='/editreview?itemId=${item.iid}' />" class="rate-button">Rate</a>
+        </c:otherwise>
+      </c:choose>
     </div>
   </div>
 
