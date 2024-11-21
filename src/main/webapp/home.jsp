@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,59 +8,108 @@
   <title>Welcome to the Reviews System</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
-
     body {
-      font-family: 'Lato', sans-serif;
-      background: linear-gradient(to right, #ffffff, #f4f4f4);
-      color: #333;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
     }
-
-    .container-fluid {
-      padding: 50px 20px;
-      margin-top: 40px;
+    .content-section .row {
+      margin-top: 20px;
     }
-
-    h1 {
-      color: #333;
-      margin-bottom: 20px;
+    .section-header {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      position: relative;
+      padding-bottom: 10px;
     }
-
-    .btn {
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      font-size: 16px;
-      transition: background-color 0.3s, border-color 0.3s;
+    .section-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
       width: 100%;
+      height: 2px;
+      background-color: #007bff;
     }
-
-    .btn-primary:hover, .btn-secondary:hover {
-      opacity: 0.9;
-    }
-
-    .text-danger a {
-      color: #e74c3c;
+    .more-link {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      font-size: 16px;
       text-decoration: none;
+      color: #007bff;
+    }
+    .card {
+      text-align: center;
+    }
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .book-section {
+      margin-bottom: 40px; /* Added bottom margin for spacing */
+    }
+    .sidebar {
+      position: fixed;
+      width: 200px;
+      top: 100px;
+      right: -50px; /* Adjust right position for more space */
+    }
+    .sidebar h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    .list-group-item {
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-<%@ include file="header.jsp" %>
-<div class="container-fluid mt-5">
-  <h1 class="text-center mb-4" style="color: #4a90e2;">Welcome to the Reviews System!</h1>
-  <p class="text-center text-danger">You need to <a href="<c:url value='/login'/>">log in</a> or <a href="<c:url value='/register'/>">register</a> to access full features.</p>
-  <div class="row mt-4 justify-content-center">
-    <div class="col-md-6">
-      <a href="<c:url value='/login'/>" class="btn btn-primary btn-lg w-100">Login</a>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-9">
+      <!-- New Books Section -->
+      <div class="book-section">
+        <div class="section-header">New Books<a href="<c:url value='/books' />" class="more-link">More...</a></div>
+        <div class="row">
+          <c:forEach var="i" begin="1" end="4">
+            <div class="col-md-3">
+              <div class="card">
+                <img src="book_image${i}.jpg" alt="Book ${i}">
+              </div>
+            </div>
+          </c:forEach>
+        </div>
+      </div>
+
+      <!-- Now Showing Section -->
+      <div class="section-header">Now Showing<a href="<c:url value='/movies' />" class="more-link">More...</a></div>
+      <div class="row">
+        <c:forEach var="i" begin="1" end="4">
+          <div class="col-md-3">
+            <div class="card">
+              <img src="movie_image${i}.jpg" alt="Movie ${i}">
+            </div>
+          </div>
+        </c:forEach>
+      </div>
     </div>
-    <div class="col-md-6">
-      <a href="<c:url value='/register'/>" class="btn btn-secondary btn-lg w-100">Register</a>
+
+    <!-- Sidebar for Weekly Recommendations -->
+    <div class="col-md-3 sidebar">
+      <h3>This Week's Top Picks</h3>
+      <ul class="list-group">
+        <c:forEach var="i" begin="1" end="10">
+          <li class="list-group-item" onclick="location.href='<c:url value='/details?id=${i}' />'">
+            Top Pick ${i}
+          </li>
+        </c:forEach>
+      </ul>
     </div>
   </div>
 </div>
 <%@ include file="footer.jsp" %>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
