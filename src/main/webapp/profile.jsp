@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,85 +13,119 @@
       background-color: #f8f9fa;
       font-family: Arial, sans-serif;
     }
-    .container {
-      background-color: #ffffff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    .profile-container {
+      margin-top: 40px;
     }
-    h2 {
-      color: #007bff;
+
+    .sidebar {
+      background-color: #ffffff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .sidebar img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .user-info {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .user-info .info-label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .user-info .info-value {
+      color: #555;
+    }
+
+    .reviews-section {
+      background-color: #ffffff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .reviews-section h3 {
       margin-bottom: 20px;
     }
-    .form-control:focus {
-      border-color: #007bff;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+
+    .review-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
     }
-    .btn-primary:hover {
-      background-color: #0056b3;
-      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+
+    .review-item:last-child {
+      border-bottom: none;
     }
-    .btn-warning {
-      color: #fff;
+
+    .review-title {
+      font-weight: bold;
+      margin-bottom: 5px;
     }
-    .table {
-      margin-top: 20px;
-      background-color: #ffffff;
+
+    .review-actions a {
+      margin-right: 10px;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .review-actions a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-<div class="container mt-5">
-  <h2 class="text-center">Your Profile</h2>
+<div class="container profile-container">
+  <div class="row">
+    <!-- Left Sidebar -->
+    <div class="col-md-3">
+      <div class="sidebar">
+        <!-- User Avatar -->
+        <img src="<c:url value='/images/${sessionScope.user.avatar}' />" alt="User Avatar">
+        <hr>
+        <!-- User Information -->
+        <div class="user-info">
+          <div><span class="info-label">Nickname:</span> <span class="info-value">${sessionScope.user.nickname}</span></div>
+          <div><span class="info-label">Email:</span> <span class="info-value">${sessionScope.user.email}</span></div>
+          <div><span class="info-label">Phone:</span> <span class="info-value">${sessionScope.user.number}</span></div>
+        </div>
+        <hr>
+        <a href="<c:url value='/edit-profile' />" class="btn btn-primary btn-sm w-100 mt-3">Edit Profile</a>
+      </div>
+    </div>
 
-  <!-- Profile Information -->
-  <h4>Account Information</h4>
-  <form action="<c:url value='/update-profile'/>" method="POST" enctype="multipart/form-data">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" class="form-control" id="username" name="username" value="${sessionScope.user.username}" readonly>
+    <!-- Right Content -->
+    <div class="col-md-9">
+      <div class="reviews-section">
+        <h3>My Reviews</h3>
+        <c:forEach var="review" items="${reviews}">
+          <div class="review-item">
+            <div class="review-title">${review.title}</div>
+            <div>${review.content}</div>
+            <div class="review-actions">
+              <a href="<c:url value='/edit-review?id=${review.id}' />">Edit</a>
+              <a href="<c:url value='/delete-review?id=${review.id}' />" class="text-danger">Delete</a>
+            </div>
+          </div>
+        </c:forEach>
+        <c:if test="${empty reviews}">
+          <p class="text-muted">You have not written any reviews yet.</p>
+        </c:if>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" name="email" value="${sessionScope.user.email}" required>
-    </div>
-    <div class="form-group">
-      <label for="avatar">Avatar</label>
-      <input type="file" class="form-control-file" id="avatar" name="avatar">
-      <img src="<c:url value='/images/${sessionScope.user.avatar}'/>" alt="Your Avatar" style="width: 100px; height: 100px; border-radius: 50%;">
-    </div>
-    <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
-  </form>
-
-  <!-- Reviews Section -->
-  <h4 class="mt-5">Your Reviews</h4>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="col">Content Type</th>
-      <th scope="col">Title</th>
-      <th scope="col">Rating</th>
-      <th scope="col">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="review" items="${reviews}">
-      <tr>
-        <td>${review.contentType}</td>
-        <td>${review.contentTitle}</td>
-        <td>${review.rating}</td>
-        <td>
-          <a href="<c:url value='/edit-review?id=${review.id}'/>" class="btn btn-warning">Edit</a>
-          <a href="<c:url value='/delete-review?id=${review.id}'/>" class="btn btn-danger">Delete</a>
-        </td>
-      </tr>
-    </c:forEach>
-    </tbody>
-  </table>
+  </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
