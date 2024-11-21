@@ -27,4 +27,4 @@
     </tbody>
   </table>
 </div>
-<%@ include file="footer.jsp" %>
+

@@ -11,6 +11,7 @@
     body {
       font-family: 'Roboto', sans-serif;
       background-color: #f4f4f4;
+      padding-bottom: 60px; /* 避免内容与页脚冲突 */
     }
     .content-section .row {
       margin-top: 20px;
@@ -41,6 +42,7 @@
     }
     .card {
       text-align: center;
+      cursor: pointer; /* 使鼠标悬停时显示手形指针 */
     }
     .card img {
       width: 100%;
@@ -48,13 +50,13 @@
       display: block;
     }
     .book-section {
-      margin-bottom: 40px; /* Added bottom margin for spacing */
+      margin-bottom: 40px; /* 增加间距 */
     }
     .sidebar {
-      position: fixed;
-      width: 200px;
-      top: 100px;
-      right: -50px; /* Adjust right position for more space */
+      position: sticky;
+      top: 100px; /* 调整位置以适应头部导航 */
+      height: calc(100vh - 120px); /* 计算高度以防止覆盖页脚 */
+      overflow-y: auto; /* 添加滚动 */
     }
     .sidebar h3 {
       font-size: 20px;
@@ -64,8 +66,7 @@
       cursor: pointer;
     }
   </style>
-</head>
-<body>
+</head><body>
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-9">
@@ -73,10 +74,10 @@
       <div class="book-section">
         <div class="section-header">New Books<a href="<c:url value='/books' />" class="more-link">More...</a></div>
         <div class="row">
-          <c:forEach var="i" begin="1" end="4">
+          <c:forEach items="${books}" var="book">
             <div class="col-md-3">
-              <div class="card">
-                <img src="book_image${i}.jpg" alt="Book ${i}">
+              <div class="card" onclick="location.href='<c:url value='/itemReview?type=book&id=${book.id}' />'">
+                <img src="${book.imageUrl}" alt="${book.title}">
               </div>
             </div>
           </c:forEach>
@@ -86,30 +87,29 @@
       <!-- Now Showing Section -->
       <div class="section-header">Now Showing<a href="<c:url value='/movies' />" class="more-link">More...</a></div>
       <div class="row">
-        <c:forEach var="i" begin="1" end="4">
+        <c:forEach items="${movies}" var="movie">
           <div class="col-md-3">
-            <div class="card">
-              <img src="movie_image${i}.jpg" alt="Movie ${i}">
+            <div class="card" onclick="location.href='<c:url value='/itemReview?type=movie&id=${movie.id}' />'">
+              <img src="${movie.imageUrl}" alt="${movie.title}">
             </div>
           </div>
         </c:forEach>
       </div>
     </div>
 
-    <!-- Sidebar for Weekly Recommendations -->
+    <!-- Sidebar for Weekly Recommendations, assuming dynamic data is available -->
     <div class="col-md-3 sidebar">
       <h3>This Week's Top Picks</h3>
       <ul class="list-group">
-        <c:forEach var="i" begin="1" end="10">
-          <li class="list-group-item" onclick="location.href='<c:url value='/details?id=${i}' />'">
-            Top Pick ${i}
+        <c:forEach items="${topPicks}" var="pick">
+          <li class="list-group-item" onclick="location.href='<c:url value='/itemReview?id=${pick.id}' />'">
+              ${pick.title}
           </li>
         </c:forEach>
       </ul>
     </div>
   </div>
 </div>
-<%@ include file="footer.jsp" %>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
