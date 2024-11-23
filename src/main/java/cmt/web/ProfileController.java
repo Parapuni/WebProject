@@ -77,14 +77,13 @@ public class ProfileController {
         }
 
         try {
-            String uploadDir = "F:\\WorkSpace\\WebDevelop\\FinalHomework\\CommentSystem\\src\\main\\resources\\imagines\\";
-            String fileName = user.getUid() + "_" + avatarFile.getOriginalFilename(); // 使用用户ID和原文件名
+            String uploadDir = getClass().getClassLoader().getResource("").getPath()+"imagines/";
+            String fileName ="UID"+user.getUid()+avatarFile.getOriginalFilename(); // 使用用户ID和原文件名
             File destination = new File(uploadDir + fileName);
             avatarFile.transferTo(destination);
 
             // 更新用户的头像路径
-            URL avatarUrl = new URL("http://localhost:8080/imagines/" + fileName);
-            user.setAvatar(avatarUrl);
+            user.setAvatar(fileName);
             // 更新数据库记录（假设有 userService）
             userJdbc.updateUser(user);
 

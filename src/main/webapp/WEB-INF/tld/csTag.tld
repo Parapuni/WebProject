@@ -13,16 +13,19 @@
             <name>index</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
+            <type>int</type>
         </attribute>
         <attribute>
             <name>pageNum</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
+            <type>int</type>
         </attribute>
         <attribute>
-            <name>category</name>
+            <name>maxPagesVisible</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
+            <type>int</type>
         </attribute>
     </tag>
 </taglib>

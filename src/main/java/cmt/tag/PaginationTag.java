@@ -1,20 +1,20 @@
 package cmt.tag;
 
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
 public class PaginationTag extends SimpleTagSupport {
-    private final int MAX_VISIBLE_PAGES = 5;
-    private String category;
+    private int maxPagesVisible = 5;
     private int index;
     private int pageNum;
 
-    public String getCategory() {
-        return category;
+    public int getMaxPagesVisible() {
+        return maxPagesVisible;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setMaxPagesVisible(int maxPagesVisible) {
+        this.maxPagesVisible = maxPagesVisible;
     }
 
     public int getIndex() {
@@ -33,23 +33,24 @@ public class PaginationTag extends SimpleTagSupport {
         this.pageNum = pageNum;
     }
 
+    /**
+     * 计算分页栏首尾页码
+     * 控制页码数为不超过maxPagesVisible+1，
+     * example：
+     * 1 2 3 4 5 6 --> 5 6 7 8 9 10
+     * @throws IOException
+     * @throws JspException
+     */
     @Override
-    public void doTag() throws IOException {
-        int cnt = index / MAX_VISIBLE_PAGES;
-        int remain = index % MAX_VISIBLE_PAGES;
-        cnt += remain == 0 ? 0 : 1;
-        int first = (cnt - 1) * MAX_VISIBLE_PAGES + 1;
-        int last = cnt * MAX_VISIBLE_PAGES;
+    public void doTag() throws IOException, JspException {
+        int cnt = index / maxPagesVisible;
+        int remain = index % maxPagesVisible;
+        cnt += (remain == 0) ? 0 : 1;
+        int first = (cnt - 1) * maxPagesVisible;
+        int last = cnt * maxPagesVisible+1;
+        first = first>0? first :1;
         last = last < pageNum ? last : pageNum;
-        String script =
-                "          <li class=\"page-item %s\">\n" +
-                        "            <a class=\"page-link\" href=\"<c:url value='/items?page=%d&category=%s' />\">%d</a>\n" +
-                        "          </li>\n";
-        for (int i = first; i <= last; i++) {
-            if (i == getIndex())
-                getJspContext().getOut().print(String.format(script, "active", i, getCategory(), i));
-            else
-                getJspContext().getOut().print(String.format(script, "", i, getCategory(), i));
-        }
+        getJspContext().setAttribute("start",first);
+        getJspContext().setAttribute("end",last);
     }
 }

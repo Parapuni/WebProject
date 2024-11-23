@@ -21,7 +21,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class ItemController {
-    private static final int PAGE_SIZE = 3;
+    private static final int PAGE_SIZE = 2;
     @Autowired
     private ItemJdbc itemJdbc;
     @Autowired

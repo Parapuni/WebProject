@@ -19,7 +19,7 @@ public class MovieJdbc implements MovieHandler {
     private final String INSERT_MOVIE = "insert into Movie values(?,?,?,?,?)";
     private final String DELETE_MOVIE = "delete from Movie where iid = ?";
     private final String SELECT_MOVIE_BY_ID = "select * from Movie m natural join Item i where m.iid = ?";
-    private final String SELECT_MOVIES = "select * from Movie natural join Item limit ? offset ?";
+    private final String SELECT_MOVIES = "select * from Movie natural join Item limit ? offset ? ";
     private final String SELECT_MOVIES_BY_CATEGORY = "select * from " +
             "(select m.* from Movie m natural join Category_Item ci where ci.name in (?) limit ? offset ?) " +
             "as cm natural join Item i";
@@ -129,11 +129,7 @@ public class MovieJdbc implements MovieHandler {
             movie.setReleaseDate(resultSet.getDate("releaseDate"));
             movie.setStars(resultSet.getString("stars"));
             movie.setRating(resultSet.getDouble("rating"));
-            try {
-                movie.setCoverImagine(new URL(resultSet.getString("coverImagine")));
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
+            movie.setCoverImagine(resultSet.getString("coverImagine"));
             movie.setDirector(resultSet.getString("director"));
             movie.setWriters(resultSet.getString("writers"));
             movie.setCast(resultSet.getString("cast"));

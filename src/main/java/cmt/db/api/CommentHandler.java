@@ -14,7 +14,7 @@ public interface CommentHandler {
 
     void removeComment(long iid, long uid);
 
-    void updateCommentContent(long iid, long uid, String newContent);
+    void updateCommentContent(long iid, long uid, String newContent, int newRating);
 
     List<Comment> findCommentsByItemId(long iid, int offset, int length);
 

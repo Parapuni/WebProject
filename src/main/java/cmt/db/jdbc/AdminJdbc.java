@@ -48,7 +48,7 @@ public class AdminJdbc implements AdminHandler {
             ps.setString(2, admin.getEmail());
             ps.setString(3, admin.getPassword());
             ps.setString(4, admin.getNumber());
-            ps.setString(5, admin.getAvatar() != null ? admin.getAvatar().toString() : null);
+            ps.setString(5, admin.getAvatar());
             return ps;
         }, keyHolder);
         admin.setAid((Long) keyHolder.getKey());
@@ -66,7 +66,7 @@ public class AdminJdbc implements AdminHandler {
                 admin.getEmail(),
                 admin.getPassword(),
                 admin.getNumber(),
-                admin.getAvatar() != null ? admin.getAvatar().toString() : null,
+                admin.getAvatar(),
                 admin.getAid());
     }
 
@@ -93,11 +93,7 @@ public class AdminJdbc implements AdminHandler {
             admin.setAdminName(resultSet.getString("adminName"));
             admin.setPassword(resultSet.getString("password"));
             admin.setEmail(resultSet.getString("email"));
-            try {
-                admin.setAvatar(new URL(resultSet.getString("avatar")));
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
+            admin.setAvatar(resultSet.getString("avatar"));
             admin.setNumber(resultSet.getString("number"));
             return admin;
         }

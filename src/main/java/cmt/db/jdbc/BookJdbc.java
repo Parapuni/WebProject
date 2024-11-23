@@ -121,12 +121,8 @@ public class BookJdbc implements BookHandler {
                 book.setReleaseDate(resultSet.getDate("releaseDate"));
                 book.setStars(resultSet.getString("stars"));
                 book.setRating(resultSet.getDouble("rating"));
-            try {
-                book.setCoverImagine(new URL(resultSet.getString("coverImagine")));
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
-            book.setAuthors(resultSet.getString("authors"));
+                book.setCoverImagine(resultSet.getString("coverImagine"));
+                book.setAuthors(resultSet.getString("authors"));
                 book.setPublisher(resultSet.getString("publisher"));
                 book.setIntroduction(resultSet.getString("introduction"));
             return book;

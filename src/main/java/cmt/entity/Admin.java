@@ -20,7 +20,7 @@ public class Admin {
     @NotNull
     private String password;//登录密码
     private String number;//手机号码
-    private URL avatar;//头像，存储在服务器中，但是在数据库中只存放其URI
+    private String avatar;//头像，存储在服务器中，但是在数据库中只存放其URI
 
 
     /**
@@ -40,7 +40,7 @@ public class Admin {
      * @param number    手机号
      * @param avatar    头像的URL
      */
-    public Admin(long aid, String adminName, String email, String password, String number, URL avatar) {
+    public Admin(long aid, String adminName, String email, String password, String number, String avatar) {
         this.aid = aid;
         this.adminName = adminName;
         this.email = email;
@@ -89,11 +89,11 @@ public class Admin {
         this.number = number;
     }
 
-    public URL getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(URL avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 }

@@ -34,7 +34,7 @@ public class ItemJdbc implements ItemHandler {
             ps.setDate(2, item.getReleaseDate());
             ps.setString(3, Arrays.toString(item.getStars()));
             ps.setDouble(4, item.getRating());
-            ps.setString(5, item.getCoverImagine().toString());
+            ps.setString(5, item.getCoverImagine());
             return ps;
         }, keyHolder);
         return keyHolder.getKey().longValue();

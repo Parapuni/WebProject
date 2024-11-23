@@ -66,6 +66,7 @@ create table `Comment`
     `iid` bigint,
     `uid` bigint,
     cdate date        not null,
+    rating int        not null ,
     `content` varchar(255),
     primary key (uid, iid),
     foreign key (uid) references `User` (uid),
@@ -81,7 +82,7 @@ create table Category_Item
 );
 
 INSERT INTO `User` (`nickname`, `password`, `firstName`, `lastName`, `birthday`, `email`, `number`, `avatar`)
-            VALUES ('FuckGLP', '1', 'G', 'LP', '2000-02-29', 'Fuck@GLP.com', '123456789', 'https://www.baidu.com');
+            VALUES ('FuckGLP', '1', 'G', 'LP', '2000-02-29', 'Fuck@GLP.com', '123456789', 'UID1avatar.png');
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
 VALUES (1, '菊花香', '2024-11-23', '[0,0,0,0,0]', 8.0, 'https://www.baidu.com');
@@ -148,3 +149,5 @@ INSERT INTO Category_Item(iid,`name`)
             VALUES(7,'鬼畜');
 INSERT INTO Category_Item(iid,`name`)
             VALUES(7,'唯美');
+
+INSERT INTO Comment VALUES (1,1,'2020-02-28',4,'TETysgccuwuwudhwudhwu');

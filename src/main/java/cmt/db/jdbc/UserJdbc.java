@@ -56,7 +56,7 @@ public class UserJdbc implements UserHandler {
             ps.setString(5, user.getEmail());
             ps.setString(6, user.getNumber());
             ps.setDate(7, user.getBirthday());
-            ps.setString(8, user.getAvatar().toString());
+            ps.setString(8, user.getAvatar());
             return ps;
         }, keyHolder);
         user.setUid(keyHolder.getKey().longValue());
@@ -133,11 +133,7 @@ public class UserJdbc implements UserHandler {
         public User mapRow(ResultSet resultSet, int i) throws SQLException {
             User user = new User();
             user.setUid(resultSet.getLong("uid"));
-            try {
-                user.setAvatar(new URL(resultSet.getString("avatar")));
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
+            user.setAvatar(resultSet.getString("avatar"));
             user.setNickname(resultSet.getString("nickname"));
             user.setFirstName(resultSet.getString("firstName"));
             user.setLastName(resultSet.getString("lastName"));
