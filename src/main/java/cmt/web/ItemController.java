@@ -104,6 +104,7 @@ public class ItemController {
         comments = commentJdbc.findCommentsByItemId(iid, (page - 1) * PAGE_SIZE, PAGE_SIZE);
         model.addAttribute("comments", comments);
         model.addAttribute("currentPage", page);
+        model.addAttribute("category", category);
         model.addAttribute("totalPages", (int)Math.ceil((double)commentJdbc.countTotal() / PAGE_SIZE));
 
         return "itemReview";

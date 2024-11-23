@@ -69,11 +69,11 @@
 <div class="container mt-5">
   <!-- Item Header -->
   <div class="item-header">
-    <img src="${item.coverImage}" alt="${item.title}">
+    <img src="${item.coverImagine}" alt="${item.title}">
     <div class="item-info">
       <h1>${item.title}</h1>
       <p><strong>Release Date:</strong> <c:out value="${item.releaseDate}" /></p>
-      <p><strong>Categories:</strong>
+      <p><strong>Tags:</strong>
         <c:forEach var="category" items="${item.categories}">
           <span class="badge bg-secondary">${category}</span>
         </c:forEach>
@@ -94,13 +94,13 @@
 
   <!-- Review Editor -->
   <div class="editor-container">
-    <h3>Write Your Review</h3>
+    <h3>Write Your Comments</h3>
     <form action="<c:url value='/submit-review' />" method="post">
       <input type="hidden" name="iid" value="${item.iid}">
       <div id="editor" class="quill"></div>
       <textarea name="reviewContent" id="reviewContent" hidden></textarea>
       <input type="hidden" id="ratingInputHidden" name="rating" value="0">
-      <button type="submit" class="btn btn-primary submit-btn">Submit Review</button>
+      <button type="submit" class="btn btn-primary submit-btn">Submit Comment</button>
     </form>
   </div>
 </div>
