@@ -86,9 +86,9 @@
               <img src="<c:url value='/images/${item.coverImagine}' />" alt="${item.title}" class="card-img-top">
               <div class="card-body">
                 <h5><a href="<c:url value='/item-details?id=${item.iid}' />" class="text-dark">${item.title}</a></h5>
-                <p>${item.description}</p>
+                <p>${item.releaseDate}</p>
                 <!-- Display Rating -->
-                <div class="rating">${item.rating.toFixed(1)} / 5</div>
+                <div class="rating">${item.rating} / 5</div>
               </div>
             </div>
           </div>
