@@ -21,6 +21,7 @@ public abstract class Item {
     private URL coverImagine;//封面，存储在服务器中，数据库中只存储其URL
 
     public Item() {
+        this.stars = new int[5];
     }
 
     /**
