@@ -1,21 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="header.jsp" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>Welcome to the Reviews System</title>
+  <title>欢迎来到评论系统</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
       font-family: 'Roboto', sans-serif;
       background-color: #f4f4f4;
-      padding-bottom: 60px; /* 避免内容与页脚冲突 */
     }
-    .content-section .row {
-      margin-top: 20px;
-    }
+
     .section-header {
       font-size: 24px;
       font-weight: bold;
@@ -23,6 +19,7 @@
       position: relative;
       padding-bottom: 10px;
     }
+
     .section-header::after {
       content: '';
       position: absolute;
@@ -32,107 +29,158 @@
       height: 2px;
       background-color: #007bff;
     }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card p {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 5px;
+      font-weight: bold;
+    }
+
     .more-link {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      font-size: 16px;
+      font-size: 14px;
+      float: right;
       text-decoration: none;
       color: #007bff;
     }
-    .card {
-      text-align: center;
-      cursor: pointer; /* 鼠标悬停时显示手形指针 */
-    }
-    .card img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .book-section {
-      margin-bottom: 40px; /* 增加间距 */
+
+    .more-link:hover {
+      text-decoration: underline;
     }
 
-    .movie-section {
-      margin-bottom: 40px; /* 增加间距 */
+    .weekly-recommendation ul {
+      list-style: none;
+      padding: 0;
     }
-    .sidebar {
-      position: sticky;
-      top: 100px; /* 调整位置以适应头部导航 */
-      height: calc(100vh - 120px); /* 计算高度以防止覆盖页脚 */
-      overflow-y: auto; /* 添加滚动 */
-    }
-    .sidebar h3 {
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-    .list-group-item {
-      cursor: pointer;
+
+    .weekly-recommendation li {
+      margin-bottom: 5px;
     }
   </style>
 </head>
 <body>
-<div class="container mt-5">
+<div class="container mt-4">
   <div class="row">
-    <!-- Main Content -->
     <div class="col-md-9">
-      <!-- New Books Section -->
-      <div class="book-section">
-        <div class="section-header">New Books
-          <a href="<c:url value='/items?category=Books' />" class="more-link">More...</a>
+      <!-- 最新书籍 -->
+      <div class="section-header">
+        最新书籍
+        <a href="<c:url value='/items?category=Books' />" class="more-link">更多...</a>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card">
+            <img src="book1.jpg" alt="奶龙">
+            <p>奶龙娘</p>
+          </div>
         </div>
-        <div class="row">
-          <c:forEach items="${books}" var="book">
-            <div class="col-md-3">
-              <div class="card" onclick="location.href='<c:url value='/itemReview?type=book&id=${book.iid}' />'">
-                <img src="${book.coverImagine}" alt="${book.title}">
-              </div>
-            </div>
-          </c:forEach>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="book2.jpg" alt="书籍封面">
+            <p>书名代号2</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="book3.jpg" alt="书籍封面">
+            <p>书名代号3</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="book4.jpg" alt="书籍封面">
+            <p>书名代号4</p>
+          </div>
         </div>
       </div>
 
-      <!-- Now Showing Section -->
-      <div class="movie-section">
-      <div class="section-header">Now Showing
-        <a href="<c:url value='/items?category=Movies' />" class="more-link">More...</a>
+      <!-- 正在上映 -->
+      <div class="section-header">
+        正在上映
+        <a href="<c:url value='/items?category=Movies' />" class="more-link">更多...</a>
       </div>
       <div class="row">
-        <c:forEach items="${movies}" var="movie">
-          <div class="col-md-3">
-            <div class="card" onclick="location.href='<c:url value='/itemReview?type=movie&id=${movie.iid}' />'">
-              <img src="${movie.coverImagine}" alt="${movie.title}">
-            </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="movie1.jpg" alt="电影海报">
+            <p>电影代号1</p>
           </div>
-        </c:forEach>
-      </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="movie2.jpg" alt="电影海报">
+            <p>电影代号2</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="movie3.jpg" alt="电影海报">
+            <p>电影代号3</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="movie4.jpg" alt="电影海报">
+            <p>电影代号4</p>
+          </div>
+        </div>
       </div>
 
-      <!-- New Music Section -->
-      <div class="section-header">New Music
-        <a href="<c:url value='/items?category=Music' />" class="more-link">More...</a>
+      <!-- 最新音乐 -->
+      <div class="section-header">
+        最新音乐
+        <a href="<c:url value='/items?category=Music' />" class="more-link">更多...</a>
       </div>
       <div class="row">
-        <c:forEach items="${music}" var="track">
-          <div class="col-md-3">
-            <div class="card" onclick="location.href='<c:url value='/itemReview?type=music&id=${track.iid}' />'">
-              <img src="${track.coverImagine}" alt="${track.title}">
-            </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="music1.jpg" alt="音乐封面">
+            <p>音乐代号1</p>
           </div>
-        </c:forEach>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="music2.jpg" alt="音乐封面">
+            <p>音乐代号2</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="music3.jpg" alt="音乐封面">
+            <p>音乐代号3</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="music4.jpg" alt="音乐封面">
+            <p>音乐代号4</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Sidebar for Weekly Recommendations -->
-    <div class="col-md-3 sidebar">
-      <h3>This Week's Top Picks</h3>
-      <ul class="list-group">
-        <c:forEach items="${topPicks}" var="pick">
-          <li class="list-group-item" onclick="location.href='<c:url value='/itemReview?id=${pick.iid}' />'">
-              ${pick.title}
-          </li>
-        </c:forEach>
-      </ul>
+    <div class="col-md-3">
+      <h3>每周推荐</h3>
+      <div class="weekly-recommendation">
+        <ul>
+          <li>推荐1</li>
+          <li>推荐2</li>
+          <li>推荐3</li>
+          <li>推荐4</li>
+          <li>推荐5</li>
+          <li>推荐6</li>
+          <li>推荐7</li>
+          <li>推荐8</li>
+          <li>推荐9</li>
+          <li>推荐10</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
