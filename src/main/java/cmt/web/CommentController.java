@@ -79,7 +79,7 @@ public class CommentController {
         comment.setUserName(user.getNickname());
         comment.setItemTitle("Item Title Placeholder");
 
-        if(commentJdbc.findComment(user.getUid(), iid) != null){
+        if(commentJdbc.findComment(iid, user.getUid()) != null){
             model.addAttribute("error", "You have already submitted a review for this item.");
             return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
         }

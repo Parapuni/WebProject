@@ -84,7 +84,7 @@
         <c:forEach var="item" items="${items}">
           <div class="col-md-4">
             <div class="card">
-              <img src="<c:url value='/images/${item.coverImagine}' />" alt="${item.title}" class="card-img-top">
+              <img src="<c:url value='/imagines/${item.coverImagine}' />" alt="${item.title}" class="card-img-top">
               <div class="card-body">
                 <h5><a href="<c:url value='/item-details?id=${item.iid}&category=${category}' />" class="text-dark">${item.title}</a></h5>
                 <p>${item.releaseDate}</p>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="header.jsp" %>
+<%@ taglib uri="/WEB-INF/tld/csTag.tld" prefix="cs" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -120,8 +121,13 @@
   <div class="rate-section">
     <!-- Poster -->
     <div class="poster">
-      <img src="${item.coverImagine}" alt="${item.title}" class="img-fluid shadow-lg rounded">
+      <img src="<c:url value='/imagines/${item.coverImagine}' />" alt="${item.title}" class="img-fluid shadow-lg rounded">
       <div class="release-date">Release Date: ${item.releaseDate}</div>
+      <p><strong>Tags:</strong>
+        <c:forEach var="category" items="${item.categories}">
+          <span class="badge bg-secondary">${category}</span>
+        </c:forEach>
+      </p>
     </div>
 
     <!-- Rating Information -->
@@ -196,6 +202,7 @@
 
   <!-- Pagination -->
   <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+    <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="1"/>
     <ul class="pagination">
       <c:forEach var="i" begin="${start}" end="${end}">
         <li class="page-item ${i == currentPage ? 'active' : ''}">

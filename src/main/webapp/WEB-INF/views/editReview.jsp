@@ -106,7 +106,7 @@
 <div class="container mt-5">
   <!-- Item Header -->
   <div class="item-header">
-    <img src="${item.coverImagine}" alt="${item.title}">
+    <img src="<c:url value='/imagines/${item.coverImagine}' />" alt="${item.title}">
     <div class="item-info">
       <h1>${item.title}</h1>
       <p><strong>Release Date:</strong> <c:out value="${item.releaseDate}" /></p>

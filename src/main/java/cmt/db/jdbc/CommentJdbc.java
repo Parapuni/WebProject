@@ -56,10 +56,10 @@ public class CommentJdbc implements CommentHandler {
     }
 
     @Override
-    public Comment findComment(long uid, long iid) {
+    public Comment findComment(long iid, long uid) {
         Comment comment = null;
         try {
-            jdbcTemplate.queryForObject(SELECT_COMMENT, new CommentRowMapper(), uid, iid);
+            comment = jdbcTemplate.queryForObject(SELECT_COMMENT, new CommentRowMapper(), iid, uid);
         }catch (DataAccessException dae){
         }finally {
             return comment;

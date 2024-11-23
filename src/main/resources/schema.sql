@@ -94,7 +94,7 @@ INSERT INTO Category_Item(iid,`name`)
             VALUES(1,'唯美');
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-VALUES (2, '美女视频', '2023-11-23', '[0,0,0,0,0]', 10.0, 'IID1cover.jpg');
+VALUES (2, '美女视频', '2023-11-23', '[0,0,0,0,0]', 10.0, '1_OIP-C.jpg');
 INSERT INTO `Movie` (`iid`,`director`,`writers`,`cast`,`introduction`)
             VALUES(2,'kobe man!','glp','菊花,耳朵','这个很好看');
 INSERT INTO Category_Item(iid,`name`)
