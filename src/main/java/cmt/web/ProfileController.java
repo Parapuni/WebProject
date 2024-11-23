@@ -24,6 +24,16 @@ public class ProfileController {
     @Autowired
     private UserJdbc userJdbc;
 
+    @RequestMapping(value = "/edit-profile", method = GET)
+    public String showEditProfile(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", user);
+        return "edit-profile";
+    }
+
     @RequestMapping(value = "/update-profile", method = POST)
     public String processUpdateProfile(Model model, HttpSession session,
                                        @RequestParam("username") String username,
