@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tld/csTag.tld" prefix="cs" %>
 <%@ include file="header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,7 +96,6 @@
         </c:forEach>
       </div>
     </div>
-
     <!-- Pagination -->
     <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
       <ul class="pagination">
@@ -104,6 +104,7 @@
             <a class="page-link" href="<c:url value='/items?page=${i}&category=${category}' />">${i}</a>
           </li>
         </c:forEach>
+        <%--        <cs:page index="${currentPage}" pageNum="${totalPage}" category="${category}"/>--%>
       </ul>
     </nav>
 
