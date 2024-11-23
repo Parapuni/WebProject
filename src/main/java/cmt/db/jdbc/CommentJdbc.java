@@ -3,6 +3,7 @@ package cmt.db.jdbc;
 import cmt.db.api.CommentHandler;
 import cmt.entity.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -56,7 +57,13 @@ public class CommentJdbc implements CommentHandler {
 
     @Override
     public Comment findComment(long uid, long iid) {
-        return jdbcTemplate.queryForObject(SELECT_COMMENT,new CommentRowMapper(),uid,iid);
+        Comment comment = null;
+        try {
+            jdbcTemplate.queryForObject(SELECT_COMMENT, new CommentRowMapper(), uid, iid);
+        }catch (DataAccessException dae){
+        }finally {
+            return comment;
+        }
     }
 
     @Override
