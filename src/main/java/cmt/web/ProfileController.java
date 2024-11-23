@@ -35,6 +35,8 @@ public class ProfileController {
         }
         user.setNickname(username);
         user.setPassword(password);
+        user.setEmail(email);
+        System.out.println(user.getEmail()+"   "+user.getPassword());
         userJdbc.updateUser(user);
         model.addAttribute("user", user);
         return "profile";

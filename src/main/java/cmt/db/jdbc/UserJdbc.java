@@ -22,7 +22,7 @@ public class UserJdbc implements UserHandler {
 
     private final String INSERT_USER = "insert into User(nickname,firstName,lastName,`password`,email,`number`,birthday,avatar) values(?,?,?,?,?,?,?,?);";
     private final String DELETE_USER = "delete from User where uid = ?;";
-    private final String UPDATE_USER = "update User set uid = ?,nickname = ?,firstName = ?,lastname = ?,`password` = ?,email = ?,`number` = ?,birthday = ?,avatar = ? where uid = ?;";
+    private final String UPDATE_USER = "update User set nickname = ?,firstName = ?,lastname = ?,`password` = ?,email = ?,`number` = ?,birthday = ?,avatar = ? where uid = ?;";
     private final String SELECT_USER_BY_ID = "select * from User where uid = ?;";
     private final String SELECT_USER_BY_NAME_AND_PASSWORD = "select * from User where nickname = ? and `password` = ?;";
     private final String SELECT_USERS = "select * from User limit ? offset ?;";
@@ -76,7 +76,6 @@ public class UserJdbc implements UserHandler {
     @Override
     public void updateUser(User user) {
         jdbcTemplate.update(UPDATE_USER,
-                user.getUid(),
                 user.getNickname(),
                 user.getFirstName(),
                 user.getLastName(),
@@ -84,7 +83,8 @@ public class UserJdbc implements UserHandler {
                 user.getEmail(),
                 user.getNumber(),
                 user.getBirthday(),
-                user.getAvatar().toString());
+                user.getAvatar().toString(),
+                user.getUid());
     }
 
     /**

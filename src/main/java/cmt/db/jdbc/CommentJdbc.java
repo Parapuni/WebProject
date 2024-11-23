@@ -39,7 +39,7 @@ public class CommentJdbc implements CommentHandler {
 
     @Override
     public void updateCommentContent(long iid, long uid, String newContent) {
-        jdbcTemplate.update(UPDATE_COMMENT_CONTENT, iid, uid, newContent);
+        jdbcTemplate.update(UPDATE_COMMENT_CONTENT, newContent, iid, uid);
     }
 
     @Override

@@ -52,7 +52,7 @@ public class ItemJdbc implements ItemHandler {
      */
     @Override
     public void updateItem(Item item) {
-        jdbcTemplate.update(UPDATE_ITEM, item.getTitle(), item.getReleaseDate(), item.getStars(), item.getRating(), item.getCoverImagine());
+        jdbcTemplate.update(UPDATE_ITEM, item.getTitle(), item.getReleaseDate(), item.getStars(), item.getRating(), item.getCoverImagine(),item.getIid());
     }
 
     @Override
