@@ -50,14 +50,20 @@ public class ItemController {
             case "book":
                 books = bookJdbc.findBooks((page - 1) * PAGE_SIZE, PAGE_SIZE);
                 model.addAttribute("items", books);
+                model.addAttribute("currentPage", page);
+                model.addAttribute("totalPages", 2);
                 break;
             case "movie":
                 movies = movieJdbc.findMovies((page - 1) * PAGE_SIZE, PAGE_SIZE);
                 model.addAttribute("items", movies);
+                model.addAttribute("currentPage", page);
+                model.addAttribute("totalPages", 2);
                 break;
             case "music":
                 musics = musicJdbc.findMusics((page - 1) * PAGE_SIZE, PAGE_SIZE);
                 model.addAttribute("items", musics);
+                model.addAttribute("currentPage", page);
+                model.addAttribute("totalPages", 2);
                 break;
             default:
                 model.addAttribute("categoryName", "Unknown");

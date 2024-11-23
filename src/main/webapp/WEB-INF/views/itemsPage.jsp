@@ -96,13 +96,20 @@
       </div>
     </div>
 
+    <!-- Pagination -->
+    <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+      <ul class="pagination">
+        <c:forEach var="i" begin="1" end="${totalPages}">
+          <li class="page-item ${i == currentPage ? 'active' : ''}">
+            <a class="page-link" href="<c:url value='/items?page=${i}&category=${category}' />">${i}</a>
+          </li>
+        </c:forEach>
+      </ul>
+    </nav>
+
   </div>
 </div>
-<div>
-  <c:forEach var="i" begin="1" end="${totalPages}">
-    <a href="<c:url value='/items?page=${i}' />">${i}</a>
-  </c:forEach>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
