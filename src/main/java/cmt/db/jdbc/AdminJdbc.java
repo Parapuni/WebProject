@@ -9,6 +9,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +19,7 @@ import java.util.List;
 
 @Repository
 public class AdminJdbc implements AdminHandler {
-
+    private final String COUNT_TOTAL = "select COUNT(*) from Admin";
     private final String INSERT_ADMIN = "insert into Admin(`adminName`, `email`, `password`, `number`, `avatar`) values(?, ?, ?, ?, ?);";
     private final String DELETE_ADMIN = "delete from Admin where aid = ?;";
     private final String UPDATE_ADMIN = "update Admin set `adminName` = ?, `email` = ?, `password` = ?, `number` = ?, `avatar` = ? where aid = ?;";
@@ -33,6 +35,11 @@ public class AdminJdbc implements AdminHandler {
     }
 
     @Override
+    public int countTotal() {
+        return jdbcTemplate.queryForInt(COUNT_TOTAL);
+    }
+
+    @Override
     public void addAdmin(Admin admin) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -41,7 +48,7 @@ public class AdminJdbc implements AdminHandler {
             ps.setString(2, admin.getEmail());
             ps.setString(3, admin.getPassword());
             ps.setString(4, admin.getNumber());
-            ps.setString(5, admin.getAvatar() != null ? admin.getAvatar().toString() : null);
+            ps.setString(5, admin.getAvatar());
             return ps;
         }, keyHolder);
         admin.setAid((Long) keyHolder.getKey());
@@ -59,7 +66,7 @@ public class AdminJdbc implements AdminHandler {
                 admin.getEmail(),
                 admin.getPassword(),
                 admin.getNumber(),
-                admin.getAvatar() != null ? admin.getAvatar().toString() : null,
+                admin.getAvatar(),
                 admin.getAid());
     }
 
@@ -86,7 +93,7 @@ public class AdminJdbc implements AdminHandler {
             admin.setAdminName(resultSet.getString("adminName"));
             admin.setPassword(resultSet.getString("password"));
             admin.setEmail(resultSet.getString("email"));
-            admin.setAvatar(resultSet.getURL("avatar"));
+            admin.setAvatar(resultSet.getString("avatar"));
             admin.setNumber(resultSet.getString("number"));
             return admin;
         }

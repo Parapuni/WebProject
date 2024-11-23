@@ -9,6 +9,7 @@ import java.util.List;
  * Movie数据操作接口
  */
 public interface MovieHandler {
+    int countTotal();
     void addMovie(Movie movie);
 
     void removeMovie(long iid);

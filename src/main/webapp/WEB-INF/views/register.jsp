@@ -50,21 +50,48 @@
 <div class="container mt-5">
     <h2 class="text-center">Register</h2>
     <form action="register" method="POST">
+        <!-- 用户ID：不可编辑 -->
         <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <label for="uid">UID</label>
+            <input type="text" class="form-control" id="uid" name="uid" value="${generatedUserId}" readonly>
+        </div>
+        <!-- 必填字段 -->
+        <div class="form-group">
+            <label for="nickname">Nickname</label>
+            <input type="text" class="form-control" id="nickname" name="nickname" required>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="form-group">
+            <label for="number">Phone Number</label>
+            <input type="text" class="form-control" id="number" name="number" required>
+        </div>
+        <!-- 非必填字段 -->
+        <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" name="password">
         </div>
         <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+        </div>
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName">
+        </div>
+        <div class="form-group">
+            <label for="birthday">Birthday</label>
+            <input type="date" class="form-control" id="birthday" name="birthday">
+        </div>
+        <div class="form-group">
+            <label for="avatar">Avatar</label>
+            <input type="file" class="form-control-file" id="avatar" name="avatar">
         </div>
         <button type="submit" class="btn btn-primary btn-block">Register</button>
     </form>

@@ -9,6 +9,7 @@ import java.util.List;
  * Music数据操作接口
  */
 public interface MusicHandler {
+    int countTotal();
     void addMusic(Music music);
 
     void removeMusic(long iid);

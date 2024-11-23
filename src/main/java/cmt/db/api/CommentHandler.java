@@ -9,11 +9,12 @@ import java.util.List;
  * Comment数据操作接口
  */
 public interface CommentHandler {
+    int countTotal();
     void addComment(Comment comment);
 
     void removeComment(long iid, long uid);
 
-    void updateCommentContent(long iid, long uid, String newContent);
+    void updateCommentContent(long iid, long uid, String newContent, int newRating);
 
     List<Comment> findCommentsByItemId(long iid, int offset, int length);
 

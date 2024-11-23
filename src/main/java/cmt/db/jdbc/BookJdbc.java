@@ -2,10 +2,7 @@ package cmt.db.jdbc;
 
 import cmt.db.api.BookHandler;
 import cmt.entity.Book;
-import cmt.entity.Movie;
-import cmt.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -18,11 +15,11 @@ import java.util.List;
 
 @Repository
 public class BookJdbc implements BookHandler {
-
+    private final String COUNT_TOTAL = "select COUNT(*) from Book";
     private final String INSERT_BOOK = "insert into Book values(?,?,?,?)";
     private final String DELETE_BOOK = "delete from Book where iid = ?";
     private final String UPDATE_BOOK = "update Book set `authors` = ?,`publisher` = ?,`introduction` = ?  where iid = ?;";
-    private final String SELECT_BOOK_BY_ID = "select * from Book natural join item where iid = ?;";
+    private final String SELECT_BOOK_BY_ID = "select * from Book b natural join item i where b.iid = ?;";
     private final String SELECT_BOOKS = "select * from Book natural join item limit ? offset ?;";
     private final String SELECT_BOOKS_BY_CATEGORY = "select * from " +
             "(select b.* from Book b natural join Category_Item ci where ci.name in (?) limit ? offset ?) " +
@@ -39,6 +36,11 @@ public class BookJdbc implements BookHandler {
     @Autowired
     public BookJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public int countTotal() {
+        return jdbcTemplate.queryForInt(COUNT_TOTAL);
     }
 
     @Override
@@ -119,7 +121,7 @@ public class BookJdbc implements BookHandler {
                 book.setReleaseDate(resultSet.getDate("releaseDate"));
                 book.setStars(resultSet.getString("stars"));
                 book.setRating(resultSet.getDouble("rating"));
-                book.setCoverImagine(resultSet.getURL("coverImagine"));
+                book.setCoverImagine(resultSet.getString("coverImagine"));
                 book.setAuthors(resultSet.getString("authors"));
                 book.setPublisher(resultSet.getString("publisher"));
                 book.setIntroduction(resultSet.getString("introduction"));
