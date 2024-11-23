@@ -17,8 +17,8 @@ public class CommentJdbc implements CommentHandler {
     private final String INSERT_COMMENT = "insert into Comment(`iid`, `uid`,`cdate`, `content`) values(?, ?, ?, ?);";
     private final String DELETE_COMMENT = "delete from Comment where `iid` = ? and `uid` = ?;";
     private final String UPDATE_COMMENT_CONTENT = "update Comment set `content` = ? where iid = ? and uid = ?;";
-    private final String SELECT_COMMENTS_BY_ITEM_ID = "select c.*,u.nickname from Comment c natural join `User` u where c.iid = ? limit ? offset ?;";
-    private final String SELECT_COMMENTS_BY_USER_ID = "select c.*,u.nickname from Comment c natural join `User` u where c.uid = ? limit ? offset ?;";
+    private final String SELECT_COMMENTS_BY_ITEM_ID = "select c.*,u.nickname,i.title from Item i natural join Comment c natural join `User` u where c.iid = ? limit ? offset ?;";
+    private final String SELECT_COMMENTS_BY_USER_ID = "select c.*,u.nickname,i.tltle from Item i natural join Comment c natural join `User` u where c.uid = ? limit ? offset ?;";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -60,8 +60,9 @@ public class CommentJdbc implements CommentHandler {
             comment.setIid(resultSet.getLong("iid"));
             comment.setUid(resultSet.getLong("uid"));
             comment.setCdate(resultSet.getDate("cdate"));
-            //先Join表User
-            comment.setUname(resultSet.getString("nickname"));
+            //先Join表User和Item
+            comment.setUserName(resultSet.getString("nickname"));
+            comment.setItemTitle(resultSet.getString("title"));
             comment.setContent(resultSet.getString("content"));
             return comment;
         }

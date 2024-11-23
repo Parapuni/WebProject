@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #183b83; font-family: 'Arial', sans-serif;">
   <div class="container-fluid">
     <a class="navbar-brand" href="<c:url value='/' />">
-      <img src="src/main/resources/images/logo.png" alt="Logo" style="height: 40px;">
+      <img src="sre/main/resources/images/logo.png" alt="Logo" style="height: 40px;">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -25,6 +25,7 @@
             <li class="nav-item"><a class="nav-link" href="<c:url value='/register' />">注册</a></li>
           </c:when>
           <c:otherwise>
+            <li class="nav-item"><a class="nav-link" href="<c:url value='/profile' />">个人信息</a></li>
             <li class="nav-item"><a class="nav-link" href="<c:url value='/logout' />">退出</a></li>
           </c:otherwise>
         </c:choose>
