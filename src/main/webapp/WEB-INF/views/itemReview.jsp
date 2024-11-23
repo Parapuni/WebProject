@@ -127,15 +127,15 @@
   <!-- User Reviews Section -->
   <div class="reviews-section">
     <h3>User Reviews</h3>
-    <c:forEach items="${item.reviews}" var="review">
+    <c:forEach items="${item.reviews}" var="comment">
       <div class="review">
-        <p><strong>${review.username}</strong></p>
+        <p><strong>${comment.username}</strong></p>
         <div class="review-rating">
-          <c:forEach var="star" begin="1" end="${review.rating}">
+          <c:forEach var="star" begin="1" end="${comment.rating}">
             ★
           </c:forEach>
         </div>
-        <p>${review.comment}</p>
+        <p>${comment.comment}</p>
       </div>
     </c:forEach>
   </div>

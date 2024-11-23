@@ -14,15 +14,15 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="review" items="${reviews}">
+    <c:forEach var="comment" items="${reviews}">
       <tr>
-        <td>${review.reviewerName}</td>
-        <td>${review.contentTitle}</td>
-        <td>${review.rating}</td>
-        <td>${review.text}</td>
+        <td>${comment.reviewerName}</td>
+        <td>${comment.contentTitle}</td>
+        <td>${comment.rating}</td>
+        <td>${comment.text}</td>
         <td>
-          <a href="edit-review?id=${review.id}" class="btn btn-warning btn-sm">Edit</a>
-          <a href="delete-review?id=${review.id}" class="btn btn-danger btn-sm">Delete</a>
+          <a href="edit-review?id=${comment.id}" class="btn btn-warning btn-sm">Edit</a>
+          <a href="delete-review?id=${comment.id}" class="btn btn-danger btn-sm">Delete</a>
         </td>
       </tr>
     </c:forEach>

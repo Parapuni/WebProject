@@ -27,11 +27,11 @@
       </tr>
       </thead>
       <tbody>
-      <c:forEach var="review" items="${reviews}">
+      <c:forEach var="comment" items="${reviews}">
         <tr>
-          <td>${review.title}</td>
-          <td>${review.text}</td>
-          <td>${review.rating}</td>
+          <td>${comment.title}</td>
+          <td>${comment.text}</td>
+          <td>${comment.rating}</td>
         </tr>
       </c:forEach>
       </tbody>

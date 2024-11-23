@@ -98,11 +98,11 @@
 
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <div>
   <c:forEach var="i" begin="1" end="${totalPages}">
     <a href="<c:url value='/items?page=${i}' />">${i}</a>
   </c:forEach>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

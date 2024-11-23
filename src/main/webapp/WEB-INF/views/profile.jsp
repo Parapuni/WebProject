@@ -107,19 +107,19 @@
     <!-- Right Content -->
     <div class="col-md-9">
       <div class="reviews-section">
-        <h3>My Reviews</h3>
-        <c:forEach var="review" items="${reviews}">
+        <h3>My Comments</h3>
+        <c:forEach var="comment" items="${reviews}">
           <div class="review-item">
-            <div class="review-title">${review.title}</div>
-            <div>${review.content}</div>
+            <div class="review-title">${comment.title}</div>
+            <div>${comment.content}</div>
             <div class="review-actions">
-              <a href="<c:url value='/edit-review?id=${review.id}' />">Edit</a>
-              <a href="<c:url value='/delete-review?id=${review.id}' />" class="text-danger">Delete</a>
+              <a href="<c:url value='/edit-review?id=${comment.id}' />">Edit</a>
+              <a href="<c:url value='/delete-review?id=${comment.id}' />" class="text-danger">Delete</a>
             </div>
           </div>
         </c:forEach>
         <c:if test="${empty reviews}">
-          <p class="text-muted">You have not written any reviews yet.</p>
+          <p class="text-muted">You have not written any comments yet.</p>
         </c:if>
       </div>
     </div>
