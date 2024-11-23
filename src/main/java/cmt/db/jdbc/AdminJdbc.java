@@ -19,7 +19,7 @@ import java.util.List;
 
 @Repository
 public class AdminJdbc implements AdminHandler {
-
+    private final String COUNT_TOTAL = "select COUNT(*) from Admin";
     private final String INSERT_ADMIN = "insert into Admin(`adminName`, `email`, `password`, `number`, `avatar`) values(?, ?, ?, ?, ?);";
     private final String DELETE_ADMIN = "delete from Admin where aid = ?;";
     private final String UPDATE_ADMIN = "update Admin set `adminName` = ?, `email` = ?, `password` = ?, `number` = ?, `avatar` = ? where aid = ?;";
@@ -32,6 +32,11 @@ public class AdminJdbc implements AdminHandler {
     @Autowired
     public AdminJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public int countTotal() {
+        return jdbcTemplate.queryForInt(COUNT_TOTAL);
     }
 
     @Override

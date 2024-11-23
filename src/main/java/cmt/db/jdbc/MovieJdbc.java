@@ -15,10 +15,10 @@ import java.util.List;
 
 @Repository
 public class MovieJdbc implements MovieHandler {
-
+    private final String COUNT_TOTAL = "select COUNT(*) from Movie";
     private final String INSERT_MOVIE = "insert into Movie values(?,?,?,?,?)";
     private final String DELETE_MOVIE = "delete from Movie where iid = ?";
-    private final String SELECT_MOVIE_BY_ID = "select * from Movie natural join Item where iid = ?";
+    private final String SELECT_MOVIE_BY_ID = "select * from Movie m natural join Item i where m.iid = ?";
     private final String SELECT_MOVIES = "select * from Movie natural join Item limit ? offset ?";
     private final String SELECT_MOVIES_BY_CATEGORY = "select * from " +
             "(select m.* from Movie m natural join Category_Item ci where ci.name in (?) limit ? offset ?) " +
@@ -37,6 +37,11 @@ public class MovieJdbc implements MovieHandler {
     @Autowired
     public MovieJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public int countTotal() {
+        return jdbcTemplate.queryForInt(COUNT_TOTAL);
     }
 
     @Override

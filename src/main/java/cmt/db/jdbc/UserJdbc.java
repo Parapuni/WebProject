@@ -19,7 +19,7 @@ import java.util.List;
 
 @Repository
 public class UserJdbc implements UserHandler {
-
+    private final String COUNT_TOTAL = "select COUNT(*) from User";
     private final String INSERT_USER = "insert into User(nickname,firstName,lastName,`password`,email,`number`,birthday,avatar) values(?,?,?,?,?,?,?,?);";
     private final String DELETE_USER = "delete from User where uid = ?;";
     private final String UPDATE_USER = "update User set nickname = ?,firstName = ?,lastname = ?,`password` = ?,email = ?,`number` = ?,birthday = ?,avatar = ? where uid = ?;";
@@ -31,6 +31,11 @@ public class UserJdbc implements UserHandler {
     @Autowired
     public UserJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public int countTotal() {
+        return jdbcTemplate.queryForInt(COUNT_TOTAL);
     }
 
     /**
@@ -143,7 +148,4 @@ public class UserJdbc implements UserHandler {
             return user;
         }
     }
-
-    // TODO: 2024/11/20 0020 未实现的方法
-    //检查顺序，检查url
 }

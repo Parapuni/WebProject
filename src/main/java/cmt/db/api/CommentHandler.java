@@ -9,6 +9,7 @@ import java.util.List;
  * Comment数据操作接口
  */
 public interface CommentHandler {
+    int countTotal();
     void addComment(Comment comment);
 
     void removeComment(long iid, long uid);

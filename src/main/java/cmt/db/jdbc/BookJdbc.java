@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 public class BookJdbc implements BookHandler {
-
+    private final String COUNT_TOTAL = "select COUNT(*) from Book";
     private final String INSERT_BOOK = "insert into Book values(?,?,?,?)";
     private final String DELETE_BOOK = "delete from Book where iid = ?";
     private final String UPDATE_BOOK = "update Book set `authors` = ?,`publisher` = ?,`introduction` = ?  where iid = ?;";
@@ -36,6 +36,11 @@ public class BookJdbc implements BookHandler {
     @Autowired
     public BookJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public int countTotal() {
+        return jdbcTemplate.queryForInt(COUNT_TOTAL);
     }
 
     @Override
