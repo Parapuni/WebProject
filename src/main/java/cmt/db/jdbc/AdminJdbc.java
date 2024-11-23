@@ -3,6 +3,7 @@ package cmt.db.jdbc;
 import cmt.db.api.AdminHandler;
 import cmt.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -72,12 +73,26 @@ public class AdminJdbc implements AdminHandler {
 
     @Override
     public Admin findAdminById(long id) {
-        return jdbcTemplate.queryForObject(SELECT_ADMIN_BY_ID, new AdminRowMapper(), id);
+        Admin admin = null;
+        try{
+            jdbcTemplate.queryForObject(SELECT_ADMIN_BY_ID, new AdminRowMapper(), id);
+        }catch (DataAccessException dae){
+
+        }finally {
+            return  admin;
+        }
     }
 
     @Override
     public Admin findAdminByNameAndPassword(String adminName, String password) {
-        return jdbcTemplate.queryForObject(SELECT_ADMIN_BY_NAME_AND_PASSWORD, new AdminRowMapper(), adminName, password);
+        Admin admin = null;
+        try{
+            admin = jdbcTemplate.queryForObject(SELECT_ADMIN_BY_NAME_AND_PASSWORD, new AdminRowMapper(), adminName, password);
+        }catch (DataAccessException dae){
+
+        }finally {
+            return admin;
+        }
     }
 
     @Override

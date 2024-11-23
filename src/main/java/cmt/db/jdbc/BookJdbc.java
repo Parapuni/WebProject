@@ -3,6 +3,7 @@ package cmt.db.jdbc;
 import cmt.db.api.BookHandler;
 import cmt.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -71,9 +72,14 @@ public class BookJdbc implements BookHandler {
 
     @Override
     public Book findBookById(long iid) {
-        Book book = jdbcTemplate.queryForObject(SELECT_BOOK_BY_ID,new BookRowMapper(),iid);
-        categoryJdbc.setCategory(book);
-        return book;
+        Book book = null;
+        try {
+            book = jdbcTemplate.queryForObject(SELECT_BOOK_BY_ID, new BookRowMapper(), iid);
+            categoryJdbc.setCategory(book);
+        }catch (DataAccessException dae) {
+        }finally {
+            return book;
+        }
     }
 
     @Override

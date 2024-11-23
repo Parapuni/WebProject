@@ -3,6 +3,7 @@ package cmt.db.jdbc;
 import cmt.db.api.MusicHandler;
 import cmt.entity.Music;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -74,9 +75,14 @@ public class MusicJdbc implements MusicHandler {
 
     @Override
     public Music findMusicById(long iid) {
-        Music music = jdbcTemplate.queryForObject(SELECT_MUSIC_BY_ID,new MusicRowMapper(),iid);
-        categoryJdbc.setCategory(music);
-        return music;
+        Music music = null;
+        try {
+            music = jdbcTemplate.queryForObject(SELECT_MUSIC_BY_ID, new MusicRowMapper(), iid);
+            categoryJdbc.setCategory(music);
+        }catch (DataAccessException dae){
+        }finally {
+            return music;
+        }
     }
 
     @Override

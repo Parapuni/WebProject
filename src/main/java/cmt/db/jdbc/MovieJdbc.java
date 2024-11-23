@@ -2,7 +2,9 @@ package cmt.db.jdbc;
 
 import cmt.db.api.MovieHandler;
 import cmt.entity.Movie;
+import cmt.entity.Music;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -72,9 +74,14 @@ public class MovieJdbc implements MovieHandler {
 
     @Override
     public Movie findMovieById(long iid) {
-        Movie movie = jdbcTemplate.queryForObject(SELECT_MOVIE_BY_ID, new MovieRowMapper(), iid);
-        categoryJdbc.setCategory(movie);
-        return movie;
+        Movie movie = null;
+        try {
+            movie = jdbcTemplate.queryForObject(SELECT_MOVIE_BY_ID, new MovieRowMapper(), iid);
+            categoryJdbc.setCategory(movie);
+        }catch (DataAccessException dae){
+        }finally {
+            return movie;
+        }
     }
 
     @Override

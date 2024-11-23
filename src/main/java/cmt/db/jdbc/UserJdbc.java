@@ -3,6 +3,7 @@ package cmt.db.jdbc;
 import cmt.db.api.UserHandler;
 import cmt.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -100,7 +101,13 @@ public class UserJdbc implements UserHandler {
      */
     @Override
     public User findUserById(long uid) {
-        return jdbcTemplate.queryForObject(SELECT_USER_BY_ID, new UserRowMapper(), uid);
+        User user = null;
+        try {
+            user = jdbcTemplate.queryForObject(SELECT_USER_BY_ID, new UserRowMapper(), uid);
+        }catch (DataAccessException dae){
+        }finally {
+            return user;
+        }
     }
 
     /**
@@ -112,7 +119,13 @@ public class UserJdbc implements UserHandler {
      */
     @Override
     public User findUserByNameAndPassword(String nickname, String password) {
-        return jdbcTemplate.queryForObject(SELECT_USER_BY_NAME_AND_PASSWORD, new UserRowMapper(), nickname, password);
+        User user = null;
+        try {
+            user = jdbcTemplate.queryForObject(SELECT_USER_BY_NAME_AND_PASSWORD, new UserRowMapper(), nickname, password);
+        }catch (DataAccessException dae){
+        }finally {
+            return user;
+        }
     }
 
     /**
