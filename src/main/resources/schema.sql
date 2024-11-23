@@ -65,7 +65,6 @@ create table `Comment`
 (
     `iid` bigint,
     `uid` bigint,
-    uname varchar(30) not null,
     cdate date        not null,
     `content` varchar(255),
     primary key (uid, iid),

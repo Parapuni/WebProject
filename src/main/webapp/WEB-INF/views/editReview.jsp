@@ -96,7 +96,7 @@
   <div class="editor-container">
     <h3>Write Your Comments</h3>
     <form action="<c:url value='/submit-review' />" method="post">
-      <input type="hidden" name="iid" value="${item.iid}">
+      <input type="hidden" name="id" value="${item.iid}">
       <div id="editor" class="quill"></div>
       <textarea name="reviewContent" id="reviewContent" hidden></textarea>
       <input type="hidden" id="ratingInputHidden" name="rating" value="0">
