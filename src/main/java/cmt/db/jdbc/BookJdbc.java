@@ -20,7 +20,7 @@ public class BookJdbc implements BookHandler {
     private final String DELETE_BOOK = "delete from Book where iid = ?";
     private final String UPDATE_BOOK = "update Book set `authors` = ?,`publisher` = ?,`introduction` = ?  where iid = ?;";
     private final String SELECT_BOOK_BY_ID = "select * from Book b natural join item i where b.iid = ?;";
-    private final String SELECT_BOOKS = "select * from Book natural join item limit ? offset ?;";
+    private final String SELECT_BOOKS = "select * from Book m natural join item i order by i.releaseDate desc limit ? offset ?;";
     private final String SELECT_BOOKS_BY_CATEGORY = "select * from " +
             "(select b.* from Book b natural join Category_Item ci where ci.name in (?) limit ? offset ?) " +
             "as cb natural join Item i";
