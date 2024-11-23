@@ -94,7 +94,7 @@ INSERT INTO Category_Item(iid,`name`)
             VALUES(1,'唯美');
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-VALUES (2, '美女视频', '2023-11-23', '[0,0,0,0,0]', 10.0, 'https://www.baidu.com');
+VALUES (2, '美女视频', '2023-11-23', '[0,0,0,0,0]', 10.0, 'IID1cover.jpg');
 INSERT INTO `Movie` (`iid`,`director`,`writers`,`cast`,`introduction`)
             VALUES(2,'kobe man!','glp','菊花,耳朵','这个很好看');
 INSERT INTO Category_Item(iid,`name`)
@@ -114,7 +114,7 @@ INSERT INTO Category_Item(iid,`name`)
             VALUES(3,'健康');
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-VALUES (4, '菊花香', '2024-11-23', '[0,0,0,0,0]', 8.0, 'https://www.baidu.com');
+VALUES (4, '菊花香', '2024-11-20', '[0,0,0,0,0]', 8.0, 'IID1cover.jpg');
 INSERT INTO `Music` (`iid`,`artists`,`lyrics`,`album`)
             VALUES(4,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
 INSERT INTO Category_Item(iid,`name`)
@@ -124,7 +124,7 @@ INSERT INTO Category_Item(iid,`name`)
 
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-VALUES (5, '菊花香', '2024-11-23', '[0,0,0,0,0]', 8.0, 'https://www.baidu.com');
+VALUES (5, '菊花香', '2024-11-23', '[0,0,0,0,0]', 8.0, 'IID1cover.jpg');
 INSERT INTO `Music` (`iid`,`artists`,`lyrics`,`album`)
             VALUES(5,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
 INSERT INTO Category_Item(iid,`name`)
@@ -133,7 +133,7 @@ INSERT INTO Category_Item(iid,`name`)
             VALUES(5,'唯美');
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-VALUES (6, '菊花香', '2024-11-23', '[0,0,0,0,0]', 8.0, 'https://www.baidu.com');
+VALUES (6, '菊花香', '2024-11-25', '[0,0,0,0,0]', 8.0, 'IID1cover.jpg');
 INSERT INTO `Music` (`iid`,`artists`,`lyrics`,`album`)
             VALUES(6,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
 INSERT INTO Category_Item(iid,`name`)

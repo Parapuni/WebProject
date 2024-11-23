@@ -20,7 +20,7 @@ public class MusicJdbc implements MusicHandler {
     private final String DELETE_MUSIC = "delete from Music where iid = ?";
     private final String UPDATE_MUSIC = "update Music set `authors` = ?,`publisher` = ?,`introduction` = ?  where iid = ?;";
     private final String SELECT_MUSIC_BY_ID = "select * from Music m natural join item i where m.iid = ?;";
-    private final String SELECT_MUSICS = "select * from Music m natural join item i limit ? offset ?;";
+    private final String SELECT_MUSICS = "select * from Music m natural join item i limit ? offset ? ;";
     private final String SELECT_MUSICS_BY_CATEGORY = "select * from " +
             "(select m.* from Music m natural join Category_Item ci where ci.name in (?) limit ? offset ?) " +
             "as cm natural join Item i";
