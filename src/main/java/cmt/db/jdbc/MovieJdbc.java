@@ -129,11 +129,7 @@ public class MovieJdbc implements MovieHandler {
             movie.setReleaseDate(resultSet.getDate("releaseDate"));
             movie.setStars(resultSet.getString("stars"));
             movie.setRating(resultSet.getDouble("rating"));
-            try {
-                movie.setCoverImagine(new URL(resultSet.getString("coverImagine")));
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
+            movie.setCoverImagine(resultSet.getString("coverImagine"));
             movie.setDirector(resultSet.getString("director"));
             movie.setWriters(resultSet.getString("writers"));
             movie.setCast(resultSet.getString("cast"));

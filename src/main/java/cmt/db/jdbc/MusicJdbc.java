@@ -126,11 +126,7 @@ public class MusicJdbc implements MusicHandler {
             music.setReleaseDate(resultSet.getDate("releaseDate"));
             music.setStars(resultSet.getString("stars"));
             music.setRating(resultSet.getDouble("rating"));
-            try {
-                music.setCoverImagine(new URL(resultSet.getString("coverImagine")));
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
+            music.setCoverImagine(resultSet.getString("coverImagine"));
             music.setArtists(resultSet.getString("artists"));
             music.setLyrics(resultSet.getString("lyrics"));
             music.setAlbum(resultSet.getString("album"));

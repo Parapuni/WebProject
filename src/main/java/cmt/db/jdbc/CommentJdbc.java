@@ -14,9 +14,9 @@ import java.util.List;
 @Repository
 public class CommentJdbc implements CommentHandler {
     private final String COUNT_TOTAL = "select COUNT(*) from Comment";
-    private final String INSERT_COMMENT = "insert into Comment(`iid`, `uid`,`cdate`, `content`) values(?, ?, ?, ?);";
+    private final String INSERT_COMMENT = "insert into Comment(`iid`, `uid`,`cdate`, `content`,rating) values(?, ?, ?, ?,?);";
     private final String DELETE_COMMENT = "delete from Comment where `iid` = ? and `uid` = ?;";
-    private final String UPDATE_COMMENT_CONTENT = "update Comment set `content` = ? where iid = ? and uid = ?;";
+    private final String UPDATE_COMMENT_CONTENT = "update Comment set `content` = ?,rating = ? where iid = ? and uid = ?;";
     private final String SELECT_COMMENTS_BY_ITEM_ID = "select c.*,u.nickname,i.title from Item i natural join Comment c natural join `User` u where c.iid = ? limit ? offset ?;";
     private final String SELECT_COMMENTS_BY_USER_ID = "select c.*,u.nickname,i.tltle from Item i natural join Comment c natural join `User` u where c.uid = ? limit ? offset ?;";
 
@@ -34,7 +34,7 @@ public class CommentJdbc implements CommentHandler {
 
     @Override
     public void addComment(Comment comment) {
-        jdbcTemplate.update(INSERT_COMMENT, comment.getIid(), comment.getUid(), comment.getCdate(), comment.getContent());
+        jdbcTemplate.update(INSERT_COMMENT, comment.getIid(), comment.getUid(), comment.getCdate(), comment.getContent(), comment.getRating());
     }
 
     @Override
@@ -43,8 +43,8 @@ public class CommentJdbc implements CommentHandler {
     }
 
     @Override
-    public void updateCommentContent(long iid, long uid, String newContent) {
-        jdbcTemplate.update(UPDATE_COMMENT_CONTENT, newContent, iid, uid);
+    public void updateCommentContent(long iid, long uid, String newContent, int newRating) {
+        jdbcTemplate.update(UPDATE_COMMENT_CONTENT, newContent,newRating, iid, uid);
     }
 
     @Override
@@ -68,6 +68,7 @@ public class CommentJdbc implements CommentHandler {
             //先Join表User和Item
             comment.setUserName(resultSet.getString("nickname"));
             comment.setItemTitle(resultSet.getString("title"));
+            comment.setRating(resultSet.getInt("rating"));
             comment.setContent(resultSet.getString("content"));
             return comment;
         }

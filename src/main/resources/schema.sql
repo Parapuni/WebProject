@@ -65,8 +65,8 @@ create table `Comment`
 (
     `iid` bigint,
     `uid` bigint,
-    uname varchar(30) not null,
     cdate date        not null,
+    rating int        not null ,
     `content` varchar(255),
     primary key (uid, iid),
     foreign key (uid) references `User` (uid),
@@ -149,3 +149,5 @@ INSERT INTO Category_Item(iid,`name`)
             VALUES(7,'鬼畜');
 INSERT INTO Category_Item(iid,`name`)
             VALUES(7,'唯美');
+
+INSERT INTO Comment VALUES (1,1,'2020-02-28',4,'TETysgccuwuwudhwudhwu');
