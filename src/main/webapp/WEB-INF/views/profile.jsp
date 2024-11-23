@@ -91,7 +91,7 @@
     <div class="col-md-3">
       <div class="sidebar">
         <!-- User Avatar -->
-        <img src="${sessionScope.user.avatar}" alt="User Avatar" id="userAvatar" data-bs-toggle="modal" data-bs-target="#changeAvatarModal" style="cursor: pointer;">
+        <img src="<c:url value="/imagines/${sessionScope.user.avatar}" />" alt="User Avatar" id="userAvatar" data-bs-toggle="modal" data-bs-target="#changeAvatarModal" style="cursor: pointer;">
         <hr>
         <!-- User Information -->
         <div class="user-info">

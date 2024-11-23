@@ -27,7 +27,7 @@ public class Music extends Item {
      * @param album 专辑
      * @param lyrics 歌词
      */
-    public Music(long iid, String title, Date releaseDate, int[] stars, List<String> categories, double rating, URL coverImagine, String artists, String album, String lyrics) {
+    public Music(long iid, String title, Date releaseDate, int[] stars, List<String> categories, double rating, String coverImagine, String artists, String album, String lyrics) {
         super(iid, title, releaseDate, stars, categories, rating, coverImagine);
         this.artists = artists;
         this.album = album;

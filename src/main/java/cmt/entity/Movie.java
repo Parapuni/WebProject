@@ -29,7 +29,7 @@ public class Movie extends Item {
      * @param cast 演员阵容
      * @param intoduction 简介
      */
-    public Movie(long iid, String title, Date releaseDate, int[] stars, List<String> categories, double rating, URL coverImagine, String director, String writers, String cast, String intoduction) {
+    public Movie(long iid, String title, Date releaseDate, int[] stars, List<String> categories, double rating, String coverImagine, String director, String writers, String cast, String intoduction) {
         super(iid, title, releaseDate, stars, categories, rating, coverImagine);
         this.director = director;
         this.writers = writers;
