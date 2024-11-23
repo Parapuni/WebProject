@@ -117,7 +117,7 @@
         </c:when>
         <c:otherwise>
           <!-- If user is logged in -->
-          <a href="<c:url value='/editreview?itemId=${item.iid}' />" class="rate-button">Rate</a>
+          <a href="<c:url value='/editreview?id=${item.iid}&category=${category}' />" class="rate-button">Rate</a>
         </c:otherwise>
       </c:choose>
     </div>
