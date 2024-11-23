@@ -53,6 +53,7 @@ public class CommentController {
                 model.addAttribute("item", music);
                 break;
         }
+        session.setAttribute("category", category);
         return "editReview";
     }
 
@@ -73,14 +74,19 @@ public class CommentController {
         comment.setIid(iid);
         comment.setUid(user.getUid());
         comment.setCdate(Date.valueOf(LocalDate.now()));
+        comment.setRating(rating);
         comment.setContent(content);
         comment.setUserName(user.getNickname());
         comment.setItemTitle("Item Title Placeholder");
+
+        System.out.println("Rating: " + rating);
+        System.out.println("Content: " + content);
+        System.out.println("Item ID: " + iid);
 
         // 将评论保存到数据库
         commentJdbc.addComment(comment);
 
         // 重定向到该作品详情页
-        return "redirect:/item-details?id=" + iid + "&category=";
+        return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
     }
 }

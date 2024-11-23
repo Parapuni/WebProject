@@ -51,18 +51,55 @@
     }
 
     .editor-container {
-      margin-top: 30px;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .quill {
-      background-color: white;
-      border-radius: 8px;
-      min-height: 200px;
+    .editor-container h3 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .comment-form .form-group {
+      margin-bottom: 20px;
+    }
+
+    .comment-box {
+      width: 100%;
+      font-size: 16px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+      resize: none; /* 禁止拖动改变大小 */
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .comment-box:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+      outline: none;
     }
 
     .submit-btn {
-      margin-top: 20px;
+      background-color: #007bff;
+      border: none;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
     }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
   </style>
 </head>
 <body>
@@ -95,14 +132,16 @@
   <!-- Review Editor -->
   <div class="editor-container">
     <h3>Write Your Comments</h3>
-    <form action="<c:url value='/submit-review' />" method="post">
+    <form action="submit-review" method="post" class="comment-form">
       <input type="hidden" name="id" value="${item.iid}">
-      <div id="editor" class="quill"></div>
-      <textarea name="reviewContent" id="reviewContent" hidden></textarea>
+      <div class="form-group">
+        <textarea class="form-control comment-box" name="reviewContent" id="reviewContent" rows="5" placeholder="Write your review here..."></textarea>
+      </div>
       <input type="hidden" id="ratingInputHidden" name="rating" value="0">
       <button type="submit" class="btn btn-primary submit-btn">Submit Comment</button>
     </form>
   </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

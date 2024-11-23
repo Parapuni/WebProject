@@ -126,9 +126,12 @@
   <!-- User Reviews Section -->
   <div class="reviews-section">
     <h3>User Comments</h3>
+    <c:if test="${empty comments}">
+      <p class="text-muted">No comments yet. Be the first to review!</p>
+    </c:if>
     <c:forEach items="${comments}" var="comment">
       <div class="review">
-        <p><strong>${comment.username}</strong></p>
+        <p><strong>${comment.userName}</strong></p>
         <div class="review-rating">
           <c:forEach var="star" begin="1" end="${comment.rating}">
             ★
@@ -141,10 +144,11 @@
 
   <!-- Pagination -->
   <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+    <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="1"/>
     <ul class="pagination">
-      <c:forEach var="i" begin="1" end="${totalPages}">
+      <c:forEach var="i" begin="${start}" end="${end}">
         <li class="page-item ${i == currentPage ? 'active' : ''}">
-          <a class="page-link" href="<c:url value='/item-details?page=${i}&category=${category}' />">${i}</a>
+          <a class="page-link" href="<c:url value='/item-details?page=${i}&category=${category}&id=${item.iid}' />">${i}</a>
         </li>
       </c:forEach>
     </ul>
