@@ -85,67 +85,67 @@ INSERT INTO `User` (`nickname`, `password`, `firstName`, `lastName`, `birthday`,
             VALUES ('FuckGLP', '1', 'G', 'LP', '2000-02-29', 'Fuck@GLP.com', '123456789', 'https://www.baidu.com');
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-            VALUE(1,'菊花香',DATE('2024-11-23'),'[0,0,0,0,0]',8.0,'/imagines/book1.jpg');
+            VALUES(1,'菊花香','2024-11-23','[0,0,0,0,0]',8.0,'/imagines/book1.jpg');
 INSERT INTO `Music` (`iid`,`artists`,`lyrics`,`album`)
-            VALUE(1,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
+            VALUES(1,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(1,'鬼畜');
+            VALUES(1,'鬼畜');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(1,'唯美');
+            VALUES(1,'唯美');
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-            VALUE(2,'美女视频',DATE('2023-11-23'),'[0,0,0,0,0]',10.0,'/imagines/book1.jpg');
+            VALUES(2,'美女视频','2023-11-23','[0,0,0,0,0]',10.0,'/imagines/book1.jpg');
 INSERT INTO `Movie` (`iid`,`director`,`writers`,`cast`,`introduction`)
-            VALUE(2,'kobe man!','glp','菊花,耳朵','这个很好看');
+            VALUES(2,'kobe man!','glp','菊花,耳朵','这个很好看');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(2,'鬼畜');
+            VALUES(2,'鬼畜');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(2,'热血');
+            VALUES(2,'热血');
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-            VALUE(3,'奥特曼',DATE('1993-11-23'),'[0,0,0,0,0]',10.0,'/imagines/book1.jpg');
+            VALUES(3,'奥特曼','1993-11-23','[0,0,0,0,0]',10.0,'/imagines/book1.jpg');
 INSERT INTO `Book` (`iid`,`authors`,`publisher`,`introduction`)
-            VALUE(3,'kobe man!','glp er','这个很好看');
+            VALUES(3,'kobe man!','glp er','这个很好看');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(3,'唯美');
+            VALUES(3,'唯美');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(3,'热血');
+            VALUES(3,'热血');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(3,'健康');
+            VALUES(3,'健康');
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-            VALUE(4,'菊花香',DATE('2024-11-23'),'[0,0,0,0,0]',8.0,'/imagines/book1.jpg');
+            VALUES(4,'菊花香','2024-11-23','[0,0,0,0,0]',8.0,'/imagines/book1.jpg');
 INSERT INTO `Music` (`iid`,`artists`,`lyrics`,`album`)
-            VALUE(4,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
+            VALUES(4,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(4,'鬼畜');
+            VALUES(4,'鬼畜');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(4,'唯美');
+            VALUES(4,'唯美');
 
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-            VALUE(5,'菊花香',DATE('2024-11-23'),'[0,0,0,0,0]',8.0,'/imagines/book1.jpg');
+            VALUES(5,'菊花香','2024-11-23','[0,0,0,0,0]',8.0,'/imagines/book1.jpg');
 INSERT INTO `Music` (`iid`,`artists`,`lyrics`,`album`)
-            VALUE(5,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
+            VALUES(5,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(5,'鬼畜');
+            VALUES(5,'鬼畜');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(5,'唯美');
+            VALUES(5,'唯美');
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-            VALUE(6,'菊花香',DATE('2024-11-23'),'[0,0,0,0,0]',8.0,'/imagines/book1.jpg');
+            VALUES(6,'菊花香','2024-11-23','[0,0,0,0,0]',8.0,'/imagines/book1.jpg');
 INSERT INTO `Music` (`iid`,`artists`,`lyrics`,`album`)
-            VALUE(6,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
+            VALUES(6,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(6,'鬼畜');
+            VALUES(6,'鬼畜');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(6,'唯美');
+            VALUES(6,'唯美');
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-            VALUE(7,'菊花香',DATE('2024-11-23'),'[0,0,0,0,0]',8.0,'/imagines/book1.jpg');
+            VALUES(7,'菊花香','2024-11-23','[0,0,0,0,0]',8.0,'/imagines/book1.jpg');
 INSERT INTO `Music` (`iid`,`artists`,`lyrics`,`album`)
-            VALUE(7,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
+            VALUES(7,'jay zhou  man','菊花残，满地伤，你的菊花已泛黄','《菊花》');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(7,'鬼畜');
+            VALUES(7,'鬼畜');
 INSERT INTO Category_Item(iid,`name`)
-            VALUE(7,'唯美');
+            VALUES(7,'唯美');
