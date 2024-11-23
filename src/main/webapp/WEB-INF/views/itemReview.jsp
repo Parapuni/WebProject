@@ -154,8 +154,9 @@
           <c:set var="star" value="${6 - i}" />
           <div class="bar-container">
             <span>${star}★</span>
-            <div class="bar" style="width: ${item.rating}%;"></div>
-            <span>${item.rating}%</span>
+            <div class="bar" style="width: ${item.stars[star - 1] / item.totalRating * 100}%;"></div>
+            <span>${item.stars[star - 1] / item.totalRating * 100}%</span>
+            <h1>${item.totalRating}</h1>>
           </div>
         </c:forEach>
       </div>
