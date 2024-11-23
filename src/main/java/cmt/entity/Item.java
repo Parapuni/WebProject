@@ -21,7 +21,7 @@ public abstract class Item {
     private int totalRating;
     public Item() {
         this.stars = new int[5];
-        totalRating = 0;
+        totalRating = 1;
     }
 
     /**
@@ -43,14 +43,11 @@ public abstract class Item {
         this.categories = categories;
         this.rating = rating;
         this.coverImagine = coverImagine;
+        totalRating = 1;
     }
 
     public int getTotalRating() {
-        if(totalRating == 0)
-            return 1;
-        else {
-            return totalRating;
-        }
+       return totalRating;
     }
 
     public void setTotalRating(int totalRating) {
