@@ -99,12 +99,12 @@
     <!-- Pagination -->
     <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
       <ul class="pagination">
-        <c:forEach var="i" begin="1" end="${totalPages}">
+        <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="5"/>
+        <c:forEach var="i" begin="${start}" end="${end}">
           <li class="page-item ${i == currentPage ? 'active' : ''}">
             <a class="page-link" href="<c:url value='/items?page=${i}&category=${category}' />">${i}</a>
           </li>
         </c:forEach>
-        <%--        <cs:page index="${currentPage}" pageNum="${totalPage}" category="${category}"/>--%>
       </ul>
     </nav>
 
