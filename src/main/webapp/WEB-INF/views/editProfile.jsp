@@ -57,7 +57,7 @@
 <body>
 <div class="container">
   <h2>Edit Profile</h2>
-  <form action="<c:url value='/update-profile' />" method="post" enctype="multipart/form-data">
+  <form action="update-profile" method="post">
     <!-- Nickname -->
     <div class="mb-3">
       <label for="nickname" class="form-label">Nickname</label>

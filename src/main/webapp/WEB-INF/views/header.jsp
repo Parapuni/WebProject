@@ -10,8 +10,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Movies' />">电影</a></li>
-        <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Books' />">书籍</a></li>
+        <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Movie' />">电影</a></li>
+        <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Book' />">书籍</a></li>
         <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Music' />">音乐</a></li>
       </ul>
       <form class="d-flex" action="<c:url value='/search' />" method="get">

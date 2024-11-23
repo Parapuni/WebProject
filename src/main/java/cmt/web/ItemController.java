@@ -30,10 +30,16 @@ public class ItemController {
     private MovieJdbc movieJdbc;
     @Autowired
     private MusicJdbc musicJdbc;
+    @Autowired
+    private CommentJdbc commentJdbc;
 
     private List<Book> books = new ArrayList<Book>();
     private List<Movie> movies = new ArrayList<Movie>();
     private List<Music> musics = new ArrayList<Music>();
+    private List<Comment> comments = new ArrayList<Comment>();
+    private Book book = new Book();
+    private Movie movie = new Movie();
+    private Music music = new Music();
 
     @RequestMapping(value = "/items", method = GET)
     public String showItemsPage(@RequestParam(value = "category") String category,
@@ -41,25 +47,25 @@ public class ItemController {
                                 Model model) {
         model.addAttribute("category", category);
         List<String> categories = new ArrayList<String>();
-        categories.add("book");
-        categories.add("movie");
-        categories.add("music");
+        categories.add("Book");
+        categories.add("Movie");
+        categories.add("Music");
         model.addAttribute("categories", categories);
 
         switch (category){
-            case "book":
+            case "Book":
                 books = bookJdbc.findBooks((page - 1) * PAGE_SIZE, PAGE_SIZE);
                 model.addAttribute("items", books);
                 model.addAttribute("currentPage", page);
                 model.addAttribute("totalPages", (int)Math.ceil((double)bookJdbc.countTotal() / PAGE_SIZE));
                 break;
-            case "movie":
+            case "Movie":
                 movies = movieJdbc.findMovies((page - 1) * PAGE_SIZE, PAGE_SIZE);
                 model.addAttribute("items", movies);
                 model.addAttribute("currentPage", page);
                 model.addAttribute("totalPages", (int)Math.ceil((double)movieJdbc.countTotal() / PAGE_SIZE));
                 break;
-            case "music":
+            case "Music":
                 musics = musicJdbc.findMusics((page - 1) * PAGE_SIZE, PAGE_SIZE);
                 model.addAttribute("items", musics);
                 model.addAttribute("currentPage", page);
@@ -70,5 +76,36 @@ public class ItemController {
         }
 
         return "itemsPage";
+    }
+
+    @RequestMapping(value = "/item-details", method = GET)
+    public String showItemDetials(@RequestParam(value = "id")Integer iid,
+                                  @RequestParam(value = "category")String category,
+                                  @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                  Model model){
+        switch (category){
+            case "Book":
+                book = bookJdbc.findBookById(iid);
+                model.addAttribute("item", book);
+
+                break;
+            case "Movie":
+                movie = movieJdbc.findMovieById(iid);
+                model.addAttribute("item", movie);
+
+                break;
+            case "Music":
+                music = musicJdbc.findMusicById(iid);
+                model.addAttribute("item", music);
+                break;
+            default:
+                model.addAttribute("categoryName", "Unknown");
+        }
+        comments = commentJdbc.findCommentsByItemId(iid, (page - 1) * PAGE_SIZE, PAGE_SIZE);
+        model.addAttribute("comments", comments);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", (int)Math.ceil((double)commentJdbc.countTotal() / PAGE_SIZE));
+
+        return "itemReview";
     }
 }

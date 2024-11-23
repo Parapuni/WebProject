@@ -71,14 +71,14 @@
       <!-- 最新书籍 -->
       <div class="section-header">
         最新书籍
-        <a href="<c:url value='/items?category=Books' />" class="more-link">更多...</a>
+        <a href="<c:url value='/items?category=Book' />" class="more-link">更多...</a>
       </div>
       <div class="row">
         <div class="col-md-3">
           <div class="card">
             <img src="book1.jpg" alt="奶龙">
             <!-- 为 book1 添加超链接到 itemReview.jsp -->
-            <p><a href="<c:url value='/itemReview.jsp?itemId=book1' />">奶龙娘</a></p>
+            <p><a href="<c:url value='/item-details?id=1&' />">奶龙娘</a></p>
           </div>
         </div>
         <div class="col-md-3">
@@ -104,7 +104,7 @@
       <!-- 正在上映 -->
       <div class="section-header">
         正在上映
-        <a href="<c:url value='/items?category=Movies' />" class="more-link">更多...</a>
+        <a href="<c:url value='/items?category=Movie' />" class="more-link">更多...</a>
       </div>
       <div class="row">
         <div class="col-md-3">

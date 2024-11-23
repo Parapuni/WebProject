@@ -41,7 +41,8 @@ public class ProfileController {
                                        @RequestParam("email") String email,
                                        @RequestParam("firstName") String firstName,
                                        @RequestParam("lastName") String lastName,
-                                       @RequestParam("birthday")Date birthday) {
+                                       @RequestParam("birthday")Date birthday,
+                                       @RequestParam("number") String phone){
         User user = (User) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login";
@@ -52,6 +53,7 @@ public class ProfileController {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setBirthday(birthday);
+        user.setNumber(phone);
         userJdbc.updateUser(user);
         model.addAttribute("user", user);
         return "profile";

@@ -118,7 +118,7 @@
             </div>
           </div>
         </c:forEach>
-        <c:if test="${empty reviews}">
+        <c:if test="${empty comment}">
           <p class="text-muted">You have not written any comments yet.</p>
         </c:if>
       </div>
