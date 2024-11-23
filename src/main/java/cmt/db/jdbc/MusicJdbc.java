@@ -19,15 +19,15 @@ public class MusicJdbc implements MusicHandler {
     private final String INSERT_MUSIC = "insert into Music values(?,?,?,?)";
     private final String DELETE_MUSIC = "delete from Music where iid = ?";
     private final String UPDATE_MUSIC = "update Music set `authors` = ?,`publisher` = ?,`introduction` = ?  where iid = ?;";
-    private final String SELECT_MUSIC_BY_ID = "select * from Music natural join item where iid = ?;";
-    private final String SELECT_MUSICS = "select * from Music natural join item limit ? offset ?;";
+    private final String SELECT_MUSIC_BY_ID = "select * from Music m natural join item i where m.iid = ?;";
+    private final String SELECT_MUSICS = "select * from Music m natural join item i limit ? offset ?;";
     private final String SELECT_MUSICS_BY_CATEGORY = "select * from " +
             "(select m.* from Music m natural join Category_Item ci where ci.name in (?) limit ? offset ?) " +
             "as cm natural join Item i";
     private final String SELECT_MUSICS_BY_TITLE = "select * from Music m natural join Item i where i.title like ? limit ? offset ?";
     private final String SELECT_MUSICS_BY_ARTISTS = "select * from Music m natural join Item i where m.artists like ? limit ? offset ?";
     private final String SELECT_MUSICS_BY_ALBUM = "select * from Music m natural join Item i where m.album like ? limit ? offset ?";
-
+    private final String COUNT_TOTAL = "select COUNT(*) from Music";
 
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -37,6 +37,11 @@ public class MusicJdbc implements MusicHandler {
     @Autowired
     public MusicJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public int countTotal() {
+        return jdbcTemplate.queryForInt(COUNT_TOTAL);
     }
 
     @Override

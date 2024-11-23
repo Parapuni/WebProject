@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public class CommentJdbc implements CommentHandler {
-
+    private final String COUNT_TOTAL = "select COUNT(*) from Comment";
     private final String INSERT_COMMENT = "insert into Comment(`iid`, `uid`,`cdate`, `content`) values(?, ?, ?, ?);";
     private final String DELETE_COMMENT = "delete from Comment where `iid` = ? and `uid` = ?;";
     private final String UPDATE_COMMENT_CONTENT = "update Comment set `content` = ? where iid = ? and uid = ?;";
@@ -25,6 +25,11 @@ public class CommentJdbc implements CommentHandler {
     @Autowired
     public CommentJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public int countTotal() {
+        return jdbcTemplate.queryForInt(COUNT_TOTAL);
     }
 
     @Override

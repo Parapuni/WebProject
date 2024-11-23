@@ -8,6 +8,7 @@ import java.util.List;
  * User数据操作接口
  */
 public interface UserHandler {
+    int countTotal();
     /**
      * 添加一个User
      *
