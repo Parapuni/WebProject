@@ -78,7 +78,7 @@
           <div class="card">
             <img src="<c:url value="/imagines/IID1cover.jpg" />" alt="奶龙">
             <!-- 为 book1 添加超链接到 itemReview.jsp -->
-            <p><a href="<c:url value='/item-details?id=1&' />">奶龙娘</a></p>
+            <p><a href="<c:url value='/item-details?id=&' />">奶龙娘</a></p>
           </div>
         </div>
         <c:forEach var="book" items="${recentBooks}">

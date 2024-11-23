@@ -59,7 +59,7 @@ public class CommentJdbc implements CommentHandler {
     public Comment findComment(long uid, long iid) {
         Comment comment = null;
         try {
-            jdbcTemplate.queryForObject(SELECT_COMMENT, new CommentRowMapper(), uid, iid);
+            comment = jdbcTemplate.queryForObject(SELECT_COMMENT, new CommentRowMapper(), iid, uid);
         }catch (DataAccessException dae){
         }finally {
             return comment;
