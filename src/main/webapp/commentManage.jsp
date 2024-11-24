@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tld/csTag.tld" prefix="cs" %>
 <%@ include file="../../header.jsp" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -71,11 +70,10 @@
     </table>
 
     <!-- 分页 -->
-    <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
-        <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="5"/>
+    <nav aria-label="评论分页" class="mt-4">
         <ul class="pagination">
             <!-- 上一页 -->
-            <c:if test="${hasLast == true}">
+            <c:if test="${currentPage > 1}">
                 <li class="page-item">
                     <a class="page-link" href="<c:url value='/commentManage?page=${currentPage - 1}' />">&laquo;</a>
                 </li>
@@ -89,7 +87,7 @@
             </c:forEach>
 
             <!-- 下一页 -->
-            <c:if test="${hasNext == true}">
+            <c:if test="${currentPage < totalPages}">
                 <li class="page-item">
                     <a class="page-link" href="<c:url value='/commentManage?page=${currentPage + 1}' />">&raquo;</a>
                 </li>
