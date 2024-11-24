@@ -54,6 +54,7 @@
           </c:when>
           <c:otherwise>
             <li class="nav-item d-flex align-items-center">
+              <h5 style="font-style: oblique;color: white">${user.nickname}</h5>
               <a href="<c:url value='/profile' />" class="d-inline-block me-2">
                 <img src="<c:url value='/imagines/${user.avatar}' />" alt="Profile Picture" style="height: 50px; width: 50px; border-radius: 50%;">
               </a>

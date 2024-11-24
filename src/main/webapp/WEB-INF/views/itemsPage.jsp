@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tld/csTag.tld" prefix="cs" %>
-<%@ include file="header.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="banner.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,7 +90,7 @@
                 <h5><a href="<c:url value='/item-details?id=${item.iid}&category=${category}' />" class="text-dark">${item.title}</a></h5>
                 <p>${item.releaseDate}</p>
                 <!-- Display Rating -->
-                <div class="rating">${item.rating}</div>
+                <div class="rating"><fmt:formatNumber value="${item.rating}" pattern="#.0" type="number"/></div>
                 <cs:rating rating="${item.rating}"/>
               </div>
             </div>
