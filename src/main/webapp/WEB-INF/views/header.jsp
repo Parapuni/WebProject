@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #183b83; font-family: 'Arial', sans-serif;">
   <div class="container-fluid">
@@ -45,6 +46,13 @@
   </div>
 </nav>
 <style>
+  .fa-star {
+    color: #ddd; /* 灰色表示未选中 */
+  }
+  .fa-star.checked, .fa-star-half-alt.checked {
+    color: #ffc107; /* 金色表示选中 */
+  }
+
   .search-bar {
     height: 36px;
     font-size: 16px;
