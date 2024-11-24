@@ -3,6 +3,7 @@ package cmt.db.jdbc;
 import cmt.db.api.ItemHandler;
 import cmt.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -19,11 +20,55 @@ public class ItemJdbc implements ItemHandler {
     private final String UPDATE_ITEM = "update Item set title = ?,releaseDate = ?,stars = ?,rating = ?,coverImagine = ? where iid = ?";
     private final String SELECT_STARS = "select stars from Item where iid = ?";
     private final String UPDATE_STARS = "update Item set stars = ?,rating =? where iid = ?";
+    private final String IS_BOOK = "select iid from book where iid = ?";
+    private final String IS_MOVIE = "select iid from movie where iid = ?";
+    private final String IS_MUSIC = "select iid from music where iid = ?";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public ItemJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public boolean isBook(long iid){
+        boolean isBook = true;
+        try {
+            jdbcTemplate.queryForLong(IS_BOOK, iid);
+        }catch (DataAccessException dae){
+            isBook = false;
+        }finally {
+            return isBook;
+        }
+    }
+    public boolean isMovie(long iid){
+        boolean isMovie = true;
+        try {
+            jdbcTemplate.queryForLong(IS_MOVIE, iid);
+        }catch (DataAccessException dae){
+            isMovie = false;
+        }finally {
+            return isMovie;
+        }
+    }
+    public boolean isMusic(long iid){
+        boolean isMusic = true;
+        try {
+            jdbcTemplate.queryForLong(IS_MUSIC, iid);
+        }catch (DataAccessException dae){
+            isMusic = false;
+        }finally {
+            return isMusic;
+        }
+    }
+    @Override
+    public String getType(long iid) {
+        if(isBook(iid))
+            return "book";
+        if(isMovie(iid))
+            return "movie";
+        if(isMusic(iid))
+            return "music";
+        return "";
     }
 
     public long addItemReturnPrimaryKey(Item item) {
@@ -72,6 +117,11 @@ public class ItemJdbc implements ItemHandler {
         }
         rating = rating / sum;
         jdbcTemplate.update(UPDATE_STARS, Arrays.toString(stars), rating);
+    }
+
+    @Override
+    public Item getItemById(long iid) {
+        return null;
     }
 
 }
