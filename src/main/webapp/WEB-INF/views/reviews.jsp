@@ -1,4 +1,4 @@
-<%@ include file="header.jsp" %>
+<%@ include file="banner.jsp" %>
 <div class="container mt-5">
   <h2 class="text-center mb-4">Reviews</h2>
 

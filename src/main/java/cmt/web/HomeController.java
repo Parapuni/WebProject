@@ -36,24 +36,31 @@ public class HomeController {
     private MovieJdbc movieJdbc;
     @Autowired
     private MusicJdbc musicJdbc;
-
+    @Autowired
+    private ItemJdbc itemJdbc;
     @RequestMapping(method = GET)
     public String showHomePage(HttpServletRequest request,HttpServletResponse response,HttpSession session,Model model) {
         /*
         cookie记忆登陆状态
+        若已登陆过，记录"hasLogin"，session结束前取消自动登录
          */
-        Cookie[] cookies = request.getCookies();
-        String[] userInfo = null;
-        if(cookies != null)
-            for (Cookie cookie:cookies) {
-                if ("userinfo".equals(cookie.getName()))
-                    userInfo = cookie.getValue().split("_");
+        if(session.getAttribute("user") == null && session.getAttribute("hasLogin")==null) {
+            Cookie[] cookies = request.getCookies();
+            String[] userInfo = null;
+            if (cookies != null)
+                for (Cookie cookie : cookies) {
+                    if ("userinfo".equals(cookie.getName()))
+                        userInfo = cookie.getValue().split("_");
+                }
+            if (userInfo != null) {
+                User user = userJdbc.findUserById(Long.parseLong(userInfo[0]));
+                session.setAttribute("user", user);
+                session.setAttribute("hasLogin",true);
             }
-        if(userInfo != null){
-            User user = userJdbc.findUserById(Long.parseLong(userInfo[0]));
-            session.setAttribute("user",user);
         }
 
+        List<SimpleItem> ten = itemJdbc.getRecommendedItems();
+        model.addAttribute("ten",ten);
         List<Book> recentBooks = bookJdbc.findBooks(0,4);
         model.addAttribute("recentBooks",recentBooks);
         List<Movie> recentMovies = movieJdbc.findMovies(0,4);
@@ -121,6 +128,7 @@ public class HomeController {
             System.out.println(cookie.getPath());
             response.addCookie(cookie);
             session.setAttribute("user", user);
+            session.setAttribute("hasLogin",true);
             return "redirect:/";
         } else {
             model.addAttribute("error", "Invalid username or password");

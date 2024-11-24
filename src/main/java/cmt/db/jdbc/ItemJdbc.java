@@ -2,16 +2,21 @@ package cmt.db.jdbc;
 
 import cmt.db.api.ItemHandler;
 import cmt.entity.Item;
+import cmt.entity.SimpleItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.List;
 
 @Repository
 public class ItemJdbc implements ItemHandler {
@@ -23,6 +28,7 @@ public class ItemJdbc implements ItemHandler {
     private final String IS_BOOK = "select iid from book where iid = ?";
     private final String IS_MOVIE = "select iid from movie where iid = ?";
     private final String IS_MUSIC = "select iid from music where iid = ?";
+    private final String GET_TEN = "select iid,title,rating,coverImagine from item order by rating desc limit 6";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -151,4 +157,19 @@ public class ItemJdbc implements ItemHandler {
         return null;
     }
 
+    public List<SimpleItem> getRecommendedItems(){
+        List<SimpleItem> items = jdbcTemplate.query(GET_TEN,new SimpleItemRowMapper());
+        for (SimpleItem item:items
+             ) {
+            item.setType(getType(item.getIid()));
+        }
+        return items;
+    }
+    private final static class SimpleItemRowMapper implements RowMapper<SimpleItem> {
+
+        @Override
+        public SimpleItem mapRow(ResultSet resultSet, int i) throws SQLException {
+            return new SimpleItem(resultSet.getLong("iid"),resultSet.getString("title"), resultSet.getDouble("rating"),resultSet.getString("coverImagine"));
+        }
+    }
 }

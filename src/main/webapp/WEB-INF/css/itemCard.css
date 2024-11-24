@@ -1,0 +1,23 @@
+
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.card img {
+    height: 300px;
+    object-fit: cover;
+}
+.card-body h5 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.card-body p {
+    font-size: 14px;
+    color: #666;
+}
+.rating {
+    font-size: 16px;
+    color: #ffc107;
+    margin-top: 5px;
+}
