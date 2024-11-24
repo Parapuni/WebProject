@@ -199,7 +199,6 @@
       </c:forEach>
     </div>
   </div>
-  ${totalPages}
   <!-- Pagination -->
   <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
     <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="1"/>
