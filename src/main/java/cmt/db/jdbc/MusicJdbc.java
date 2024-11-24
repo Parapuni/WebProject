@@ -32,9 +32,9 @@ public class MusicJdbc implements MusicHandler {
     private final String COUNT_BY_CATEGORY = "select COUNT(*) from " +
             "(select m.* from Music m natural join Category_Item ci where ci.name in (?)) " +
             "as cm natural join Item i";
-    private final String COUNT_BY_TITLE = "select * from Music m natural join Item i where i.title like ? ";
-    private final String COUNT_BY_ARTISTS = "select * from Music m natural join Item i where m.artists like ? ";
-    private final String COUNT_BY_ALBUM = "select * from Music m natural join Item i where m.album like ? ";
+    private final String COUNT_BY_TITLE = "select count(*) from Music m natural join Item i where i.title like ? ";
+    private final String COUNT_BY_ARTISTS = "select count(*) from Music m natural join Item i where m.artists like ? ";
+    private final String COUNT_BY_ALBUM = "select count(*) from Music m natural join Item i where m.album like ? ";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private CategoryJdbc categoryJdbc;

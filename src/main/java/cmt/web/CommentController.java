@@ -13,13 +13,12 @@ import javax.servlet.http.HttpSession;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 public class CommentController {
-    private static final int PAGE_SIZE = 5;
+
     @Autowired
     private ItemJdbc itemJdbc;
     @Autowired
@@ -37,6 +36,7 @@ public class CommentController {
     public String showSubmitReviewPage(@RequestParam(value = "category") String category,
                                        @RequestParam(value = "id") Integer iid,
                                        Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
         if (session.getAttribute("user") == null) {
             return "redirect:/login";
         }
@@ -61,16 +61,35 @@ public class CommentController {
     @RequestMapping(value = "/submit-review", method = RequestMethod.POST)
     public String processSubmitReview(@RequestParam("reviewContent") String content,
                                       @RequestParam(value = "id") Integer iid,
-                                      @RequestParam(value = "rating") Integer rating,
+                                      @RequestParam(value = "rating", defaultValue = "1") Integer rating,
                                       Model model, HttpSession session) {
-        // 获取当前登录用户
         User user = (User) session.getAttribute("user");
+        String category = (String) session.getAttribute("category");
         if (user == null) {
             model.addAttribute("error", "You must be logged in to submit a review.");
             return "redirect:/login";
         }
+        if (rating < 1) {
+            rating = 1;
+        }
 
-        // 创建 Comment 实例
+        // 检查用户是否已评论该 item
+        Comment existingComment = commentJdbc.findComment(iid, user.getUid());
+        if (existingComment != null) {
+            System.out.println("Comment exists");
+            // 提示用户是否覆盖评论
+            model.addAttribute("commentExists", true);
+            model.addAttribute("existingComment", existingComment);
+            model.addAttribute("content", content);
+            model.addAttribute("rating", rating);
+            model.addAttribute("originalRating", existingComment.getRating());
+            model.addAttribute("iid", iid);
+
+            session.setAttribute("category", category);
+            return "editReview"; // 回到评论页面
+        }
+
+        // 保存新评论
         Comment comment = new Comment();
         comment.setIid(iid);
         comment.setUid(user.getUid());
@@ -80,38 +99,41 @@ public class CommentController {
         comment.setUserName(user.getNickname());
         comment.setItemTitle("Item Title Placeholder");
 
-        if(commentJdbc.findComment(iid, user.getUid()) != null){
-            model.addAttribute("error", "You have already submitted a review for this item.");
-            return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
-        }
-
-        System.out.println("Rating: " + rating);
-        System.out.println("Content: " + content);
-        System.out.println("Item ID: " + iid);
-
-        // 将评论保存到数据库
+        itemJdbc.updateRating(iid, rating,1);
         commentJdbc.addComment(comment);
 
-        // 重定向到该作品详情页
+
+
         return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
     }
 
-    @RequestMapping(value = "/admin/managecomments", method = GET)
-    public String showManageCommentsPage(
-            @RequestParam(value = "uid", required = false) Long uid,
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
-            Model model) {
-        if (uid != null) {
-            List<Comment> comments = commentJdbc.findCommentsByUserId(uid, (page - 1) * PAGE_SIZE, PAGE_SIZE);
-            int totalComments = commentJdbc.countByUserId(uid);
-            int totalPages = (int) Math.ceil((double) totalComments / PAGE_SIZE);
-
-            model.addAttribute("comments", comments);
-            model.addAttribute("currentPage", page);
-            model.addAttribute("totalPages", totalPages);
-            model.addAttribute("uid", uid);
+    @RequestMapping(value = "/update-review", method = RequestMethod.POST)
+    public String updateReview(@RequestParam("reviewContent") String content,
+                               @RequestParam(value = "id") Integer iid,
+                               @RequestParam(value = "rating", defaultValue = "1") Integer rating,
+                               @RequestParam(value = "originalRating") Integer originalRating,
+                               HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
         }
 
-        return "managecomments";
+        itemJdbc.updateRating(iid, originalRating, -1);
+        itemJdbc.updateRating(iid, rating, 1);
+        commentJdbc.updateCommentContent(iid, user.getUid(), content, rating);
+
+        return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
+    }
+
+    @RequestMapping(value = "/delete-comment", method = RequestMethod.POST)
+    public String deleteComment(@RequestParam("commentId") Integer iid,
+                                HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        commentJdbc.removeComment(iid, user.getUid());
+        return "redirect:/profile";
     }
 }

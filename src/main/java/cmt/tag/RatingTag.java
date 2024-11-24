@@ -22,17 +22,17 @@ public class RatingTag extends SimpleTagSupport {
 
         // 输出整星
         for (int i = 0; i < fullStars; i++) {
-            out.write("<span class='fa fa-star checked'></span>");
+            out.write("<span class='fa fa-star checked' style =\"color:#ffc107;\"></span>");
         }
 
         // 输出半星
         if (hasHalfStar) {
-            out.write("<span class='fa fa-star-half-alt checked'></span>");
+            out.write("<span class='fa fa-star-half-alt checked' style =\"color:#ffc107;\"></span>");
         }
 
         // 输出空星
         for (int i = 0; i < emptyStars; i++) {
-            out.write("<span class='fa fa-star'></span>");
+            out.write("<span class='fa fa-star' style =\"color:white;\"></span>");
         }
     }
 }
