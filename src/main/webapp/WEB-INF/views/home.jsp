@@ -119,7 +119,7 @@
           <div class="col-md-3">
             <div class="card">
               <img src="<c:url value="/imagines/${music.coverImagine}"/>" alt="MUSIC">
-              <p><a href="<c:url value='/item-details?id=${music.iid}&category=Movie' />">${music.title}</a></p>
+              <p><a href="<c:url value='/item-details?id=${music.iid}&category=Music' />">${music.title}</a></p>
               <p>${music.releaseDate}</p>
             </div>
           </div>

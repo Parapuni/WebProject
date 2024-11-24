@@ -199,16 +199,22 @@
       </c:forEach>
     </div>
   </div>
-
+  ${totalPages}
   <!-- Pagination -->
   <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
     <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="1"/>
     <ul class="pagination">
+      <c:if test="${hasLast == true}">
+        <a class="page-link" href="<c:url value='/items-details?page=${currentPage-1}&category=${category}&id=${item.iid}' />"><c:out value="<" escapeXml="true"/></a>
+      </c:if>
       <c:forEach var="i" begin="${start}" end="${end}">
         <li class="page-item ${i == currentPage ? 'active' : ''}">
           <a class="page-link" href="<c:url value='/item-details?page=${i}&category=${category}&id=${item.iid}' />">${i}</a>
         </li>
       </c:forEach>
+      <c:if test="${hasLast == true}">
+        <a class="page-link" href="<c:url value='/items-details?page=${currentPage+1}&category=${category}&id=${item.iid}' />"><c:out value=">" escapeXml="true"/></a>
+      </c:if>
     </ul>
   </nav>
 </div>
