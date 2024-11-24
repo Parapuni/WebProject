@@ -64,6 +64,7 @@ public class CommentController {
                                       @RequestParam(value = "rating") Integer rating,
                                       Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
+        String category = (String) session.getAttribute("category");
         if (user == null) {
             model.addAttribute("error", "You must be logged in to submit a review.");
             return "redirect:/login";
@@ -78,7 +79,10 @@ public class CommentController {
             model.addAttribute("existingComment", existingComment);
             model.addAttribute("content", content);
             model.addAttribute("rating", rating);
+            model.addAttribute("originalRating", existingComment.getRating());
             model.addAttribute("iid", iid);
+
+            session.setAttribute("category", category);
             return "editReview"; // 回到评论页面
         }
 
@@ -92,7 +96,10 @@ public class CommentController {
         comment.setUserName(user.getNickname());
         comment.setItemTitle("Item Title Placeholder");
 
+        itemJdbc.updateRating(iid, rating,1);
         commentJdbc.addComment(comment);
+
+
 
         return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
     }
@@ -101,12 +108,15 @@ public class CommentController {
     public String updateReview(@RequestParam("reviewContent") String content,
                                @RequestParam(value = "id") Integer iid,
                                @RequestParam(value = "rating") Integer rating,
+                               @RequestParam(value = "originalRating") Integer originalRating,
                                HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login";
         }
 
+        itemJdbc.updateRating(iid, originalRating, -1);
+        itemJdbc.updateRating(iid, rating, 1);
         commentJdbc.updateCommentContent(iid, user.getUid(), content, rating);
 
         return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");

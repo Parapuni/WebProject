@@ -90,7 +90,7 @@ public abstract class Item {
         totalRating = 0;
         String[] ss = s.substring(1, s.length() - 1).split(",");
         for (int i = 0; i < 5; i++) {
-            this.stars[i] = Integer.parseInt(ss[i]);
+            this.stars[i] = Integer.parseInt(ss[i].trim());
             totalRating += this.stars[i];
         }
 

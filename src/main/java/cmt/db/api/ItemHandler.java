@@ -11,5 +11,7 @@ public interface ItemHandler {
 
     void updateRating(long iid, int star);
 
+    void updateRating(long iid, int star, int isAdd);
+
     Item getItemById(long iid);
 }

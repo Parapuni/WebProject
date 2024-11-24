@@ -44,6 +44,7 @@ public class ItemController {
     private Book book = new Book();
     private Movie movie = new Movie();
     private Music music = new Music();
+    private Item item;
 
     @RequestMapping(value = "/items", method = GET)
     public String showItemsPage(@RequestParam(value = "category") String category,
@@ -81,6 +82,41 @@ public class ItemController {
 
         return "itemsPage";
     }
+    @RequestMapping(value = "/search", method = GET)
+    public String processSearching(@RequestParam(value = "type") String category,
+                                   @RequestParam(value = "query") String query,
+                                   @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                   Model model) {
+        model.addAttribute("category", category);
+        List<String> categories = new ArrayList<String>();
+        categories.add("Book");
+        categories.add("Movie");
+        categories.add("Music");
+        model.addAttribute("categories", categories);
+
+        if (query == null || query.trim().isEmpty()){
+            model.addAttribute("error", "Search query cannot be empty.");
+            return "/";
+        }
+        switch (category){
+            case "Book":
+                List<Book> books = bookJdbc.findBooksByTitle((page - 1) * PAGE_SIZE, PAGE_SIZE, query);
+                model.addAttribute("items", books);
+                break;
+            case "Movie":
+                List<Movie> movies = movieJdbc.findMoviesByTitle((page - 1) * PAGE_SIZE, PAGE_SIZE, query);
+                model.addAttribute("items", movies);
+                break;
+            case "Music":
+                List<Music> musics = musicJdbc.findMusicsByTitle((page - 1) * PAGE_SIZE, PAGE_SIZE, query);
+                model.addAttribute("totalPages", (int) Math.ceil((double) musicJdbc.countTotal() / PAGE_SIZE));
+                model.addAttribute("items", musics);
+                break;
+        }
+        model.addAttribute("currentPage", page);
+
+        return "itemsPage";
+    }
 
     @RequestMapping(value = "/item-details", method = GET)
     public String showItemDetials(@RequestParam(value = "id") Integer iid,
@@ -90,22 +126,26 @@ public class ItemController {
         System.out.println("Item ID: " + iid);
         switch (category) {
             case "Book":
-                book = bookJdbc.findBookById(iid);
-                model.addAttribute("item", book);
-
+                item = bookJdbc.findBookById(iid);
                 break;
             case "Movie":
-                movie = movieJdbc.findMovieById(iid);
-                model.addAttribute("item", movie);
-
+                item = movieJdbc.findMovieById(iid);
                 break;
             case "Music":
-                music = musicJdbc.findMusicById(iid);
-                model.addAttribute("item", music);
+                item = musicJdbc.findMusicById(iid);
                 break;
             default:
                 model.addAttribute("categoryName", "Unknown");
         }
+        List<Integer> percentages = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            double percentage = item.getTotalRating() > 0
+                    ? (item.getStars()[i] / (double) item.getTotalRating()) * 100
+                    : 0;
+            percentages.add((int) percentage);
+        }
+        model.addAttribute("percentages", percentages);
+        model.addAttribute("item", item);
         comments = commentJdbc.findCommentsByItemId(iid, (page - 1) * PAGE_SIZE, PAGE_SIZE);
         System.out.println(comments.size());
         model.addAttribute("comments", comments);

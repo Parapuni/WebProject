@@ -54,24 +54,51 @@ public class ItemJdbc implements ItemHandler {
     public void updateItem(Item item) {
         jdbcTemplate.update(UPDATE_ITEM, item.getTitle(), item.getReleaseDate(), item.getStars(), item.getRating(), item.getCoverImagine(),item.getIid());
     }
-
     @Override
     public void updateRating(long iid, int star) {
+        star --;
         String sStars = jdbcTemplate.queryForObject(SELECT_STARS, String.class, iid);
-        sStars.substring(1, sStars.length() - 1);
+        sStars = sStars.substring(1, sStars.length() - 1);
         int[] stars = new int[5];
         String[] s = sStars.split(",");
         double rating = 0.0;
         long sum = 0;
         for (int i = 0; i < 5; i++) {
-            stars[i] = Integer.parseInt(s[i]);
+            stars[i] = Integer.parseInt(s[i].trim());
             if (i == star)
-                stars[i]++;
+                stars[i] ++;
             sum += stars[i];
             rating += (i + 1) * stars[i];
         }
         rating = rating / sum;
-        jdbcTemplate.update(UPDATE_STARS, Arrays.toString(stars), rating);
+        System.out.println(Arrays.toString(stars));
+        jdbcTemplate.update(UPDATE_STARS, Arrays.toString(stars), rating,iid);
+    }
+    /**
+     *
+     * @param iid
+     * @param star
+     * @param isAdd 1表示增加，-1表示减少
+     */
+    @Override
+    public void updateRating(long iid, int star, int isAdd) {
+        star --;
+        String sStars = jdbcTemplate.queryForObject(SELECT_STARS, String.class, iid);
+        sStars = sStars.substring(1, sStars.length() - 1);
+        int[] stars = new int[5];
+        String[] s = sStars.split(",");
+        double rating = 0.0;
+        long sum = 0;
+        for (int i = 0; i < 5; i++) {
+            stars[i] = Integer.parseInt(s[i].trim());
+            if (i == star)
+                stars[i] += isAdd;
+            sum += stars[i];
+            rating += (i + 1) * stars[i];
+        }
+        rating = rating / sum;
+        System.out.println(Arrays.toString(stars));
+        jdbcTemplate.update(UPDATE_STARS, Arrays.toString(stars), rating,iid);
     }
 
     @Override

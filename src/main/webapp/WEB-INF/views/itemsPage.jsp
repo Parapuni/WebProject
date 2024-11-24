@@ -113,6 +113,7 @@
         </c:if>
       </ul>
     </nav>
+    <h1>${currentPage}${totalPages}</h1>
 
   </div>
 </div>

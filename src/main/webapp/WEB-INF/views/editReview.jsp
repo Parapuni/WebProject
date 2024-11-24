@@ -103,56 +103,54 @@
   </style>
 </head>
 <body>
-<div class="container mt-5">
+<div class="container mt-5 p-4 shadow-lg rounded bg-white">
   <!-- Item Header -->
-  <div class="item-header">
-    <img src="<c:url value='/imagines/${item.coverImagine}' />" alt="${item.title}">
+  <div class="item-header d-flex align-items-start gap-4">
+    <img src="<c:url value='/imagines/${item.coverImagine}' />" alt="${item.title}" class="img-fluid shadow-sm rounded" style="max-width: 200px; height: auto;">
     <div class="item-info">
-      <h1>${item.title}</h1>
+      <h1 class="text-primary">${item.title}</h1>
       <p><strong>Release Date:</strong> <c:out value="${item.releaseDate}" /></p>
       <p><strong>Tags:</strong>
         <c:forEach var="category" items="${item.categories}">
-          <span class="badge bg-secondary">${category}</span>
+          <span class="badge bg-secondary me-1">${category}</span>
         </c:forEach>
       </p>
     </div>
   </div>
 
   <!-- Rating Section -->
-  <div class="rating-container">
-    <h3>Your Rating</h3>
-    <div class="star-rating" id="starRating">
+  <div class="rating-container mt-4">
+    <h3 class="text-primary">Your Rating</h3>
+    <div class="star-rating d-flex align-items-center gap-2" id="starRating">
       <c:forEach begin="1" end="5" var="star">
-        <i class="bi bi-star" onclick="setRating(${star})" data-rating="${star}"></i>
+        <i class="bi bi-star" onclick="setRating(${star})" data-rating="${star}" style="font-size: 24px; cursor: pointer;"></i>
       </c:forEach>
     </div>
     <input type="hidden" id="ratingInput" name="rating" value="0">
   </div>
 
   <!-- Review Editor -->
-  <div class="editor-container">
-    <h3>Write Your Comments</h3>
+  <div class="editor-container mt-4 p-3">
+    <h3 class="text-primary">Write Your Comments</h3>
     <form action="submit-review" method="post" class="comment-form">
       <input type="hidden" name="id" value="${item.iid}">
       <div class="form-group">
-        <textarea class="form-control comment-box" name="reviewContent" id="reviewContent" rows="5" placeholder="Write your review here..."></textarea>
+        <textarea class="form-control comment-box shadow-sm" name="reviewContent" id="reviewContent" rows="5" placeholder="Write your review here..."></textarea>
       </div>
       <input type="hidden" id="ratingInputHidden" name="rating" value="0">
-      <button type="submit" class="btn btn-primary submit-btn">Submit Comment</button>
+      <button type="submit" class="btn btn-primary w-100 submit-btn">Submit Comment</button>
     </form>
   </div>
 </div>
 
 <!-- Modal -->
 <c:if test="${commentExists}">
-  <div class="modal" tabindex="-1" role="dialog" id="overwriteModal" style="display: block; background: rgba(0, 0, 0, 0.5);">
-    <div class="modal-dialog" role="document">
+  <div class="modal fade show" tabindex="-1" role="dialog" id="overwriteModal" style="display: block; background: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Existing Comment Found</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="hideModal()">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title text-danger">Existing Comment Found</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="hideModal()"></button>
         </div>
         <div class="modal-body">
           <p>You have already submitted a comment for this item. Do you want to overwrite it?</p>
@@ -161,10 +159,11 @@
           <form action="update-review" method="post">
             <input type="hidden" name="id" value="${iid}">
             <input type="hidden" name="rating" value="${rating}">
+            <input type="hidden" name="originalRating" value="${originalRating}">
             <textarea name="reviewContent" hidden>${content}</textarea>
             <button type="submit" class="btn btn-primary">Overwrite</button>
           </form>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="hideModal()">Cancel</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hideModal()">Cancel</button>
         </div>
       </div>
     </div>
@@ -175,6 +174,7 @@
     document.getElementById('overwriteModal').style.display = 'none';
   }
 </script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/quill/dist/quill.min.js"></script>
