@@ -16,6 +16,13 @@ import java.util.List;
 @Repository
 public class MovieJdbc implements MovieHandler {
     private final String COUNT_TOTAL = "select COUNT(*) from Movie";
+    private final String COUNT_BY_CATEGORY = "select COUNT(*) from " +
+            "(select m.* from Movie m natural join Category_Item ci where ci.name in (?)) " +
+            "as cm natural join Item i";
+    private final String COUNT_BY_TITLE = "select COUNT(*) from Movie m natural join Item i where i.title like ? ";
+    private final String COUNT_BY_DIRECTOR = "select COUNT(*) from Movie m natural join Item i where m.director like ? ";
+    private final String COUNT_BY_CAST = "select COUNT(*) from Movie m natural join Item i where m.cast like ? ";
+    private final String COUNT_BY_WRITERS = "select COUNT(*) from Movie m natural join Item i where m.writers like ? ";
     private final String INSERT_MOVIE = "insert into Movie values(?,?,?,?,?)";
     private final String DELETE_MOVIE = "delete from Movie where iid = ?";
     private final String SELECT_MOVIE_BY_ID = "select * from Movie m natural join Item i where m.iid = ?";
@@ -98,10 +105,21 @@ public class MovieJdbc implements MovieHandler {
     }
 
     @Override
+    public int countByCategories(List<String> NameOfCategories) {
+        String categories = String.join(",", NameOfCategories);
+        return jdbcTemplate.queryForInt(COUNT_BY_CATEGORY,categories);
+    }
+
+    @Override
     public List<Movie> findMoviesByTitle(int offset, int length, String title) {
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_TITLE, new MovieRowMapper(), "%" + title + "%", length, offset);
         categoryJdbc.setCategory(movies);
         return movies;
+    }
+
+    @Override
+    public int countByTitle(String title) {
+        return jdbcTemplate.queryForInt(COUNT_BY_TITLE,"%" + title + "%");
     }
 
     @Override
@@ -112,6 +130,11 @@ public class MovieJdbc implements MovieHandler {
     }
 
     @Override
+    public int countByDirector(String director) {
+        return jdbcTemplate.queryForInt(COUNT_BY_DIRECTOR,"%" + director + "%");
+    }
+
+    @Override
     public List<Movie> findMoviesByCast(int offset, int length, String cast) {
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_CAST, new MovieRowMapper(), "%" + cast + "%", length, offset);
         categoryJdbc.setCategory(movies);
@@ -119,10 +142,20 @@ public class MovieJdbc implements MovieHandler {
     }
 
     @Override
+    public int countByCast(String cast) {
+        return jdbcTemplate.queryForInt(COUNT_BY_CAST,"%" + cast + "%");
+    }
+
+    @Override
     public List<Movie> findMoviesByWriters(int offset, int length, String writers) {
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_WRITERS, new MovieRowMapper(), "%" + writers + "%", length, offset);
         categoryJdbc.setCategory(movies);
         return movies;
+    }
+
+    @Override
+    public int countByWriters(String writers) {
+        return jdbcTemplate.queryForInt(COUNT_BY_WRITERS,"%" + writers + "%");
     }
 
     private static final class MovieRowMapper implements RowMapper<Movie> {
