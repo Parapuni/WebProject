@@ -84,7 +84,7 @@
         <c:forEach var="item" items="${items}">
           <div class="col-md-4">
             <div class="card">
-              <img src="<c:url value='/images/${item.coverImagine}' />" alt="${item.title}" class="card-img-top">
+              <img src="<c:url value='/imagines/${item.coverImagine}' />" alt="${item.title}" class="card-img-top">
               <div class="card-body">
                 <h5><a href="<c:url value='/item-details?id=${item.iid}&category=${category}' />" class="text-dark">${item.title}</a></h5>
                 <p>${item.releaseDate}</p>
@@ -98,8 +98,8 @@
     </div>
     <!-- Pagination -->
     <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+      <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="1"/>
       <ul class="pagination">
-        <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="5"/>
         <c:forEach var="i" begin="${start}" end="${end}">
           <li class="page-item ${i == currentPage ? 'active' : ''}">
             <a class="page-link" href="<c:url value='/items?page=${i}&category=${category}' />">${i}</a>

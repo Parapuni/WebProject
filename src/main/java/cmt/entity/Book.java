@@ -27,7 +27,7 @@ public class Book extends Item {
      * @param publisher    出版商
      * @param introduction 简介
      */
-    public Book(long iid, String title, Date releaseDate, int[] stars, List<String> categories, double rating, URL coverImagine, String authors, String publisher, String introduction) {
+    public Book(long iid, String title, Date releaseDate, int[] stars, List<String> categories, double rating, String coverImagine, String authors, String publisher, String introduction) {
         super(iid, title, releaseDate, stars, categories, rating, coverImagine);
         this.authors = authors;
         this.publisher = publisher;

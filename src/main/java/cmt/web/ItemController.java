@@ -21,7 +21,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class ItemController {
-    private static final int PAGE_SIZE = 3;
+    private static final int PAGE_SIZE = 2;
     @Autowired
     private ItemJdbc itemJdbc;
     @Autowired
@@ -83,6 +83,7 @@ public class ItemController {
                                   @RequestParam(value = "category")String category,
                                   @RequestParam(value = "page", defaultValue = "1") Integer page,
                                   Model model){
+        System.out.println("Item ID: " + iid);
         switch (category){
             case "Book":
                 book = bookJdbc.findBookById(iid);
@@ -102,8 +103,10 @@ public class ItemController {
                 model.addAttribute("categoryName", "Unknown");
         }
         comments = commentJdbc.findCommentsByItemId(iid, (page - 1) * PAGE_SIZE, PAGE_SIZE);
+        System.out.println(comments.size());
         model.addAttribute("comments", comments);
         model.addAttribute("currentPage", page);
+        model.addAttribute("category", category);
         model.addAttribute("totalPages", (int)Math.ceil((double)commentJdbc.countTotal() / PAGE_SIZE));
 
         return "itemReview";

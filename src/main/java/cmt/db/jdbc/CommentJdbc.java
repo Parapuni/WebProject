@@ -3,6 +3,7 @@ package cmt.db.jdbc;
 import cmt.db.api.CommentHandler;
 import cmt.entity.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -17,8 +18,15 @@ public class CommentJdbc implements CommentHandler {
     private final String INSERT_COMMENT = "insert into Comment(`iid`, `uid`,`cdate`, `content`,rating) values(?, ?, ?, ?,?);";
     private final String DELETE_COMMENT = "delete from Comment where `iid` = ? and `uid` = ?;";
     private final String UPDATE_COMMENT_CONTENT = "update Comment set `content` = ?,rating = ? where iid = ? and uid = ?;";
-    private final String SELECT_COMMENTS_BY_ITEM_ID = "select c.*,u.nickname,i.title from Item i natural join Comment c natural join `User` u where c.iid = ? limit ? offset ?;";
-    private final String SELECT_COMMENTS_BY_USER_ID = "select c.*,u.nickname,i.tltle from Item i natural join Comment c natural join `User` u where c.uid = ? limit ? offset ?;";
+    private final String SELECT_COMMENT = "select c.*,i.title,u.nickname\n" +
+            "from  `comment` c join `item` i on(c.iid = i.iid) join `user` u on(c.uid = u.uid) " +
+            "where c.iid = ? and c.uid = ?;";
+    private final String SELECT_COMMENTS_BY_ITEM_ID = "select c.*,i.title,u.nickname\n" +
+                                "from  `comment` c join `item` i on(c.iid = i.iid) join `user` u on(c.uid = u.uid) " +
+                                "where c.iid = ? limit ? offset ?;";
+    private final String SELECT_COMMENTS_BY_USER_ID = "select c.*,i.title,u.nickname\n" +
+            "from  `comment` c join `item` i on(c.iid = i.iid) join `user` u on(c.uid = u.uid) " +
+            "where c.uid = ? limit ? offset ?;";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -45,6 +53,17 @@ public class CommentJdbc implements CommentHandler {
     @Override
     public void updateCommentContent(long iid, long uid, String newContent, int newRating) {
         jdbcTemplate.update(UPDATE_COMMENT_CONTENT, newContent,newRating, iid, uid);
+    }
+
+    @Override
+    public Comment findComment(long iid, long uid) {
+        Comment comment = null;
+        try {
+            comment = jdbcTemplate.queryForObject(SELECT_COMMENT, new CommentRowMapper(), iid, uid);
+        }catch (DataAccessException dae){
+        }finally {
+            return comment;
+        }
     }
 
     @Override

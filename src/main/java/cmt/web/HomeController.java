@@ -36,6 +36,13 @@ public class HomeController {
 
     @RequestMapping(method = GET)
     public String showHomePage(Model model) {
+        List<Book> recentBooks = bookJdbc.findBooks(0,4);
+        model.addAttribute("recentBooks",recentBooks);
+        List<Movie> recentMovies = movieJdbc.findMovies(0,4);
+        model.addAttribute("recentMovies",recentMovies);
+        List<Music> recentMusics = musicJdbc.findMusics(0,4);
+        model.addAttribute("recentMusics",recentMusics);
+
         String welcomeMessage = "Welcome to the Reviews System!";
         model.addAttribute("welcomeMessage", welcomeMessage);
 

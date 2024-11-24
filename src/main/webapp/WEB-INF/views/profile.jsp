@@ -91,7 +91,7 @@
     <div class="col-md-3">
       <div class="sidebar">
         <!-- User Avatar -->
-        <img src="<c:url value='/images/${sessionScope.user.avatar}' />" alt="User Avatar">
+        <img src="<c:url value="/imagines/${sessionScope.user.avatar}" />" alt="User Avatar" id="userAvatar" data-bs-toggle="modal" data-bs-target="#changeAvatarModal" style="cursor: pointer;">
         <hr>
         <!-- User Information -->
         <div class="user-info">
@@ -125,6 +125,29 @@
     </div>
   </div>
 </div>
+
+<!-- Change Avatar Modal -->
+<div class="modal fade" id="changeAvatarModal" tabindex="-1" aria-labelledby="changeAvatarModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changeAvatarModalLabel">Change Avatar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="<c:url value='/change-avatar' />" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <label for="avatarFile" class="form-label">Choose a new avatar:</label>
+          <input type="file" class="form-control" id="avatarFile" name="avatarFile" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

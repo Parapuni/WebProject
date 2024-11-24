@@ -76,61 +76,37 @@
       <div class="row">
         <div class="col-md-3">
           <div class="card">
-            <img src="book1.jpg" alt="奶龙">
+            <img src="<c:url value="/imagines/IID1cover.jpg" />" alt="奶龙">
             <!-- 为 book1 添加超链接到 itemReview.jsp -->
-            <p><a href="<c:url value='/item-details?id=1&' />">奶龙娘</a></p>
+            <p><a href="<c:url value='/item-details?id=1&category=Book' />">奶龙娘</a></p>
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="card">
-            <img src="book2.jpg" alt="书籍封面">
-            <p>书名代号2</p>
+        <c:forEach var="book" items="${recentBooks}">
+          <div class="col-md-3">
+            <div class="card">
+              <img src="<c:url value="/imagines/${book.coverImagine}" /> " alt="奶龙">
+              <p><a href="<c:url value='/item-details?id=1&category=Book' />">${book.title}</a></p>
+              <p>${book.releaseDate}</p>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card">
-            <img src="book3.jpg" alt="书籍封面">
-            <p>书名代号3</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card">
-            <img src="book4.jpg" alt="书籍封面">
-            <p>书名代号4</p>
-          </div>
-        </div>
+        </c:forEach>
       </div>
 
       <!-- 正在上映 -->
       <div class="section-header">
-        正在上映
+        正在热映
         <a href="<c:url value='/items?category=Movie' />" class="more-link">更多...</a>
       </div>
       <div class="row">
+        <c:forEach var="movie" items="${recentMovies}">
         <div class="col-md-3">
           <div class="card">
-            <img src="movie1.jpg" alt="电影海报">
-            <p>电影代号1</p>
+            <img src="<c:url value="/imagines/${movie.coverImagine}" /> " alt="奶龙">
+            <p><a href="<c:url value='/item-details?id=1&category=Movie' />">${movie.title}</a></p>
+            <p>${movie.releaseDate}</p>
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="card">
-            <img src="movie2.jpg" alt="电影海报">
-            <p>电影代号2</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card">
-            <img src="movie3.jpg" alt="电影海报">
-            <p>电影代号3</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card">
-            <img src="movie4.jpg" alt="电影海报">
-            <p>电影代号4</p>
-          </div>
-        </div>
+        </c:forEach>
       </div>
 
       <!-- 最新音乐 -->
@@ -139,33 +115,17 @@
         <a href="<c:url value='/items?category=Music' />" class="more-link">更多...</a>
       </div>
       <div class="row">
-        <div class="col-md-3">
-          <div class="card">
-            <img src="music1.jpg" alt="音乐封面">
-            <p>音乐代号1</p>
+        <c:forEach var="music" items="${recentMusics}">
+          <div class="col-md-3">
+            <div class="card">
+              <img src="<c:url value="/imagines/${music.coverImagine}"/>" alt="MUSIC">
+              <p>${music.title}</p>
+              <p>${music.releaseDate}</p>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card">
-            <img src="music2.jpg" alt="音乐封面">
-            <p>音乐代号2</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card">
-            <img src="music3.jpg" alt="音乐封面">
-            <p>音乐代号3</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card">
-            <img src="music4.jpg" alt="音乐封面">
-            <p>音乐代号4</p>
-          </div>
-        </div>
+        </c:forEach>
       </div>
     </div>
-
     <div class="col-md-3">
       <h3>每周推荐</h3>
       <div class="weekly-recommendation">
