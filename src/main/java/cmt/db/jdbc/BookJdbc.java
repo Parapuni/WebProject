@@ -98,10 +98,20 @@ public class BookJdbc implements BookHandler {
     }
 
     @Override
+    public int countByCategories(List<String> NameOfCategories) {
+        return 0;
+    }
+
+    @Override
     public List<Book> findBooksByTitle(int offset, int length, String title) {
         List<Book> books = jdbcTemplate.query(SELECT_BOOKS_BY_TITLE, new BookRowMapper(), "%" + title + "%", length, offset);
         categoryJdbc.setCategory(books);
         return books;
+    }
+
+    @Override
+    public int countByTitle(String title) {
+        return 0;
     }
 
     @Override
@@ -112,10 +122,20 @@ public class BookJdbc implements BookHandler {
     }
 
     @Override
+    public int countByAuthors(String authors) {
+        return 0;
+    }
+
+    @Override
     public List<Book> findBooksByPublisher(int offset, int length, String publisher) {
         List<Book> books = jdbcTemplate.query(SELECT_BOOKS_BY_PUBLISHER, new BookRowMapper(), "%" + publisher + "%", length, offset);
         categoryJdbc.setCategory(books);
         return books;
+    }
+
+    @Override
+    public int countByPublisher(String publisher) {
+        return 0;
     }
 
     private static final class BookRowMapper implements RowMapper<Book> {

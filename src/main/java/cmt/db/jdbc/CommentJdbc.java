@@ -72,8 +72,18 @@ public class CommentJdbc implements CommentHandler {
     }
 
     @Override
+    public int countByItemId(long iid) {
+        return 0;
+    }
+
+    @Override
     public List<Comment> findCommentsByUserId(long uid, int offset, int length) {
         return jdbcTemplate.query(SELECT_COMMENTS_BY_USER_ID, new CommentRowMapper(), uid, length, offset);
+    }
+
+    @Override
+    public int countByUserId(long uid) {
+        return 0;
     }
 
     private static final class CommentRowMapper implements RowMapper<Comment> {

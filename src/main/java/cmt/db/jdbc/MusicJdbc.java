@@ -101,10 +101,20 @@ public class MusicJdbc implements MusicHandler {
     }
 
     @Override
+    public int countByCategories(List<String> NameOfCategories) {
+        return 0;
+    }
+
+    @Override
     public List<Music> findMusicsByTitle(int offset, int length, String title) {
         List<Music> musics = jdbcTemplate.query(SELECT_MUSICS_BY_TITLE, new MusicRowMapper(), "%" + title + "%", length, offset);
         categoryJdbc.setCategory(musics);
         return musics;
+    }
+
+    @Override
+    public int countByTitle(String title) {
+        return 0;
     }
 
     @Override
@@ -115,10 +125,20 @@ public class MusicJdbc implements MusicHandler {
     }
 
     @Override
+    public int countByArtists(String artists) {
+        return 0;
+    }
+
+    @Override
     public List<Music> findMusicsByAlbum(int offset, int length, String Album) {
         List<Music> musics = jdbcTemplate.query(SELECT_MUSICS_BY_ALBUM,new MusicRowMapper(), "%" + Album + "%", length, offset);
         categoryJdbc.setCategory(musics);
         return musics;
+    }
+
+    @Override
+    public int countByAlbum(String Album) {
+        return 0;
     }
 
     private static final class MusicRowMapper implements RowMapper<Music> {

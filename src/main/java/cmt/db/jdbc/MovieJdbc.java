@@ -98,10 +98,20 @@ public class MovieJdbc implements MovieHandler {
     }
 
     @Override
+    public int countByCategories(List<String> NameOfCategories) {
+        return 0;
+    }
+
+    @Override
     public List<Movie> findMoviesByTitle(int offset, int length, String title) {
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_TITLE, new MovieRowMapper(), "%" + title + "%", length, offset);
         categoryJdbc.setCategory(movies);
         return movies;
+    }
+
+    @Override
+    public int countByTitle(String title) {
+        return 0;
     }
 
     @Override
@@ -112,6 +122,11 @@ public class MovieJdbc implements MovieHandler {
     }
 
     @Override
+    public int countByDirector(String director) {
+        return 0;
+    }
+
+    @Override
     public List<Movie> findMoviesByCast(int offset, int length, String cast) {
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_CAST, new MovieRowMapper(), "%" + cast + "%", length, offset);
         categoryJdbc.setCategory(movies);
@@ -119,10 +134,20 @@ public class MovieJdbc implements MovieHandler {
     }
 
     @Override
+    public int countByCast(String cast) {
+        return 0;
+    }
+
+    @Override
     public List<Movie> findMoviesByWriters(int offset, int length, String writers) {
         List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_WRITERS, new MovieRowMapper(), "%" + writers + "%", length, offset);
         categoryJdbc.setCategory(movies);
         return movies;
+    }
+
+    @Override
+    public int countByWriters(String writers) {
+        return 0;
     }
 
     private static final class MovieRowMapper implements RowMapper<Movie> {
