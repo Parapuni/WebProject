@@ -24,11 +24,21 @@ public interface MovieHandler {
 
     List<Movie> findMoviesByCategories(int offset, int length, List<String> NameOfCategories);
 
+    int countByCategories(List<String> NameOfCategories);
+
     List<Movie> findMoviesByTitle(int offset, int length, String title);
+
+    int countByTitle(String title);
 
     List<Movie> findMoviesByDirector(int offset, int length, String director);
 
+    int countByDirector(String director);
+
     List<Movie> findMoviesByCast(int offset, int length, String cast);
 
+    int countByCast(String cast);
+
     List<Movie> findMoviesByWriters(int offset, int length, String writers);
+
+    int countByWriters(String writers);
 }

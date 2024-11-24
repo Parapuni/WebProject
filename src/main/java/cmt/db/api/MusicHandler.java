@@ -24,9 +24,17 @@ public interface MusicHandler {
 
     List<Music> findMusicsByCategories(int offset, int length, List<String> NameOfCategories);
 
+    int countByCategories(List<String> NameOfCategories);
+
     List<Music> findMusicsByTitle(int offset, int length, String title);
+
+    int countByTitle(String title);
 
     List<Music> findMusicsByArtists(int offset, int length, String artists);
 
+    int countByArtists(String artists);
+
     List<Music> findMusicsByAlbum(int offset, int length, String Album);
+
+    int countByAlbum(String Album);
 }
