@@ -10,19 +10,30 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
+        <!-- 管理员管理入口 -->
+        <c:if test="${not empty sessionScope.admin}">
+          <li class="nav-item"><a class="nav-link" href="<c:url value='/adminmanage' />">管理员管理</a></li>
+        </c:if>
+        <!-- 普通用户分类入口 -->
         <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Movie' />">电影</a></li>
         <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Book' />">书籍</a></li>
         <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Music' />">音乐</a></li>
       </ul>
+      <!-- 搜索框 -->
       <form class="d-flex" action="<c:url value='/search' />" method="get">
         <input class="form-control me-2 search-bar" type="search" placeholder="搜索" name="query">
         <button class="btn btn-outline-light search-btn" type="submit">搜索</button>
       </form>
       <ul class="navbar-nav">
+        <!-- 用户和管理员登录逻辑 -->
         <c:choose>
-          <c:when test="${empty user}">
+          <c:when test="${empty sessionScope.user && empty sessionScope.admin}">
             <li class="nav-item"><a class="nav-link" href="<c:url value='/login' />">登录</a></li>
             <li class="nav-item"><a class="nav-link" href="<c:url value='/register' />">注册</a></li>
+          </c:when>
+          <c:when test="${not empty sessionScope.admin}">
+            <li class="nav-item"><a class="nav-link" href="<c:url value='/admindashboard' />">管理员中心</a></li>
+            <li class="nav-item"><a class="nav-link" href="<c:url value='/logout' />">退出</a></li>
           </c:when>
           <c:otherwise>
             <li class="nav-item"><a class="nav-link" href="<c:url value='/profile' />">个人信息</a></li>
