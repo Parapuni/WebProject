@@ -85,7 +85,7 @@
           <div class="col-md-3">
             <div class="card">
               <img src="<c:url value="/imagines/${book.coverImagine}" /> " alt="奶龙">
-              <p><a href="<c:url value='/item-details?id=1&category=Book' />">${book.title}</a></p>
+              <p><a href="<c:url value='/item-details?id=${book.iid}&category=Book' />">${book.title}</a></p>
               <p>${book.releaseDate}</p>
             </div>
           </div>
@@ -102,7 +102,7 @@
         <div class="col-md-3">
           <div class="card">
             <img src="<c:url value="/imagines/${movie.coverImagine}" /> " alt="奶龙">
-            <p><a href="<c:url value='/item-details?id=1&category=Movie' />">${movie.title}</a></p>
+            <p><a href="<c:url value='/item-details?id=${movie.iid}&category=Movie' />">${movie.title}</a></p>
             <p>${movie.releaseDate}</p>
           </div>
         </div>
@@ -119,7 +119,7 @@
           <div class="col-md-3">
             <div class="card">
               <img src="<c:url value="/imagines/${music.coverImagine}"/>" alt="MUSIC">
-              <p>${music.title}</p>
+              <p><a href="<c:url value='/item-details?id=${music.iid}&category=Movie' />">${music.title}</a></p>
               <p>${music.releaseDate}</p>
             </div>
           </div>
