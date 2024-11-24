@@ -78,14 +78,14 @@
           <div class="card">
             <img src="<c:url value="/imagines/IID1cover.jpg" />" alt="奶龙">
             <!-- 为 book1 添加超链接到 itemReview.jsp -->
-            <p><a href="<c:url value='/item-details?id=&' />">奶龙娘</a></p>
+            <p><a href="<c:url value='/item-details?id=1&category=Book' />">奶龙娘</a></p>
           </div>
         </div>
         <c:forEach var="book" items="${recentBooks}">
           <div class="col-md-3">
             <div class="card">
               <img src="<c:url value="/imagines/${book.coverImagine}" /> " alt="奶龙">
-              <p><a href="<c:url value='/item-details?id=1&' />">${book.title}</a></p>
+              <p><a href="<c:url value='/item-details?id=1&category=Book' />">${book.title}</a></p>
               <p>${book.releaseDate}</p>
             </div>
           </div>
@@ -102,7 +102,7 @@
         <div class="col-md-3">
           <div class="card">
             <img src="<c:url value="/imagines/${movie.coverImagine}" /> " alt="奶龙">
-            <p><a href="<c:url value='/item-details?id=1&' />">${movie.title}</a></p>
+            <p><a href="<c:url value='/item-details?id=1&category=Movie' />">${movie.title}</a></p>
             <p>${movie.releaseDate}</p>
           </div>
         </div>

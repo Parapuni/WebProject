@@ -47,7 +47,7 @@ public abstract class Item {
     }
 
     public int getTotalRating() {
-       return totalRating;
+       return totalRating==0?1:totalRating;
     }
 
     public void setTotalRating(int totalRating) {

@@ -9,8 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -49,7 +47,7 @@ public class MovieJdbc implements MovieHandler {
     @Override
     public void addMovie(Movie movie) {
         long iid = itemJdbc.addItemReturnPrimaryKey(movie);
-        jdbcTemplate.update(INSERT_MOVIE, iid, movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntoduction());
+        jdbcTemplate.update(INSERT_MOVIE, iid, movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntroduction());
         categoryJdbc.addItemCategories(iid, movie.getCategories());
     }
 
@@ -63,7 +61,7 @@ public class MovieJdbc implements MovieHandler {
     @Override
     public void updateMovie(Movie movie) {
         itemJdbc.updateItem(movie);
-        jdbcTemplate.update(UPDATE_MOVIE, movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntoduction(), movie.getIid());
+        jdbcTemplate.update(UPDATE_MOVIE, movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntroduction(), movie.getIid());
         categoryJdbc.updateItemCategories(movie);
     }
 
@@ -140,7 +138,7 @@ public class MovieJdbc implements MovieHandler {
             movie.setDirector(resultSet.getString("director"));
             movie.setWriters(resultSet.getString("writers"));
             movie.setCast(resultSet.getString("cast"));
-            movie.setIntoduction(resultSet.getString("introduction"));
+            movie.setIntroduction(resultSet.getString("introduction"));
             return movie;
         }
     }
