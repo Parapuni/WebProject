@@ -74,4 +74,9 @@ public class ItemJdbc implements ItemHandler {
         jdbcTemplate.update(UPDATE_STARS, Arrays.toString(stars), rating);
     }
 
+    @Override
+    public Item getItemById(long iid) {
+        return null;
+    }
+
 }
