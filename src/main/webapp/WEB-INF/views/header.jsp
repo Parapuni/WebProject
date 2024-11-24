@@ -3,7 +3,7 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-      <a class="navbar-brand" href="/">Book, Movie, Music Reviews</a>
+      <a class="navbar-brand" href="<c:url value="/home"/>">Book, Movie, Music Reviews</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -12,16 +12,16 @@
           <c:choose>
             <c:when test="${not empty sessionScope.user}">
               <li class="nav-item">
-                <a class="nav-link" href="/home.jsp">Home</a>
+                <a class="nav-link" href="<c:url value="/home"/>">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/submit-review.jsp">Submit Review</a>
+                <a class="nav-link" href="<c:url value="/submit-review"/>">Submit Review</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/profile.jsp">Profile</a>
+                <a class="nav-link" href="<c:url value="/profile"/>">Profile</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-danger" href="/simulateLogout">Logout</a>
+                <a class="nav-link text-danger" href="<c:url value="/logout"/>">Logout</a>
               </li>
             </c:when>
 
@@ -36,16 +36,16 @@
                 <a class="nav-link" href="/content-management.jsp">Manage Content</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-danger" href="/simulateLogout">Logout</a>
+                <a class="nav-link text-danger" href="<c:url value="/logout"/>">Logout</a>
               </li>
             </c:when>
 
             <c:otherwise>
               <li class="nav-item">
-                <a class="nav-link" href="/login.jsp">Login</a>
+                <a class="nav-link" href="<c:url value="/login"/>">Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/register.jsp">Register</a>
+                <a class="nav-link" href="<c:url value="/register"/>">Register</a>
               </li>
             </c:otherwise>
           </c:choose>

@@ -6,11 +6,11 @@
 
   <c:choose>
     <c:when test="${empty sessionScope.user && empty sessionScope.admin}">
-      <p class="text-center text-danger">You need to <a href="login.jsp" class="text-decoration-none">log in</a> to access this feature.</p>
+      <p class="text-center text-danger">You need to <a href="<c:url value="/login"/>" class="text-decoration-none">log in</a> to access this feature.</p>
       <div class="row mt-4">
         <div class="col-md-12">
           <h4 class="text-center" style="color: #7f8c8d;">Explore Reviews</h4>
-          <a href="reviews.jsp" class="btn btn-secondary btn-lg w-100">View Reviews</a>
+          <a href="<c:url value="/reviews"/>" class="btn btn-secondary btn-lg w-100">View Reviews</a>
         </div>
       </div>
     </c:when>
@@ -39,14 +39,14 @@
         <h3 style="color: #e74c3c;">User Dashboard</h3>
         <div class="row mt-4">
           <div class="col-sm-6 mb-3">
-            <a href="submit-review.jsp" class="btn btn-primary w-100">Submit a Review</a>
+            <a href="<c:url value="/submit-review"/>" class="btn btn-primary w-100">Submit a Review</a>
           </div>
           <div class="col-sm-6 mb-3">
-            <a href="reviews.jsp" class="btn btn-secondary w-100">Manage Your Reviews</a>
+            <a href="<c:url value="/reviews"/>" class="btn btn-secondary w-100">Manage Your Reviews</a>
           </div>
         </div>
         <div class="mt-3">
-          <a href="profile.jsp" class="btn btn-outline-info w-100">Edit Your Profile</a>
+          <a href="<c:url value="/profile"/>" class="btn btn-outline-info w-100">Edit Your Profile</a>
         </div>
       </div>
     </c:otherwise>
