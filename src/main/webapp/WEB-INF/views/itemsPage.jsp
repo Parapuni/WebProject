@@ -100,11 +100,17 @@
     <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
       <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="1"/>
       <ul class="pagination">
+        <c:if test="${hasLast == true}">
+          <a class="page-link" href="<c:url value='/items?page=${currentPage-1}&category=${category}' />"><c:out value="<" escapeXml="true"/></a>
+        </c:if>
         <c:forEach var="i" begin="${start}" end="${end}">
           <li class="page-item ${i == currentPage ? 'active' : ''}">
             <a class="page-link" href="<c:url value='/items?page=${i}&category=${category}' />">${i}</a>
           </li>
         </c:forEach>
+        <c:if test="${hasNext == true}">
+          <a class="page-link" href="<c:url value='/items?page=${currentPage+1}&category=${category}' />"><c:out value=">" escapeXml="true"/></a>
+        </c:if>
       </ul>
     </nav>
 
