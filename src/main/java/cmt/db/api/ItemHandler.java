@@ -10,4 +10,6 @@ public interface ItemHandler {
     void updateItem(Item item);
 
     void updateRating(long iid, int star);
+
+    Item getItemById(long iid);
 }
