@@ -63,11 +63,11 @@ public class ItemJdbc implements ItemHandler {
     @Override
     public String getType(long iid) {
         if(isBook(iid))
-            return "book";
+            return "Book";
         if(isMovie(iid))
-            return "movie";
+            return "Movie";
         if(isMusic(iid))
-            return "music";
+            return "Music";
         return "";
     }
 

@@ -158,6 +158,14 @@ public class ItemController {
         return "itemReview";
     }
 
+    @RequestMapping(value = "/toPage", method = GET)
+    public String toPage(@RequestParam("iid") Integer iid,
+                         Model model){
+        String category = itemJdbc.getType(iid);
+        System.out.println(category);
+        return showItemDetials(iid,category,1,model);
+    }
+
     /**
      * 显示上传封面页面
      */

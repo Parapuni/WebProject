@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.net.MalformedURLException;
@@ -35,7 +38,22 @@ public class HomeController {
     private MusicJdbc musicJdbc;
 
     @RequestMapping(method = GET)
-    public String showHomePage(Model model) {
+    public String showHomePage(HttpServletRequest request,HttpServletResponse response,HttpSession session,Model model) {
+        /*
+        cookie记忆登陆状态
+         */
+        Cookie[] cookies = request.getCookies();
+        String[] userInfo = null;
+        if(cookies != null)
+            for (Cookie cookie:cookies) {
+                if ("userinfo".equals(cookie.getName()))
+                    userInfo = cookie.getValue().split("_");
+            }
+        if(userInfo != null){
+            User user = userJdbc.findUserById(Long.parseLong(userInfo[0]));
+            session.setAttribute("user",user);
+        }
+
         List<Book> recentBooks = bookJdbc.findBooks(0,4);
         model.addAttribute("recentBooks",recentBooks);
         List<Movie> recentMovies = movieJdbc.findMovies(0,4);
@@ -89,9 +107,19 @@ public class HomeController {
     @RequestMapping(value = "/login", method = POST)
     public String processLogin(@RequestParam(value = "username", defaultValue = "") String userName,
                                @RequestParam(value = "password", defaultValue = "") String password,
+                               HttpServletRequest request,
+                               HttpServletResponse response,
                                HttpSession session, Model model) {
         User user = userJdbc.findUserByNameAndPassword(userName, password);
         if (user != null) {
+            /*
+            设置cookie，寿命1天
+             */
+            Cookie cookie = new Cookie("userinfo",Long.toString(user.getUid())+"_"+user.getNickname());
+            cookie.setMaxAge(3600*24);
+            cookie.setPath(request.getContextPath());
+            System.out.println(cookie.getPath());
+            response.addCookie(cookie);
             session.setAttribute("user", user);
             return "redirect:/";
         } else {
