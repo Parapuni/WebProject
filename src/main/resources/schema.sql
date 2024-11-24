@@ -30,7 +30,7 @@ create table `Item`
     `releaseDate`  date,
     `stars`        varchar(80),
     `rating` double,
-    `coverImagine` varchar(255)
+    `coverImagine` varchar(255),
 );
 
 create table `Book`
