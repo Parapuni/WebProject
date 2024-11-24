@@ -29,7 +29,12 @@ public class MusicJdbc implements MusicHandler {
     private final String SELECT_MUSICS_BY_ARTISTS = "select * from Music m natural join Item i where m.artists like ? limit ? offset ?";
     private final String SELECT_MUSICS_BY_ALBUM = "select * from Music m natural join Item i where m.album like ? limit ? offset ?";
     private final String COUNT_TOTAL = "select COUNT(*) from Music";
-
+    private final String COUNT_BY_CATEGORY = "select COUNT(*) from " +
+            "(select m.* from Music m natural join Category_Item ci where ci.name in (?)) " +
+            "as cm natural join Item i";
+    private final String COUNT_BY_TITLE = "select * from Music m natural join Item i where i.title like ? ";
+    private final String COUNT_BY_ARTISTS = "select * from Music m natural join Item i where m.artists like ? ";
+    private final String COUNT_BY_ALBUM = "select * from Music m natural join Item i where m.album like ? ";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private CategoryJdbc categoryJdbc;
@@ -101,10 +106,21 @@ public class MusicJdbc implements MusicHandler {
     }
 
     @Override
+    public int countByCategories(List<String> NameOfCategories) {
+        String categories = String.join(",", NameOfCategories);
+        return jdbcTemplate.queryForInt(COUNT_BY_CATEGORY,categories);
+    }
+
+    @Override
     public List<Music> findMusicsByTitle(int offset, int length, String title) {
         List<Music> musics = jdbcTemplate.query(SELECT_MUSICS_BY_TITLE, new MusicRowMapper(), "%" + title + "%", length, offset);
         categoryJdbc.setCategory(musics);
         return musics;
+    }
+
+    @Override
+    public int countByTitle(String title) {
+        return jdbcTemplate.queryForInt(COUNT_BY_TITLE,"%" + title + "%");
     }
 
     @Override
@@ -115,10 +131,20 @@ public class MusicJdbc implements MusicHandler {
     }
 
     @Override
+    public int countByArtists(String artists) {
+        return jdbcTemplate.queryForInt(COUNT_BY_ARTISTS,"%" + artists + "%");
+    }
+
+    @Override
     public List<Music> findMusicsByAlbum(int offset, int length, String Album) {
         List<Music> musics = jdbcTemplate.query(SELECT_MUSICS_BY_ALBUM,new MusicRowMapper(), "%" + Album + "%", length, offset);
         categoryJdbc.setCategory(musics);
         return musics;
+    }
+
+    @Override
+    public int countByAlbum(String Album) {
+        return jdbcTemplate.queryForInt(COUNT_BY_ALBUM,"%" + Album + "%");
     }
 
     private static final class MusicRowMapper implements RowMapper<Music> {

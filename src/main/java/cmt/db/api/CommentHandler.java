@@ -19,5 +19,10 @@ public interface CommentHandler {
 
     List<Comment> findCommentsByItemId(long iid, int offset, int length);
 
+    int  countByItemId(long iid);
+
     List<Comment> findCommentsByUserId(long uid, int offset, int length);
+
+    int  countByUserId(long uid);
+
 }
