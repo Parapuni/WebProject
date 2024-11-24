@@ -36,6 +36,7 @@ public class CommentController {
     public String showSubmitReviewPage(@RequestParam(value = "category") String category,
                                        @RequestParam(value = "id") Integer iid,
                                        Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
         if (session.getAttribute("user") == null) {
             return "redirect:/login";
         }
@@ -62,14 +63,26 @@ public class CommentController {
                                       @RequestParam(value = "id") Integer iid,
                                       @RequestParam(value = "rating") Integer rating,
                                       Model model, HttpSession session) {
-        // 获取当前登录用户
         User user = (User) session.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "You must be logged in to submit a review.");
             return "redirect:/login";
         }
 
-        // 创建 Comment 实例
+        // 检查用户是否已评论该 item
+        Comment existingComment = commentJdbc.findComment(iid, user.getUid());
+        if (existingComment != null) {
+            System.out.println("Comment exists");
+            // 提示用户是否覆盖评论
+            model.addAttribute("commentExists", true);
+            model.addAttribute("existingComment", existingComment);
+            model.addAttribute("content", content);
+            model.addAttribute("rating", rating);
+            model.addAttribute("iid", iid);
+            return "editReview"; // 回到评论页面
+        }
+
+        // 保存新评论
         Comment comment = new Comment();
         comment.setIid(iid);
         comment.setUid(user.getUid());
@@ -79,19 +92,24 @@ public class CommentController {
         comment.setUserName(user.getNickname());
         comment.setItemTitle("Item Title Placeholder");
 
-        if(commentJdbc.findComment(iid, user.getUid()) != null){
-            model.addAttribute("error", "You have already submitted a review for this item.");
-            return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
-        }
-
-        System.out.println("Rating: " + rating);
-        System.out.println("Content: " + content);
-        System.out.println("Item ID: " + iid);
-
-        // 将评论保存到数据库
         commentJdbc.addComment(comment);
 
-        // 重定向到该作品详情页
         return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
     }
+
+    @RequestMapping(value = "/update-review", method = RequestMethod.POST)
+    public String updateReview(@RequestParam("reviewContent") String content,
+                               @RequestParam(value = "id") Integer iid,
+                               @RequestParam(value = "rating") Integer rating,
+                               HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        commentJdbc.updateCommentContent(iid, user.getUid(), content, rating);
+
+        return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
+    }
+
 }

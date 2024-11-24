@@ -141,8 +141,40 @@
       <button type="submit" class="btn btn-primary submit-btn">Submit Comment</button>
     </form>
   </div>
-
 </div>
+
+<!-- Modal -->
+<c:if test="${commentExists}">
+  <div class="modal" tabindex="-1" role="dialog" id="overwriteModal" style="display: block; background: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Existing Comment Found</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="hideModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>You have already submitted a comment for this item. Do you want to overwrite it?</p>
+        </div>
+        <div class="modal-footer">
+          <form action="update-review" method="post">
+            <input type="hidden" name="id" value="${iid}">
+            <input type="hidden" name="rating" value="${rating}">
+            <textarea name="reviewContent" hidden>${content}</textarea>
+            <button type="submit" class="btn btn-primary">Overwrite</button>
+          </form>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="hideModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</c:if>
+<script>
+  function hideModal() {
+    document.getElementById('overwriteModal').style.display = 'none';
+  }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/quill/dist/quill.min.js"></script>
