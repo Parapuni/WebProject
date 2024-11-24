@@ -61,13 +61,16 @@ public class CommentController {
     @RequestMapping(value = "/submit-review", method = RequestMethod.POST)
     public String processSubmitReview(@RequestParam("reviewContent") String content,
                                       @RequestParam(value = "id") Integer iid,
-                                      @RequestParam(value = "rating") Integer rating,
+                                      @RequestParam(value = "rating", defaultValue = "1") Integer rating,
                                       Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         String category = (String) session.getAttribute("category");
         if (user == null) {
             model.addAttribute("error", "You must be logged in to submit a review.");
             return "redirect:/login";
+        }
+        if (rating < 1) {
+            rating = 1;
         }
 
         // 检查用户是否已评论该 item
@@ -107,7 +110,7 @@ public class CommentController {
     @RequestMapping(value = "/update-review", method = RequestMethod.POST)
     public String updateReview(@RequestParam("reviewContent") String content,
                                @RequestParam(value = "id") Integer iid,
-                               @RequestParam(value = "rating") Integer rating,
+                               @RequestParam(value = "rating", defaultValue = "1") Integer rating,
                                @RequestParam(value = "originalRating") Integer originalRating,
                                HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -122,4 +125,15 @@ public class CommentController {
         return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
     }
 
+    @RequestMapping(value = "/delete-comment", method = RequestMethod.POST)
+    public String deleteComment(@RequestParam("commentId") Integer iid,
+                                HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        commentJdbc.removeComment(iid, user.getUid());
+        return "redirect:/profile";
+    }
 }

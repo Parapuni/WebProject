@@ -90,6 +90,7 @@
                 <p>${item.releaseDate}</p>
                 <!-- Display Rating -->
                 <div class="rating">${item.rating}</div>
+                <cs:rating rating="${item.rating}"/>
               </div>
             </div>
           </div>
@@ -113,7 +114,6 @@
         </c:if>
       </ul>
     </nav>
-    <h1>${currentPage}${totalPages}</h1>
 
   </div>
 </div>

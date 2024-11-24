@@ -39,6 +39,15 @@
 <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="container">
         <h3 class="text-center">Login</h3>
+
+        <!-- 错误信息弹窗 -->
+        <c:if test="${not empty error}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error:</strong> ${error}
+            </div>
+        </c:if>
+
+        <!-- 登录表单 -->
         <form action="login" method="post">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>

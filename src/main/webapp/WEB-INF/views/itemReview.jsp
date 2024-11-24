@@ -155,7 +155,7 @@
         </c:forEach>
       </div>
       <div class="mt-3">
-        <h4 class="text-success"><strong>Overall Rating:</strong> ${item.rating}</h4>
+        <h4 class="text-success"><strong>Overall Rating:</strong> <fmt:formatNumber value="${item.rating}" pattern="#.0" type="number"/></h4>
         <cs:rating rating="${item.rating}"/>
       </div>
     </div>
@@ -245,6 +245,7 @@
 
   <!-- Pagination -->
   <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+    <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="2"/>
     <ul class="pagination">
       <c:if test="${hasLast == true}">
         <li class="page-item">

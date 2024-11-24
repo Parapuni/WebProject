@@ -25,7 +25,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 public class ItemController {
-    private static final int PAGE_SIZE = 2;
+    private static final int PAGE_SIZE = 3;
     @Autowired
     private ItemJdbc itemJdbc;
     @Autowired
@@ -101,15 +101,17 @@ public class ItemController {
         switch (category){
             case "Book":
                 List<Book> books = bookJdbc.findBooksByTitle((page - 1) * PAGE_SIZE, PAGE_SIZE, query);
+                model.addAttribute("totalPages", (int) Math.ceil((double) bookJdbc.countByTitle(query) / PAGE_SIZE));
                 model.addAttribute("items", books);
                 break;
             case "Movie":
                 List<Movie> movies = movieJdbc.findMoviesByTitle((page - 1) * PAGE_SIZE, PAGE_SIZE, query);
+                model.addAttribute("totalPages", (int) Math.ceil((double) movieJdbc.countByTitle(query) / PAGE_SIZE));
                 model.addAttribute("items", movies);
                 break;
             case "Music":
                 List<Music> musics = musicJdbc.findMusicsByTitle((page - 1) * PAGE_SIZE, PAGE_SIZE, query);
-                model.addAttribute("totalPages", (int) Math.ceil((double) musicJdbc.countTotal() / PAGE_SIZE));
+                model.addAttribute("totalPages", (int) Math.ceil((double) musicJdbc.countByTitle(query) / PAGE_SIZE));
                 model.addAttribute("items", musics);
                 break;
         }
@@ -151,7 +153,7 @@ public class ItemController {
         model.addAttribute("comments", comments);
         model.addAttribute("currentPage", page);
         model.addAttribute("category", category);
-        model.addAttribute("totalPages", (int) Math.ceil((double) commentJdbc.countTotal() / PAGE_SIZE));
+        model.addAttribute("totalPages", (int) Math.ceil((double) commentJdbc.countByItemId(iid) / PAGE_SIZE));
 
         return "itemReview";
     }

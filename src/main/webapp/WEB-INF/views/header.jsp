@@ -53,8 +53,15 @@
             <li class="nav-item"><a class="nav-link" href="<c:url value='/logout' />">退出</a></li>
           </c:when>
           <c:otherwise>
-            <li class="nav-item"><a class="nav-link" href="<c:url value='/profile' />">个人信息</a></li>
-            <li class="nav-item"><a class="nav-link" href="<c:url value='/logout' />">退出</a></li>
+            <li class="nav-item d-flex align-items-center">
+              <a href="<c:url value='/profile' />" class="d-inline-block me-2">
+                <img src="<c:url value='/imagines/${user.avatar}' />" alt="Profile Picture" style="height: 50px; width: 50px; border-radius: 50%;">
+              </a>
+              <div>
+                <a class="nav-link" href="<c:url value='/profile' />">个人信息</a>
+                <a class="nav-link" href="<c:url value='/logout' />">退出</a>
+              </div>
+            </li>
           </c:otherwise>
         </c:choose>
       </ul>
@@ -134,6 +141,17 @@
     margin-bottom: auto;
     padding-top: 0;
     padding-bottom: 0;
+  }
+
+  /* 垂直对齐调整 */
+  .navbar-nav.ms-3 .nav-item {
+    display: flex;
+    align-items: center;
+  }
+
+  /* 调整头像间距 */
+  .navbar-nav .nav-item img {
+    margin-right: 10px;
   }
 
   /* 移动端适配 */
