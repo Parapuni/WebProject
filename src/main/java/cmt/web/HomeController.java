@@ -59,6 +59,8 @@ public class HomeController {
             return "redirect:/login";
         }
         model.addAttribute("user", user);
+        List<Comment> comments = commentJdbc.findCommentsByUserId(user.getUid(),0, 99999);
+        model.addAttribute("comments", comments);
         return "profile";
     }
 
@@ -77,12 +79,6 @@ public class HomeController {
         return "register";
     }
 
-    @RequestMapping(value = "/reviews", method = GET)
-    public String showReviewsPage(Model model) {
-        // TODO: 2024/11/20 Add reviews to model
-        return "reviews";
-    }
-
     @RequestMapping(value = "/submit-review", method = GET)
     public String showSubmitReviewPage(Model model) {
         return "submit-review";
@@ -93,12 +89,13 @@ public class HomeController {
     @RequestMapping(value = "/login", method = POST)
     public String processLogin(@RequestParam(value = "username", defaultValue = "") String userName,
                                @RequestParam(value = "password", defaultValue = "") String password,
-                               HttpSession session) {
+                               HttpSession session, Model model) {
         User user = userJdbc.findUserByNameAndPassword(userName, password);
         if (user != null) {
             session.setAttribute("user", user);
             return "redirect:/";
         } else {
+            model.addAttribute("error", "Invalid username or password");
             return "login";
         }
     }
@@ -123,4 +120,6 @@ public class HomeController {
             return "redirect:profile";
         }
     }
+
+
 }

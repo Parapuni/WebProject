@@ -90,6 +90,7 @@
                 <p>${item.releaseDate}</p>
                 <!-- Display Rating -->
                 <div class="rating">${item.rating}</div>
+                <cs:rating rating="${item.rating}"/>
               </div>
             </div>
           </div>

@@ -108,19 +108,35 @@
     <div class="col-md-9">
       <div class="reviews-section">
         <h3>My Comments</h3>
-        <c:forEach var="comment" items="${reviews}">
-          <div class="review-item">
-            <div class="review-title">${comment.title}</div>
-            <div>${comment.content}</div>
-            <div class="review-actions">
-              <a href="<c:url value='/edit-review?id=${comment.id}' />">Edit</a>
-              <a href="<c:url value='/delete-review?id=${comment.id}' />" class="text-danger">Delete</a>
+        <c:if test="${empty comments}">
+          <p class="text-muted">No comments yet. Be the first to review!</p>
+        </c:if>
+        <c:forEach items="${comments}" var="comment">
+          <div class="review p-3 mb-3 border rounded shadow-sm bg-light">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-dark fw-bold">${comment.userName}</span>
+              <span class="text-muted">${comment.cdate}</span>
             </div>
+
+            <strong><p class="text-secondary">${comment.itemTitle}</p></strong>
+
+            <div class="review-rating text-warning mb-2">
+              <c:forEach var="star" begin="1" end="${comment.rating}">
+                ★
+              </c:forEach>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <p class="text-secondary">${comment.content}</p>
+              <form action="delete-comment" method="post" class="mt-2">
+                <input type="hidden" name="commentId" value="${comment.iid}">
+                <button type="submit" class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+              </form>
+            </div>
+
           </div>
         </c:forEach>
-        <c:if test="${empty comment}">
-          <p class="text-muted">You have not written any comments yet.</p>
-        </c:if>
       </div>
     </div>
   </div>
