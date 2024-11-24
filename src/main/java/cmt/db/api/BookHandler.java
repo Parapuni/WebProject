@@ -9,6 +9,7 @@ import java.util.List;
  * Book数据操作接口
  */
 public interface BookHandler {
+    int countTotal();
     void addBook(Book book);
 
     void removeBook(long iid);

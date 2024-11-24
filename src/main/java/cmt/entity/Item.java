@@ -2,7 +2,6 @@ package cmt.entity;
 
 import com.sun.istack.internal.NotNull;
 
-import java.net.URL;
 import java.sql.Date;
 import java.util.List;
 
@@ -18,9 +17,10 @@ public abstract class Item {
     private int[] stars;//评星级人数
     private List<String> categories;//作品分类，存在 Item-Category表中
     private double rating;//电影评分，评星按人数加权平均计算得到
-    private URL coverImagine;//封面，存储在服务器中，数据库中只存储其URL
+    private String coverImagine;//封面，存储在resource/imagines中，数据库中只存储其文件名(也是其编号)
 
     public Item() {
+        this.stars = new int[5];
     }
 
     /**
@@ -34,7 +34,7 @@ public abstract class Item {
      * @param rating        评分
      * @param coverImagine 封面
      */
-    public Item(long iid, String title, Date releaseDate, int[] stars, List<String> categories, double rating, URL coverImagine) {
+    public Item(long iid, String title, Date releaseDate, int[] stars, List<String> categories, double rating, String coverImagine) {
         this.iid = iid;
         this.title = title;
         this.releaseDate = releaseDate;
@@ -99,11 +99,11 @@ public abstract class Item {
         this.categories = categories;
     }
 
-    public URL getCoverImagine() {
+    public String getCoverImagine() {
         return coverImagine;
     }
 
-    public void setCoverImagine(URL coverImagine) {
+    public void setCoverImagine(String coverImagine) {
         this.coverImagine = coverImagine;
     }
 }

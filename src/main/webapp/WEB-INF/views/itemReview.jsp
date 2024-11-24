@@ -93,22 +93,21 @@
   <div class="rate-section">
     <!-- Poster -->
     <div class="poster">
-      <img src="${item.coverImage}" alt="Poster for ${item.title}">
+      <img src="${item.coverImagine}" alt="${item.title}">
       <div class="release-date">Release Date: ${item.releaseDate}</div>
     </div>
 
     <!-- Rating Information -->
     <div class="rating-info">
-      <h3>Overall Rating: ${item.rating.toFixed(1)} / 5</h3>
-      <p>Rated by ${item.totalRatings} users</p>
+      <h3>Overall Rating: ${item.rating}</h3>
       <div class="rating-distribution">
         <c:forEach var="i" begin="1" end="5">
           <c:set var="star" value="${6 - i}" />
-          <div class="bar-container">
-            <span>${star}★</span>
-            <div class="bar" style="width: ${item.stars[star - 1] / item.totalRatings * 100}%;"></div>
-            <span>${item.stars[star - 1] / item.totalRatings * 100}%</span>
-          </div>
+<%--          <div class="bar-container">--%>
+<%--            <span>${star}★</span>--%>
+<%--            <div class="bar" style="width: ${item.stars[star - 1] / item.totalRatings * 100}%;"></div>--%>
+<%--            <span>${item.stars[star - 1] / item.totalRatings * 100}%</span>--%>
+<%--          </div>--%>
         </c:forEach>
       </div>
       <c:choose>
@@ -126,19 +125,30 @@
 
   <!-- User Reviews Section -->
   <div class="reviews-section">
-    <h3>User Reviews</h3>
-    <c:forEach items="${item.reviews}" var="review">
+    <h3>User Comments</h3>
+    <c:forEach items="${comments}" var="comment">
       <div class="review">
-        <p><strong>${review.username}</strong></p>
+        <p><strong>${comment.username}</strong></p>
         <div class="review-rating">
-          <c:forEach var="star" begin="1" end="${review.rating}">
+          <c:forEach var="star" begin="1" end="${comment.rating}">
             ★
           </c:forEach>
         </div>
-        <p>${review.comment}</p>
+        <p>${comment.content}</p>
       </div>
     </c:forEach>
   </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+    <ul class="pagination">
+      <c:forEach var="i" begin="1" end="${totalPages}">
+        <li class="page-item ${i == currentPage ? 'active' : ''}">
+          <a class="page-link" href="<c:url value='/item-details?page=${i}&category=${category}' />">${i}</a>
+        </li>
+      </c:forEach>
+    </ul>
+  </nav>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

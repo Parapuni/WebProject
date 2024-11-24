@@ -16,6 +16,9 @@ public class Comment {
     private long uid;   //发表评论的用户的id
     @NotNull
     private Date cdate;
+    private String userName;
+    private String itemTitle;
+    private int rating;
     @NotNull
     private String content;  //评论内容
 
@@ -32,12 +35,14 @@ public class Comment {
      * @param uid     发言者id
      * @param cdate 发言时间
      * @param content 内容
+     * @param rating 评分
      */
-    public Comment(long iid, long uid, String uname, Date cdate, String content) {
+    public Comment(long iid, long uid, Date cdate, String content,int rating) {
         this.iid = iid;
         this.uid = uid;
         this.cdate = cdate;
         this.content = content;
+        this.rating = rating;
     }
 
     public long getIid() {
@@ -70,5 +75,29 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getItemTitle() {
+        return itemTitle;
+    }
+
+    public void setItemTitle(String itemTitle) {
+        this.itemTitle = itemTitle;
     }
 }

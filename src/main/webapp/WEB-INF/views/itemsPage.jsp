@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tld/csTag.tld" prefix="cs" %>
 <%@ include file="header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,18 +86,31 @@
             <div class="card">
               <img src="<c:url value='/images/${item.coverImagine}' />" alt="${item.title}" class="card-img-top">
               <div class="card-body">
-                <h5><a href="<c:url value='/item-details?id=${item.iid}' />" class="text-dark">${item.title}</a></h5>
-                <p>${item.description}</p>
+                <h5><a href="<c:url value='/item-details?id=${item.iid}&category=${category}' />" class="text-dark">${item.title}</a></h5>
+                <p>${item.releaseDate}</p>
                 <!-- Display Rating -->
-                <div class="rating">${item.rating.toFixed(1)} / 5</div>
+                <div class="rating">${item.rating}</div>
               </div>
             </div>
           </div>
         </c:forEach>
       </div>
     </div>
+    <!-- Pagination -->
+    <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+      <ul class="pagination">
+        <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="5"/>
+        <c:forEach var="i" begin="${start}" end="${end}">
+          <li class="page-item ${i == currentPage ? 'active' : ''}">
+            <a class="page-link" href="<c:url value='/items?page=${i}&category=${category}' />">${i}</a>
+          </li>
+        </c:forEach>
+      </ul>
+    </nav>
+
   </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

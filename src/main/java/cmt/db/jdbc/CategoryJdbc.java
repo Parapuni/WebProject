@@ -36,7 +36,7 @@ public class CategoryJdbc implements CategoryHandler {
     }
 
     public List<String> getCategories(long iid) {
-        return jdbcTemplate.query(SELECT_CATEGORIES_BY_ID, new StringRowMapper());
+        return jdbcTemplate.query(SELECT_CATEGORIES_BY_ID, new StringRowMapper(), iid);
     }
 
     /**

@@ -9,6 +9,7 @@ import java.util.List;
  * Admin数据操作接口
  */
 public interface AdminHandler {
+    int countTotal();
     /**
      * 添加一名管理员
      *

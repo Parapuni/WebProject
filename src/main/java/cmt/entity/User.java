@@ -24,7 +24,7 @@ public class User {
     private String email;//邮箱
     private String number;//手机号
     private Date birthday;//生日
-    private URL avatar;//头像，存储在服务器中，但是在数据库中只存放其URI
+    private String avatar;//头像，存储在服务器中，但是在数据库中只存放其URI
 
     /**
      * 无参的默认构造函数
@@ -45,7 +45,7 @@ public class User {
      * @param birthday  生日
      * @param avatar    头像的URL
      */
-    public User(long uid, String password, String nickname, String firstName, String lastName, String email, String number, java.sql.Date birthday, URL avatar) {
+    public User(long uid, String password, String nickname, String firstName, String lastName, String email, String number, java.sql.Date birthday, String avatar) {
         this.uid = uid;
         this.password = password;
         this.nickname = nickname;
@@ -61,7 +61,7 @@ public class User {
         this.nickname = nickname;
         this.password = password;
         this.email = email;
-        this.avatar = new URL("http://localhost:8080/imagines/presplash_background.png");
+        this.avatar = "";
         this.birthday = new Date(0);
         this.firstName = "";
         this.lastName = "";
@@ -132,11 +132,11 @@ public class User {
         this.birthday = birthday;
     }
 
-    public URL getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(URL avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 }

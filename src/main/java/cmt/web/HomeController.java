@@ -23,12 +23,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class HomeController {
     @Autowired
     private UserJdbc userJdbc;
-
     @Autowired
     private AdminJdbc adminJdbc;
-
     @Autowired
     private CommentJdbc commentJdbc;
+    @Autowired
+    private BookJdbc bookJdbc;
+    @Autowired
+    private MovieJdbc movieJdbc;
+    @Autowired
+    private MusicJdbc musicJdbc;
 
     @RequestMapping(method = GET)
     public String showHomePage(Model model) {
@@ -49,12 +53,6 @@ public class HomeController {
         }
         model.addAttribute("user", user);
         return "profile";
-    }
-
-    @RequestMapping(value = "/logout", method = GET)
-    public String logout(HttpSession session) {
-        session.removeAttribute("user");
-        return "redirect:/";
     }
 
     @RequestMapping(value = "/home", method = GET)
@@ -83,6 +81,8 @@ public class HomeController {
         return "submit-review";
     }
 
+
+
     @RequestMapping(value = "/login", method = POST)
     public String processLogin(@RequestParam(value = "username", defaultValue = "") String userName,
                                @RequestParam(value = "password", defaultValue = "") String password,
@@ -94,6 +94,12 @@ public class HomeController {
         } else {
             return "login";
         }
+    }
+
+    @RequestMapping(value = "/logout", method = GET)
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/register", method = POST)
