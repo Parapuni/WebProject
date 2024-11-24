@@ -94,15 +94,6 @@
       <input type="date" class="form-control" id="birthday" name="birthday" value="${user.birthday}" />
     </div>
 
-    <!-- Avatar -->
-    <div class="mb-3">
-      <label for="avatar" class="form-label">Avatar</label>
-      <input type="file" class="form-control" id="avatar" name="avatar" />
-      <div class="mt-3">
-        <img src="<c:url value='/images/${user.avatar}' />" alt="User Avatar" style="width: 120px; height: 120px; border-radius: 50%;" />
-      </div>
-    </div>
-
     <!-- Password -->
     <div class="mb-3">
       <label for="password" class="form-label">New Password</label>

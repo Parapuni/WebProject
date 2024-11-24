@@ -1,6 +1,5 @@
 package cmt.entity;
 
-import java.net.URL;
 import java.sql.Date;
 import java.util.List;
 
@@ -8,7 +7,7 @@ public class Movie extends Item {
     private String director;//导演
     private String writers;//编剧
     private String cast;//演员
-    private String intoduction;//简介
+    private String introduction;//简介
 
     public Movie() {
         super();
@@ -27,14 +26,14 @@ public class Movie extends Item {
      * @param director 导演
      * @param writers 编剧
      * @param cast 演员阵容
-     * @param intoduction 简介
+     * @param introduction 简介
      */
-    public Movie(long iid, String title, Date releaseDate, int[] stars, List<String> categories, double rating, URL coverImagine, String director, String writers, String cast, String intoduction) {
+    public Movie(long iid, String title, Date releaseDate, int[] stars, List<String> categories, double rating, String coverImagine, String director, String writers, String cast, String introduction) {
         super(iid, title, releaseDate, stars, categories, rating, coverImagine);
         this.director = director;
         this.writers = writers;
         this.cast = cast;
-        this.intoduction = intoduction;
+        this.introduction = introduction;
     }
 
     public String getDirector() {
@@ -61,11 +60,11 @@ public class Movie extends Item {
         this.cast = cast;
     }
 
-    public String getIntoduction() {
-        return intoduction;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setIntoduction(String intoduction) {
-        this.intoduction = intoduction;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 }

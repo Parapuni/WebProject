@@ -43,6 +43,8 @@ public class PaginationTag extends SimpleTagSupport {
      */
     @Override
     public void doTag() throws IOException, JspException {
+        boolean hasNext = true;
+        boolean hasLast = true;
         int cnt = index / maxPagesVisible;
         int remain = index % maxPagesVisible;
         cnt += (remain == 0) ? 0 : 1;
@@ -50,7 +52,13 @@ public class PaginationTag extends SimpleTagSupport {
         int last = cnt * maxPagesVisible+1;
         first = first>0? first :1;
         last = last < pageNum ? last : pageNum;
+        if(index == pageNum)
+            hasNext = false;
+        if(index == 1 )
+            hasLast = false;
         getJspContext().setAttribute("start",first);
         getJspContext().setAttribute("end",last);
+        getJspContext().setAttribute("hasNext",hasNext);
+        getJspContext().setAttribute("hasLast",hasLast);
     }
 }

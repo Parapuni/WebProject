@@ -50,33 +50,24 @@
 <div class="container mt-5">
     <h2 class="text-center">Register</h2>
     <form action="register" method="POST">
-        <!-- 用户ID：不可编辑 -->
-        <div class="form-group">
-            <label for="uid">UID</label>
-            <input type="text" class="form-control" id="uid" name="uid" value="${generatedUserId}" readonly>
-        </div>
         <!-- 必填字段 -->
         <div class="form-group">
             <label for="nickname">Nickname</label>
             <input type="text" class="form-control" id="nickname" name="nickname" required>
         </div>
         <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-            <label for="number">Phone Number</label>
-            <input type="text" class="form-control" id="number" name="number" required>
-        </div>
-        <!-- 非必填字段 -->
-        <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
+            <input type="password" class="form-control" id="password" name="password"  required>
         </div>
         <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"  required>
         </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <!-- 非必填字段 -->
         <div class="form-group">
             <label for="firstName">First Name</label>
             <input type="text" class="form-control" id="firstName" name="firstName">
@@ -84,6 +75,10 @@
         <div class="form-group">
             <label for="lastName">Last Name</label>
             <input type="text" class="form-control" id="lastName" name="lastName">
+        </div>
+        <div class="form-group">
+            <label for="number">Phone Number</label>
+            <input type="text" class="form-control" id="number" name="number">
         </div>
         <div class="form-group">
             <label for="birthday">Birthday</label>

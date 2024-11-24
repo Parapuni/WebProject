@@ -2,13 +2,13 @@ package cmt.db.jdbc;
 
 import cmt.db.api.MovieHandler;
 import cmt.entity.Movie;
+import cmt.entity.Music;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,7 +19,7 @@ public class MovieJdbc implements MovieHandler {
     private final String INSERT_MOVIE = "insert into Movie values(?,?,?,?,?)";
     private final String DELETE_MOVIE = "delete from Movie where iid = ?";
     private final String SELECT_MOVIE_BY_ID = "select * from Movie m natural join Item i where m.iid = ?";
-    private final String SELECT_MOVIES = "select * from Movie natural join Item limit ? offset ?";
+    private final String SELECT_MOVIES = "select * from Movie m natural join Item i order by i.releaseDate desc limit ? offset ? ";
     private final String SELECT_MOVIES_BY_CATEGORY = "select * from " +
             "(select m.* from Movie m natural join Category_Item ci where ci.name in (?) limit ? offset ?) " +
             "as cm natural join Item i";
@@ -47,7 +47,7 @@ public class MovieJdbc implements MovieHandler {
     @Override
     public void addMovie(Movie movie) {
         long iid = itemJdbc.addItemReturnPrimaryKey(movie);
-        jdbcTemplate.update(INSERT_MOVIE, iid, movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntoduction());
+        jdbcTemplate.update(INSERT_MOVIE, iid, movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntroduction());
         categoryJdbc.addItemCategories(iid, movie.getCategories());
     }
 
@@ -61,7 +61,7 @@ public class MovieJdbc implements MovieHandler {
     @Override
     public void updateMovie(Movie movie) {
         itemJdbc.updateItem(movie);
-        jdbcTemplate.update(UPDATE_MOVIE, movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntoduction(), movie.getIid());
+        jdbcTemplate.update(UPDATE_MOVIE, movie.getDirector(), movie.getWriters(), movie.getCast(), movie.getIntroduction(), movie.getIid());
         categoryJdbc.updateItemCategories(movie);
     }
 
@@ -72,9 +72,14 @@ public class MovieJdbc implements MovieHandler {
 
     @Override
     public Movie findMovieById(long iid) {
-        Movie movie = jdbcTemplate.queryForObject(SELECT_MOVIE_BY_ID, new MovieRowMapper(), iid);
-        categoryJdbc.setCategory(movie);
-        return movie;
+        Movie movie = null;
+        try {
+            movie = jdbcTemplate.queryForObject(SELECT_MOVIE_BY_ID, new MovieRowMapper(), iid);
+            categoryJdbc.setCategory(movie);
+        }catch (DataAccessException dae){
+        }finally {
+            return movie;
+        }
     }
 
     @Override
@@ -133,7 +138,7 @@ public class MovieJdbc implements MovieHandler {
             movie.setDirector(resultSet.getString("director"));
             movie.setWriters(resultSet.getString("writers"));
             movie.setCast(resultSet.getString("cast"));
-            movie.setIntoduction(resultSet.getString("introduction"));
+            movie.setIntroduction(resultSet.getString("introduction"));
             return movie;
         }
     }

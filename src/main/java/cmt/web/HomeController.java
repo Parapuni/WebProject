@@ -36,6 +36,13 @@ public class HomeController {
 
     @RequestMapping(method = GET)
     public String showHomePage(Model model) {
+        List<Book> recentBooks = bookJdbc.findBooks(0,4);
+        model.addAttribute("recentBooks",recentBooks);
+        List<Movie> recentMovies = movieJdbc.findMovies(0,4);
+        model.addAttribute("recentMovies",recentMovies);
+        List<Music> recentMusics = musicJdbc.findMusics(0,4);
+        model.addAttribute("recentMusics",recentMusics);
+
         String welcomeMessage = "Welcome to the Reviews System!";
         model.addAttribute("welcomeMessage", welcomeMessage);
 
@@ -103,7 +110,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/register", method = POST)
-    public String processRegister(@RequestParam(value = "username", defaultValue = "") String userName,
+    public String processRegister(@RequestParam(value = "nickname", defaultValue = "") String nickname,
                                   @RequestParam(value = "password", defaultValue = "") String password,
                                   @RequestParam(value = "email", defaultValue = "") String email,
                                   @RequestParam(value = "confirmPassword", defaultValue = "") String passwordConfirm,
@@ -111,7 +118,7 @@ public class HomeController {
         if (!password.equals(passwordConfirm)) {
             return "register";
         } else {
-            User user = new User(userName, password, email);
+            User user = new User(nickname, password, email);
             userJdbc.addUser(user);
             return "redirect:profile";
         }

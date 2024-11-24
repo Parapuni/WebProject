@@ -18,9 +18,10 @@ public abstract class Item {
     private List<String> categories;//作品分类，存在 Item-Category表中
     private double rating;//电影评分，评星按人数加权平均计算得到
     private String coverImagine;//封面，存储在resource/imagines中，数据库中只存储其文件名(也是其编号)
-
+    private int totalRating;
     public Item() {
         this.stars = new int[5];
+        totalRating = 1;
     }
 
     /**
@@ -42,6 +43,15 @@ public abstract class Item {
         this.categories = categories;
         this.rating = rating;
         this.coverImagine = coverImagine;
+        totalRating = 1;
+    }
+
+    public int getTotalRating() {
+       return totalRating==0?1:totalRating;
+    }
+
+    public void setTotalRating(int totalRating) {
+        this.totalRating = totalRating;
     }
 
     public long getIid() {
@@ -77,10 +87,13 @@ public abstract class Item {
     }
 
     public void setStars(String s) {
+        totalRating = 0;
         String[] ss = s.substring(1, s.length() - 1).split(",");
         for (int i = 0; i < 5; i++) {
             this.stars[i] = Integer.parseInt(ss[i]);
+            totalRating += this.stars[i];
         }
+
     }
 
     public double getRating() {

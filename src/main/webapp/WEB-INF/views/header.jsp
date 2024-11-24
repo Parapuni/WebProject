@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #183b83; font-family: 'Arial', sans-serif;">
   <div class="container-fluid">
     <a class="navbar-brand" href="<c:url value='/' />">
-      <img src="sre/main/resources/images/logo.png" alt="Logo" style="height: 40px;">
+      <img src="<c:url value="/imagines/IID1cover.jpg" />" alt="Logo" style="height: 40px;">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
