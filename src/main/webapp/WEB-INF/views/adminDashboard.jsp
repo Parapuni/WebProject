@@ -1,84 +1,109 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="header.jsp" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员仪表盘</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* 引入Google字体 */
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
         body {
-            background: linear-gradient(135deg, #f8f9fa, #dfe3e8);
-            color: #343a40;
-            font-family: 'Roboto', sans-serif;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
         }
-
-        .container {
-            max-width: 1200px;
+        .dashboard-container {
+            margin-top: 40px;
+        }
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .dashboard-box {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
             padding: 20px;
+            margin: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-
-        .card {
-            margin-bottom: 1rem;
-            border-radius: 8px; /* 添加圆角 */
-            border: 1px solid #e0e0e0; /* 添加轻微边框 */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05); /* 调整阴影效果 */
+        .dashboard-box:hover {
+            background-color: #007bff;
+            color: #fff;
         }
-
-        .btn-warning, .btn-danger {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 为按钮添加阴影 */
-            border-radius: 4px; /* 统一按钮圆角 */
+        .dashboard-box a {
+            text-decoration: none;
+            color: inherit;
         }
-
-        .btn-warning:hover {
-            background-color: #f0b800;
+        .dashboard-box a:hover {
+            text-decoration: none;
         }
-
-        .btn-danger:hover {
-            background-color: #e60000;
+        .dashboard-box h4 {
+            margin-bottom: 10px;
         }
     </style>
-
 </head>
 <body>
-<div class="container my-5">
-    <h2 class="text-center mb-4">Admin Dashboard</h2>
-    <div class="mt-4">
-        <h3>User Management</h3>
-        <c:forEach var="user" items="${users}">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">${user.username}</h5>
-                    <p class="card-text">${user.email}</p>
-                    <div class="d-flex justify-content-end">
-                        <a href="/editUser?id=${user.id}" class="btn btn-warning me-2">Edit</a>
-                        <a href="/deleteUser?id=${user.id}" class="btn btn-danger">Delete</a>
-                    </div>
-                </div>
-            </div>
-        </c:forEach>
+<div class="container dashboard-container">
+    <!-- 标题 -->
+    <div class="dashboard-header">
+        <h2>欢迎, ${sessionScope.user.nickname}！</h2>
+        <p>你好。</p>
     </div>
-    <div class="mt-4">
-        <h3>Review Management</h3>
-        <c:forEach var="comment" items="${reviews}">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">${comment.itemName}</h5>
-                    <p class="card-text">${comment.reviewText}</p>
-                    <div class="d-flex justify-content-end">
-                        <a href="/editReview?id=${comment.id}" class="btn btn-warning me-2">Edit</a>
-                        <a href="/deleteReview?id=${comment.id}" class="btn btn-danger">Delete</a>
-                    </div>
-                </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="dashboard-box">
+                <a href="<c:url value='/manageusers' />">
+                    <h4>用户管理</h4>
+                    <p>管理用户信息和权限</p>
+                </a>
             </div>
-        </c:forEach>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-box">
+                <a href="<c:url value='/managebooks' />">
+                    <h4>书籍管理</h4>
+                    <p>管理书籍信息</p>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-box">
+                <a href="<c:url value='/managemusic' />">
+                    <h4>音乐管理</h4>
+                    <p>管理音乐信息</p>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-box">
+                <a href="<c:url value='/managemovies' />">
+                    <h4>电影管理</h4>
+                    <p>管理电影信息</p>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-box">
+                <a href="<c:url value='/managecomments' />">
+                    <h4>评论管理</h4>
+                    <p>管理用户评论</p>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-box">
+                <a href="<c:url value='/' />">
+                    <h4>返回主页</h4>
+                    <p>返回到网站首页</p>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
