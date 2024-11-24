@@ -56,7 +56,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/manageusers' />">
+                <a href="<c:url value='/admin/manageusers' />">
                     <h4>用户管理</h4>
                     <p>管理用户信息和权限</p>
                 </a>
@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/managebooks' />">
+                <a href="<c:url value='/admin/managebooks' />">
                     <h4>书籍管理</h4>
                     <p>管理书籍信息</p>
                 </a>
@@ -72,7 +72,7 @@
         </div>
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/managemusic' />">
+                <a href="<c:url value='/admin/managemusic' />">
                     <h4>音乐管理</h4>
                     <p>管理音乐信息</p>
                 </a>
@@ -80,7 +80,7 @@
         </div>
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/managemovies' />">
+                <a href="<c:url value='/admin/managemovies' />">
                     <h4>电影管理</h4>
                     <p>管理电影信息</p>
                 </a>
@@ -88,7 +88,7 @@
         </div>
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/managecomments' />">
+                <a href="<c:url value='/admin/managecomments' />">
                     <h4>评论管理</h4>
                     <p>管理用户评论</p>
                 </a>

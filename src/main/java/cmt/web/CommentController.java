@@ -13,12 +13,13 @@ import javax.servlet.http.HttpSession;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 public class CommentController {
-
+    private static final int PAGE_SIZE = 5;
     @Autowired
     private ItemJdbc itemJdbc;
     @Autowired
@@ -93,5 +94,24 @@ public class CommentController {
 
         // 重定向到该作品详情页
         return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
+    }
+
+    @RequestMapping(value = "/admin/managecomments", method = GET)
+    public String showManageCommentsPage(
+            @RequestParam(value = "uid", required = false) Long uid,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            Model model) {
+        if (uid != null) {
+            List<Comment> comments = commentJdbc.findCommentsByUserId(uid, (page - 1) * PAGE_SIZE, PAGE_SIZE);
+            int totalComments = commentJdbc.countByUserId(uid);
+            int totalPages = (int) Math.ceil((double) totalComments / PAGE_SIZE);
+
+            model.addAttribute("comments", comments);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", totalPages);
+            model.addAttribute("uid", uid);
+        }
+
+        return "managecomments";
     }
 }
