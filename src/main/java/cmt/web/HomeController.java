@@ -36,7 +36,8 @@ public class HomeController {
     private MovieJdbc movieJdbc;
     @Autowired
     private MusicJdbc musicJdbc;
-
+    @Autowired
+    private ItemJdbc itemJdbc;
     @RequestMapping(method = GET)
     public String showHomePage(HttpServletRequest request,HttpServletResponse response,HttpSession session,Model model) {
         /*
@@ -58,6 +59,8 @@ public class HomeController {
             }
         }
 
+        List<SimpleItem> ten = itemJdbc.getRecommendedItems();
+        model.addAttribute("ten",ten);
         List<Book> recentBooks = bookJdbc.findBooks(0,4);
         model.addAttribute("recentBooks",recentBooks);
         List<Movie> recentMovies = movieJdbc.findMovies(0,4);

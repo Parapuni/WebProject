@@ -45,6 +45,7 @@
     }
 
     .weekly-recommendation ul {
+      background-color: white;
       list-style: none;
       padding: 0;
     }
@@ -89,7 +90,7 @@
         <c:forEach var="item" items="${recentMovies}">
         <div class="col-md-3">
           <div class="card">
-            <img src="<c:url value="/imagines/${item.coverImagine}" /> " alt="奶龙">
+            <img src="<c:url value="/imagines/${item.coverImagine}" /> " alt="电影">
             <div class="card-body">
               <h5><a href="<c:url value='/item-details?id=${item.iid}&category=Movie' />" class="text-dark">${item.title}</a></h5>
               <p>发行时间 ${item.releaseDate}</p>
@@ -125,18 +126,29 @@
       </div>
     </div>
     <div class="col-md-3">
-      <h3>每周推荐</h3>
-      <div class="weekly-recommendation">
+      <h3>评分Top榜</h3>
+      <div class="row">
+        <div class="weekly-recommendation">
         <ul>
-          <div class="card">
-            <c:forEach var="item" items="${recommended}">
+            <c:set var="i" value="1"></c:set>
+            <c:forEach var="item" items="${ten}">
+              <h5>Top.${i}</h5>
               <li>
-                <a href="<c:url value='/item-details?id=${item.iid}&category=${item.type}' />">${item.title}</a>
-                <br>
+                <div class="card-body col-md-10 col-md-offset-2 " style="color: white;text-align: center">
+                  <img src="<c:url value="/imagines/${item.cover}" /> " width="50px" height="60px" style="border-radius: 25%" alt="作品">
+                  <h5 style="font-style: italic;color: #333333"><a href="<c:url value='/item-details?id=${item.iid}&category=${item.type}' />" class="text-dark">
+                      ${item.title}
+                  </a></h5>
+                    <!-- Display Rating -->
+                    <div class="rating" style="color: #333333">评分 <fmt:formatNumber value="${item.rating}" pattern="#.0" type="number"/></div>
+                    <cs:rating rating="${item.rating}"/>
+                </div>
+                <hr>
+                <c:set var="i" value="${i+1}"></c:set>
               </li>
             </c:forEach>
-          </div>
         </ul>
+      </div>
       </div>
     </div>
   </div>
