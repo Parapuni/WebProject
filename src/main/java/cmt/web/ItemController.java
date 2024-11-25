@@ -125,7 +125,6 @@ public class ItemController {
                 model.addAttribute("items", musics);
                 model.addAttribute("currentPage", page);
                 model.addAttribute("totalPages", (int) Math.ceil((double) musicJdbc.countByCategories(selectedTags) / PAGE_SIZE));
-                break;
             default:
                 model.addAttribute("categoryName", "Unknown");
         }
