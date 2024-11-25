@@ -52,7 +52,7 @@ public class PaginationTag extends SimpleTagSupport {
         int last = cnt * maxPagesVisible+1;
         first = first>0? first :1;
         last = last < pageNum ? last : pageNum;
-        if(index == pageNum)
+        if(index == pageNum || pageNum == 0)
             hasNext = false;
         if(index == 1 )
             hasLast = false;
