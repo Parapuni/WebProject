@@ -133,6 +133,7 @@ public class ItemJdbc implements ItemHandler {
      */
     @Override
     public void updateRating(long iid, int star, int isAdd) {
+        System.out.println(star);
         star --;
         String sStars = jdbcTemplate.queryForObject(SELECT_STARS, String.class, iid);
         sStars = sStars.substring(1, sStars.length() - 1);

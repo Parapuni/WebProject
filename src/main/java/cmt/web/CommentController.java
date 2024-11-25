@@ -55,7 +55,7 @@ public class CommentController {
                 break;
         }
         session.setAttribute("category", category);
-        return "editcomment";
+        return "editReview";
     }
 
     @RequestMapping(value = "/submit-comment", method = RequestMethod.POST)
@@ -86,7 +86,7 @@ public class CommentController {
             model.addAttribute("iid", iid);
 
             session.setAttribute("category", category);
-            return "editcomment"; // 回到评论页面
+            return "editReview"; // 回到评论页面
         }
 
         // 保存新评论
@@ -132,7 +132,7 @@ public class CommentController {
         if (user == null) {
             return "redirect:/login";
         }
-
+        itemJdbc.updateRating(iid,commentJdbc.findComment(iid,user.getUid()).getRating(),-1);
         commentJdbc.removeComment(iid, user.getUid());
         return "redirect:/profile";
     }
