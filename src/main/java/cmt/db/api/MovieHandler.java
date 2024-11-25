@@ -1,8 +1,10 @@
 package cmt.db.api;
 
 
+import cmt.entity.Book;
 import cmt.entity.Movie;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,4 +43,8 @@ public interface MovieHandler {
     List<Movie> findMoviesByWriters(int offset, int length, String writers);
 
     int countByWriters(String writers);
+
+    List<Movie> findMoviesByYear(int year);
+
+    int countByYear(int year);
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -23,6 +24,7 @@ public class MovieJdbc implements MovieHandler {
     private final String COUNT_BY_DIRECTOR = "select COUNT(*) from Movie m natural join Item i where m.director like ? ";
     private final String COUNT_BY_CAST = "select COUNT(*) from Movie m natural join Item i where m.cast like ? ";
     private final String COUNT_BY_WRITERS = "select COUNT(*) from Movie m natural join Item i where m.writers like ? ";
+    private final String COUNT_BY_YEAR = "select count(*) from Movie m natural join Item i where Year(i.releaseDate) = ? ";
     private final String INSERT_MOVIE = "insert into Movie values(?,?,?,?,?)";
     private final String DELETE_MOVIE = "delete from Movie where iid = ?";
     private final String SELECT_MOVIE_BY_ID = "select * from Movie m natural join Item i where m.iid = ?";
@@ -34,6 +36,7 @@ public class MovieJdbc implements MovieHandler {
     private final String SELECT_MOVIES_BY_DIRECTOR = "select * from Movie m natural join Item i where m.director like ? limit ? offset ?";
     private final String SELECT_MOVIES_BY_CAST = "select * from Movie m natural join Item i where m.cast like ? limit ? offset ?";
     private final String SELECT_MOVIES_BY_WRITERS = "select * from Movie m natural join Item i where m.writers like ? limit ? offset ?";
+    private final String SELECT_MOVIES_BY_YEAR = "select * from Movie m natural join Item i where Year(i.releaseDate) = ? ";
     private final String UPDATE_MOVIE = "update Movie set director = ?, writers = ?, cast = ?, introduction = ? where iid = ?";
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -156,6 +159,18 @@ public class MovieJdbc implements MovieHandler {
     @Override
     public int countByWriters(String writers) {
         return jdbcTemplate.queryForInt(COUNT_BY_WRITERS,"%" + writers + "%");
+    }
+
+    @Override
+    public List<Movie> findMoviesByYear(int year) {
+        List<Movie> movies = jdbcTemplate.query(SELECT_MOVIES_BY_YEAR,new MovieRowMapper(),year);
+        categoryJdbc.setCategory(movies);
+        return movies;
+    }
+
+    @Override
+    public int countByYear(int year) {
+        return jdbcTemplate.queryForInt(COUNT_BY_YEAR,year);
     }
 
     private static final class MovieRowMapper implements RowMapper<Movie> {
