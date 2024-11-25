@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>${item.title} - Item Review</title>
+  <title>${item.title} - Item comment</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
@@ -92,15 +92,15 @@
       background-color: #0056b3;
     }
 
-    .reviews-section {
+    .comments-section {
       margin-top: 40px;
     }
 
-    .review-list {
+    .comment-list {
       margin-top: 20px;
     }
 
-    .review {
+    .comment {
       background-color: #f9f9f9;
       padding: 15px;
       border-radius: 8px;
@@ -109,17 +109,17 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    .review p {
+    .comment p {
       margin: 0 0 10px;
     }
 
-    .review-date {
+    .comment-date {
       font-size: 14px;
       color: #666;
       margin-left: 10px;
     }
 
-    .review-rating {
+    .comment-rating {
       color: #ffcc00; /* Gold for stars */
       font-size: 18px;
       margin-bottom: 10px;
@@ -212,27 +212,27 @@
             <button class="btn btn-warning w-50" onclick="alert('Please log in to rate this item'); location.href='<c:url value='/login' />';">Rate</button>
           </c:when>
           <c:otherwise>
-            <a href="<c:url value='/editreview?id=${item.iid}&category=${category}' />" class="btn btn-primary w-50">Rate</a>
+            <a href="<c:url value='/editcomment?id=${item.iid}&category=${category}' />" class="btn btn-primary w-50">Rate</a>
           </c:otherwise>
         </c:choose>
       </div>
     </div>
   </div>
 
-  <!-- User Reviews Section -->
+  <!-- User comments Section -->
   <div class="mt-5">
     <h3 class="text-primary">User Comments</h3>
-    <div class="review-list">
+    <div class="comment-list">
       <c:if test="${empty comments}">
-        <p class="text-muted">No comments yet. Be the first to review!</p>
+        <p class="text-muted">No comments yet. Be the first to comment!</p>
       </c:if>
       <c:forEach items="${comments}" var="comment">
-        <div class="review p-3 mb-3 border rounded shadow-sm bg-light">
+        <div class="comment p-3 mb-3 border rounded shadow-sm bg-light">
           <div class="d-flex justify-content-between align-items-center mb-2">
             <span class="text-dark fw-bold">${comment.userName}</span>
             <span class="text-muted">${comment.cdate}</span>
           </div>
-          <div class="review-rating text-warning mb-2">
+          <div class="comment-rating text-warning mb-2">
             <c:forEach var="star" begin="1" end="${comment.rating}">
               ★
             </c:forEach>

@@ -32,8 +32,8 @@ public class CommentController {
     private Book book = new Book();
     private Movie movie = new Movie();
     private Music music = new Music();
-    @RequestMapping(value = "/editreview", method = GET)
-    public String showSubmitReviewPage(@RequestParam(value = "category") String category,
+    @RequestMapping(value = "/editcomment", method = GET)
+    public String showSubmitcommentPage(@RequestParam(value = "category") String category,
                                        @RequestParam(value = "id") Integer iid,
                                        Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -55,18 +55,18 @@ public class CommentController {
                 break;
         }
         session.setAttribute("category", category);
-        return "editReview";
+        return "editcomment";
     }
 
-    @RequestMapping(value = "/submit-review", method = RequestMethod.POST)
-    public String processSubmitReview(@RequestParam("reviewContent") String content,
+    @RequestMapping(value = "/submit-comment", method = RequestMethod.POST)
+    public String processSubmitcomment(@RequestParam("commentContent") String content,
                                       @RequestParam(value = "id") Integer iid,
                                       @RequestParam(value = "rating", defaultValue = "1") Integer rating,
                                       Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         String category = (String) session.getAttribute("category");
         if (user == null) {
-            model.addAttribute("error", "You must be logged in to submit a review.");
+            model.addAttribute("error", "You must be logged in to submit a comment.");
             return "redirect:/login";
         }
         if (rating < 1) {
@@ -86,7 +86,7 @@ public class CommentController {
             model.addAttribute("iid", iid);
 
             session.setAttribute("category", category);
-            return "editReview"; // 回到评论页面
+            return "editcomment"; // 回到评论页面
         }
 
         // 保存新评论
@@ -107,8 +107,8 @@ public class CommentController {
         return "redirect:/item-details?id=" + iid + "&category=" + session.getAttribute("category");
     }
 
-    @RequestMapping(value = "/update-review", method = RequestMethod.POST)
-    public String updateReview(@RequestParam("reviewContent") String content,
+    @RequestMapping(value = "/update-comment", method = RequestMethod.POST)
+    public String updatecomment(@RequestParam("commentContent") String content,
                                @RequestParam(value = "id") Integer iid,
                                @RequestParam(value = "rating", defaultValue = "1") Integer rating,
                                @RequestParam(value = "originalRating") Integer originalRating,
