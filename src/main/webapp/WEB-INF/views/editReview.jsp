@@ -163,7 +163,7 @@
             <textarea name="commentContent" hidden>${content}</textarea>
             <button type="submit" class="btn btn-primary">Overwrite</button>
           </form>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hideModal()">Cancel</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hideModal()"><a style="color: white" href="<c:url value="/item-details?id=${iid}&page=1" />">Cancel</a></button>
         </div>
       </div>
     </div>

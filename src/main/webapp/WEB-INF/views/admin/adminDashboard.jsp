@@ -50,13 +50,13 @@
 <div class="container dashboard-container">
     <!-- 标题 -->
     <div class="dashboard-header">
-        <h2>欢迎, ${sessionScope.user.nickname}！</h2>
+        <h2>欢迎, ${sessionScope.admin.adminName}！</h2>
         <p>你好。</p>
     </div>
     <div class="row">
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/admin/manageusers' />">
+                <a href="<c:url value='/admin/manageUsers' />">
                     <h4>用户管理</h4>
                     <p>管理用户信息和权限</p>
                 </a>
@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/admin/managebooks' />">
+                <a href="<c:url value='/admin/manageBooks' />">
                     <h4>书籍管理</h4>
                     <p>管理书籍信息</p>
                 </a>
@@ -72,7 +72,7 @@
         </div>
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/admin/managemusic' />">
+                <a href="<c:url value='/admin/manageMusic' />">
                     <h4>音乐管理</h4>
                     <p>管理音乐信息</p>
                 </a>
@@ -80,7 +80,7 @@
         </div>
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/admin/managemovies' />">
+                <a href="<c:url value='/admin/manageMovies' />">
                     <h4>电影管理</h4>
                     <p>管理电影信息</p>
                 </a>
@@ -88,7 +88,7 @@
         </div>
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/admin/managecomments' />">
+                <a href="<c:url value='/admin/manageComments' />">
                     <h4>评论管理</h4>
                     <p>管理用户评论</p>
                 </a>
@@ -105,5 +105,6 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<jsp:include page="../footer.jsp"/>
 </body>
 </html>

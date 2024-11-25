@@ -17,7 +17,7 @@
       <ul class="navbar-nav me-auto">
         <!-- 管理员管理入口 -->
         <c:if test="${not empty sessionScope.admin}">
-          <li class="nav-item"><a class="nav-link" href="<c:url value='/adminmanage' />">管理员管理</a></li>
+          <li class="nav-item"><a class="nav-link" href="<c:url value='/admin/manage' />">管理员管理</a></li>
         </c:if>
         <!-- 普通用户分类入口 -->
         <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Movie' />">电影</a></li>
@@ -54,8 +54,8 @@
             <li class="nav-item"><a class="nav-link" href="<c:url value='/register' />">注册</a></li>
           </c:when>
           <c:when test="${not empty sessionScope.admin}">
-            <li class="nav-item"><a class="nav-link" href="<c:url value='/admindashboard' />">管理员中心</a></li>
-            <li class="nav-item"><a class="nav-link" href="<c:url value='/logout' />">退出</a></li>
+            <li class="nav-item"><a class="nav-link" href="<c:url value='/admin/dashboard' />">管理员中心</a></li>
+            <li class="nav-item"><a class="nav-link" href="<c:url value='/adminLogout' />">退出</a></li>
           </c:when>
           <c:otherwise>
             <li class="nav-item d-flex align-items-center">
