@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="WEB-INF/views/header.jsp" %>
+<%@ include file="WEB-INF/views/banner.jsp" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
