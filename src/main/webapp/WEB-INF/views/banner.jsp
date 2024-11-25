@@ -15,10 +15,6 @@
     <!-- Navbar Links -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
-        <!-- 管理员管理入口 -->
-        <c:if test="${not empty sessionScope.admin}">
-          <li class="nav-item"><a class="nav-link" href="<c:url value='/admin/manage' />">管理员管理</a></li>
-        </c:if>
         <!-- 普通用户分类入口 -->
         <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Movie' />">电影</a></li>
         <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Book' />">书籍</a></li>
@@ -54,6 +50,7 @@
             <li class="nav-item"><a class="nav-link" href="<c:url value='/register' />">注册</a></li>
           </c:when>
           <c:when test="${not empty sessionScope.admin}">
+            <h5 style="font-style: oblique;color: white">欢迎管理员${sessionScope.admin.adminName}</h5>
             <li class="nav-item"><a class="nav-link" href="<c:url value='/admin/dashboard' />">管理员中心</a></li>
             <li class="nav-item"><a class="nav-link" href="<c:url value='/adminLogout' />">退出</a></li>
           </c:when>
