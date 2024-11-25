@@ -98,8 +98,10 @@
         <!-- User Information -->
         <div class="user-info">
           <div><span class="info-label">Nickname:</span> <span class="info-value">${sessionScope.user.nickname}</span></div>
+          <div><span class="info-label">Name:</span> <span class="info-value">${sessionScope.user.firstName} ${sessionScope.user.lastName}</span></div>
           <div><span class="info-label">Email:</span> <span class="info-value">${sessionScope.user.email}</span></div>
           <div><span class="info-label">Phone:</span> <span class="info-value">${sessionScope.user.number}</span></div>
+          <div><span class="info-label">Birthday:</span> <span class="info-value">${sessionScope.user.birthday}</span></div>
         </div>
         <hr>
         <a href="<c:url value='/edit-profile' />" class="btn btn-primary btn-sm w-100 mt-3">Edit Profile</a>

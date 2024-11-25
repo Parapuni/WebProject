@@ -61,13 +61,13 @@
     <!-- Nickname -->
     <div class="mb-3">
       <label for="nickname" class="form-label">Nickname</label>
-      <input type="text" class="form-control" id="nickname" name="nickname" value="${user.nickname}" required />
+      <input type="text" class="form-control" id="nickname" name="nickname" value="${user.nickname}"  />
     </div>
 
     <!-- Email -->
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" name="email" value="${user.email}" required />
+      <input type="email" class="form-control" id="email" name="email" value="${user.email}"  />
     </div>
 
     <!-- First Name -->

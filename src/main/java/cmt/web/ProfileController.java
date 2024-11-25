@@ -40,27 +40,33 @@ public class ProfileController {
 
     @RequestMapping(value = "/update-profile", method = POST)
     public String processUpdateProfile(Model model, HttpSession session,
-                                       @RequestParam("nickname") String nickname,
-                                       @RequestParam("password") String password,
-                                       @RequestParam("email") String email,
-                                       @RequestParam("firstName") String firstName,
-                                       @RequestParam("lastName") String lastName,
-                                       @RequestParam("birthday")Date birthday,
-                                       @RequestParam("number") String phone){
+                                       @RequestParam(value = "nickname",defaultValue = "") String nickname,
+                                       @RequestParam(value = "password",defaultValue = "") String password,
+                                       @RequestParam(value = "email",defaultValue = "") String email,
+                                       @RequestParam(value = "firstName",defaultValue = "") String firstName,
+                                       @RequestParam(value = "lastName",defaultValue = "") String lastName,
+                                       @RequestParam(value = "birthday",defaultValue = "1970-12-01")Date birthday,
+                                       @RequestParam(value = "number",defaultValue = "") String phone){
         User user = (User) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login";
         }
-        user.setNickname(nickname);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
+        if(!"".equals(nickname))
+            user.setNickname(nickname);
+        if(!"".equals(password))
+            user.setPassword(password);
+        if(!"".equals(email))
+            user.setEmail(email);
+        if(!"".equals(firstName))
+            user.setFirstName(firstName);
+        if(!"".equals(lastName))
+            user.setLastName(lastName);
         user.setBirthday(birthday);
-        user.setNumber(phone);
+        if(!"".equals(phone))
+            user.setNumber(phone);
         userJdbc.updateUser(user);
         model.addAttribute("user", user);
-        return "profile";
+        return "redirect:/profile";
     }
 
     @RequestMapping(value = "/change-avatar", method = POST)

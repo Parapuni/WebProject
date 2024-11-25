@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="../../header.jsp" %>
+<%@ include file="../banner.jsp" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -21,9 +21,6 @@
         }
         .filter-user {
             margin-bottom: 15px;
-        }
-        .pagination {
-            justify-content: center;
         }
     </style>
 </head>
@@ -68,32 +65,6 @@
         </c:forEach>
         </tbody>
     </table>
-
-    <!-- 分页 -->
-    <nav aria-label="评论分页" class="mt-4">
-        <ul class="pagination">
-            <!-- 上一页 -->
-            <c:if test="${currentPage > 1}">
-                <li class="page-item">
-                    <a class="page-link" href="<c:url value='/commentManage?page=${currentPage - 1}' />">&laquo;</a>
-                </li>
-            </c:if>
-
-            <!-- 页码 -->
-            <c:forEach var="i" begin="${start}" end="${end}">
-                <li class="page-item ${i == currentPage ? 'active' : ''}">
-                    <a class="page-link" href="<c:url value='/commentManage?page=${i}' />">${i}</a>
-                </li>
-            </c:forEach>
-
-            <!-- 下一页 -->
-            <c:if test="${currentPage < totalPages}">
-                <li class="page-item">
-                    <a class="page-link" href="<c:url value='/commentManage?page=${currentPage + 1}' />">&raquo;</a>
-                </li>
-            </c:if>
-        </ul>
-    </nav>
 </div>
 
 <script>
