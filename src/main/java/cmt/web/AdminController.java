@@ -7,16 +7,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.net.MalformedURLException;
+import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 
 import cmt.db.jdbc.*;
 import cmt.entity.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-
+    private static final int PAGE_SIZE = 3;
     @Autowired
     private AdminJdbc adminJdbc;
     @Autowired
@@ -33,10 +37,12 @@ public class AdminController {
     /**
      * 管理员仪表盘
      */
-    @RequestMapping(value = "/admindashboard", method = RequestMethod.GET)
-    public String adminDashboard() {
-        return "admindashboard";
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public String showAdminDashboard() {
+        return "admin/adminDashboard";
     }
+
+
 
     // -----------------------------------
     // 用户管理
@@ -45,20 +51,20 @@ public class AdminController {
     /**
      * 用户管理页面
      */
-    @RequestMapping(value = "/manageusers", method = RequestMethod.GET)
+    @RequestMapping(value = "/manageUsers", method = RequestMethod.GET)
     public String manageUsers(@RequestParam(value = "page", defaultValue = "1") int page,
-                              @RequestParam(value = "size", defaultValue = "10") int size,
                               Model model) {
-        int offset = (page - 1) * size;
-        List<User> users = userJdbc.findUsers(offset, size);
+
+        List<User> users = userJdbc.findUsers((page - 1) * PAGE_SIZE, PAGE_SIZE);
+
         int totalUsers = userJdbc.countTotal();
-        int totalPages = (int) Math.ceil((double) totalUsers / size);
+        int totalPages = (int) Math.ceil((double) totalUsers / PAGE_SIZE);
 
         model.addAttribute("users", users);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
 
-        return "usermanage";
+        return "admin/userManage";
     }
 
     /**
@@ -66,17 +72,33 @@ public class AdminController {
      */
     @RequestMapping(value = "/adduser", method = RequestMethod.GET)
     public String showAddUserPage() {
-        return "adduser";
+        return "admin/addUser";
     }
 
     /**
      * 处理添加用户请求
      */
     @RequestMapping(value = "/saveuser", method = RequestMethod.POST)
-    public String saveUser(User user, Model model) {
+    public String saveUser(@RequestParam("nickname") String nickname,
+                           @RequestParam("email")  String email,
+                           @RequestParam("number") String number,
+                           @RequestParam("password") String password,
+                           @RequestParam("firstName") String firstName,
+                           @RequestParam("lastName") String lastName,
+                           @RequestParam("birthday") Date birthday,
+                           HttpSession session) throws MalformedURLException {
+        if (userJdbc.isExists(nickname)) {
+            session.setAttribute("message", "用户名已存在！");
+            return "redirect:/admin/adduser";
+        }
+        User user = new User(nickname, password, email);
+        user.setNumber(number);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setBirthday(birthday);
         userJdbc.addUser(user);
-        model.addAttribute("message", "用户添加成功！");
-        return "redirect:/admin/manageusers";
+        session.setAttribute("message", "用户添加成功！");
+        return "redirect:/admin/manageUsers";
     }
 
     /**
@@ -86,27 +108,46 @@ public class AdminController {
     public String editUser(@RequestParam("uid") Long uid, Model model) {
         User user = userJdbc.findUserById(uid);
         model.addAttribute("user", user);
-        return "edituser";
+        return "admin/editUser";
     }
 
     /**
      * 处理更新用户请求
      */
     @RequestMapping(value = "/updateuser", method = RequestMethod.POST)
-    public String updateUser(User user, Model model) {
+    public String updateUser(@RequestParam("uid") Long uid,
+                             @RequestParam("nickname") String nickname,
+                             @RequestParam("firstName") String firstName,
+                             @RequestParam("lastName") String lastName,
+                             @RequestParam("email")  String email,
+                             @RequestParam("number") String number,
+                             @RequestParam("birthday") Date birthday,
+                             Model model, HttpSession session) {
+        User user = userJdbc.findUserById(uid);
+        if (userJdbc.isExists(nickname) && !user.getNickname().equals(nickname)) {
+            session.setAttribute("message", "用户名已存在！");
+            return "redirect:/admin/edituser?uid=" + uid;
+        }
+        user.setNickname(nickname);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setNumber(number);
+        user.setBirthday(birthday);
         userJdbc.updateUser(user);
-        model.addAttribute("message", "用户信息更新成功！");
-        return "redirect:/admin/manageusers";
+        session.setAttribute("message", "用户信息更新成功！");
+
+        return "redirect:/admin/manageUsers";
     }
 
     /**
      * 删除用户
      */
     @RequestMapping(value = "/deleteuser", method = RequestMethod.GET)
-    public String deleteUser(@RequestParam("uid") Long uid, Model model) {
+    public String deleteUser(@RequestParam("uid") Long uid, HttpSession session) {
         userJdbc.removeUser(uid);
-        model.addAttribute("message", "用户删除成功！");
-        return "redirect:/admin/manageusers";
+        session.setAttribute("message", "用户删除成功！");
+        return "redirect:/admin/manageUsers";
     }
 
     // -----------------------------------
@@ -116,12 +157,12 @@ public class AdminController {
     /**
      * 评论管理页面
      */
-    @RequestMapping(value = "/managecomments", method = RequestMethod.GET)
+    @RequestMapping(value = "/manageComments", method = RequestMethod.GET)
     public String manageComments(@RequestParam(value = "page", defaultValue = "1") int page,
                                  @RequestParam(value = "size", defaultValue = "10") int size,
                                  Model model) {
         int offset = (page - 1) * size;
-        List<Comment> comments = commentJdbc.findCommentsByItemId(0, offset, size); // 修改为实际评论查询
+        List<Comment> comments = commentJdbc.findAll(PAGE_SIZE, (page - 1) * PAGE_SIZE);
         int totalComments = commentJdbc.countTotal();
         int totalPages = (int) Math.ceil((double) totalComments / size);
 
@@ -129,7 +170,7 @@ public class AdminController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
 
-        return "commentmanage";
+        return "admin/commentManage";
     }
 
     /**
@@ -151,7 +192,7 @@ public class AdminController {
     /**
      * 作品管理页面
      */
-    @RequestMapping(value = "/itemmanage", method = RequestMethod.GET)
+    @RequestMapping(value = "/manageItem", method = RequestMethod.GET)
     public String manageItems(@RequestParam(value = "category", defaultValue = "All") String category,
                               @RequestParam(value = "page", defaultValue = "1") int page,
                               @RequestParam(value = "size", defaultValue = "10") int size,
