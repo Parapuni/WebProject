@@ -12,11 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * 权限控制，过滤未登录人员访问admin面板。
+ */
+
 @WebFilter(urlPatterns = "/admin/*")
 public class AdminFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
+
+    /**
+     *执行过滤操作
+     */
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

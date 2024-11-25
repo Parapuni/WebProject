@@ -17,6 +17,10 @@ public class ResponseCacheFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
+    /**
+     *执行控制操作
+     */
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
