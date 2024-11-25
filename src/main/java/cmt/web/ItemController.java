@@ -150,6 +150,9 @@ public class ItemController {
         categories.add("Music");
         model.addAttribute("categories", categories);
 
+        List<String> tags = categoryJdbc.getTagLib();
+        model.addAttribute("tags", tags);
+
         if (query == null || query.trim().isEmpty()){
             model.addAttribute("error", "Search query cannot be empty.");
             return "/";

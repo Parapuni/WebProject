@@ -69,7 +69,7 @@
     <!-- Sidebar for Categories -->
     <div class="col-md-3">
       <div class="sidebar p-3 mb-4 border rounded shadow-sm">
-        <h4 class="mb-3">选择作品种类</h4>
+        <h4 class="mb-3 ">选择作品种类</h4>
         <form action="<c:url value='/filt_items' />" method="get" id="categoryTagForm">
 
             <c:forEach var="category" items="${categories}">
