@@ -53,10 +53,5 @@ public class CommentSystemInitializer extends AbstractAnnotationConfigDispatcher
         ServletRegistration.Dynamic servlet = servletContext.addServlet("h2-console", new WebServlet());
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/console/*");
-        /*
-        TODO
-         注册Filter
-         见spring实战第7章
-         */
     }
 }
