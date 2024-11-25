@@ -40,7 +40,7 @@
 
     <!-- 添加管理员按钮 -->
     <div class="text-end add-admin-btn">
-        <a href="<c:url value='/addadmin' />" class="btn btn-success">添加管理员</a>
+        <a href="<c:url value='/admin/addadmin' />" class="btn btn-success">添加管理员</a>
     </div>
 
     <!-- 删除操作提示 -->
@@ -68,7 +68,7 @@
                 <td>${admin.email}</td>
                 <td>
                     <c:if test="${admin.aid != currentAdmin.aid}">
-                        <a href="<c:url value='/deleteadmin?aid=${admin.aid}' />" class="btn btn-danger btn-sm">删除</a>
+                        <a href="<c:url value='/admin/deleteadmin?aid=${admin.aid}' />" class="btn btn-danger btn-sm">删除</a>
                     </c:if>
                     <c:if test="${admin.aid == currentAdmin.aid}">
                         <span class="text-muted">无法删除自己</span>

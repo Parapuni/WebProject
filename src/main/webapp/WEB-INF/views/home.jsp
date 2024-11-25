@@ -77,7 +77,7 @@
         <div class="col-md-3">
           <div class="card">
             <img src="<c:url value="/imagines/IID1cover.jpg" />" alt="奶龙">
-            <!-- 为 book1 添加超链接到 itemReview.jsp -->
+            <!-- 为 book1 添加超链接到 itemComment.jsp -->
             <p><a href="<c:url value='/item-details?id=1&category=Book' />">奶龙娘</a></p>
           </div>
         </div>
@@ -130,7 +130,7 @@
       <h3>每周推荐</h3>
       <div class="weekly-recommendation">
         <ul>
-          <!-- 将第一个推荐项改为 book1，并添加超链接到 itemReview.jsp -->
+          <!-- 将第一个推荐项改为 book1，并添加超链接到 itemComment.jsp -->
           <li><a href="<c:url value='/itemReview.jsp?itemId=book1' />">奶龙娘</a></li>
           <li>推荐2</li>
           <li>推荐3</li>

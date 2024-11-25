@@ -30,11 +30,11 @@
 
     <!-- 添加作品按钮 -->
     <div class="text-end add-item-btn">
-        <a href="<c:url value='/additem' />" class="btn btn-success">添加作品</a>
+        <a href="<c:url value='/admin/additem' />" class="btn btn-success">添加作品</a>
     </div>
 
     <!-- 筛选 -->
-    <form action="<c:url value='/itemmanage' />" method="get" class="d-flex justify-content-end mb-3">
+    <form action="<c:url value='/admin/itemmanage' />" method="get" class="d-flex justify-content-end mb-3">
         <select name="category" class="form-select me-2" style="width: auto;">
             <option value="All" ${param.category == 'All' ? 'selected' : ''}>所有类别</option>
             <option value="Movie" ${param.category == 'Movie' ? 'selected' : ''}>电影</option>
@@ -65,8 +65,8 @@
                 <td>${item.releaseDate}</td>
                 <td>${item.rating}</td>
                 <td>
-                    <a href="<c:url value='/edititem?id=${item.iid}' />" class="btn btn-primary btn-sm">编辑</a>
-                    <a href="<c:url value='/deleteitem?id=${item.iid}' />" class="btn btn-danger btn-sm">删除</a>
+                    <a href="<c:url value='/admin/edititem?id=${item.iid}' />" class="btn btn-primary btn-sm">编辑</a>
+                    <a href="<c:url value='/admin/deleteitem?id=${item.iid}' />" class="btn btn-danger btn-sm">删除</a>
                 </td>
             </tr>
         </c:forEach>
@@ -79,21 +79,21 @@
             <!-- 上一页 -->
             <c:if test="${currentPage > 1}">
                 <li class="page-item">
-                    <a class="page-link" href="<c:url value='/itemmanage?page=${currentPage - 1}&category=${param.category}' />">&laquo;</a>
+                    <a class="page-link" href="<c:url value='/admin/itemmanage?page=${currentPage - 1}&category=${param.category}' />">&laquo;</a>
                 </li>
             </c:if>
 
             <!-- 页码 -->
             <c:forEach var="i" begin="${start}" end="${end}">
                 <li class="page-item ${i == currentPage ? 'active' : ''}">
-                    <a class="page-link" href="<c:url value='/itemmanage?page=${i}&category=${param.category}' />">${i}</a>
+                    <a class="page-link" href="<c:url value='/admin/itemmanage?page=${i}&category=${param.category}' />">${i}</a>
                 </li>
             </c:forEach>
 
             <!-- 下一页 -->
             <c:if test="${currentPage < totalPages}">
                 <li class="page-item">
-                    <a class="page-link" href="<c:url value='/itemmanage?page=${currentPage + 1}&category=${param.category}' />">&raquo;</a>
+                    <a class="page-link" href="<c:url value='/admin/itemmanage?page=${currentPage + 1}&category=${param.category}' />">&raquo;</a>
                 </li>
             </c:if>
         </ul>

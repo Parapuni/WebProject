@@ -36,7 +36,7 @@
 <body>
 <div class="container mt-5">
   <h2 class="text-center">添加作品</h2>
-  <form action="<c:url value='/additem' />" method="post" enctype="multipart/form-data">
+  <form action="<c:url value='/admin/additem' />" method="post" enctype="multipart/form-data">
     <!-- 通用字段 -->
     <div class="mb-3">
       <label for="title" class="form-label">标题</label>

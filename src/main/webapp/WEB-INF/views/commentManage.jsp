@@ -63,7 +63,7 @@
                 <td>${comment.cdate}</td>
                 <td>${comment.content}</td>
                 <td>
-                    <a href="<c:url value='/deleteComment?id=${comment.iid}' />" class="btn btn-danger btn-sm">删除</a>
+                    <a href="<c:url value='/admin/deleteComment?id=${comment.iid}' />" class="btn btn-danger btn-sm">删除</a>
                 </td>
             </tr>
         </c:forEach>
@@ -77,21 +77,20 @@
             <!-- 上一页 -->
             <c:if test="${hasLast == true}">
                 <li class="page-item">
-                    <a class="page-link" href="<c:url value='/commentManage?page=${currentPage - 1}' />">&laquo;</a>
+                    <a class="page-link" href="<c:url value='/admin/commentManage?page=${currentPage - 1}' />">&laquo;</a>
                 </li>
             </c:if>
 
             <!-- 页码 -->
             <c:forEach var="i" begin="${start}" end="${end}">
                 <li class="page-item ${i == currentPage ? 'active' : ''}">
-                    <a class="page-link" href="<c:url value='/commentManage?page=${i}' />">${i}</a>
+                    <a class="page-link" href="<c:url value='/admin/commentManage?page=${i}' />">${i}</a>
                 </li>
             </c:forEach>
 
-            <!-- 下一页 -->
             <c:if test="${hasNext == true}">
                 <li class="page-item">
-                    <a class="page-link" href="<c:url value='/commentManage?page=${currentPage + 1}' />">&raquo;</a>
+                    <a class="page-link" href="<c:url value='/admin/commentManage?page=${currentPage + 1}' />">&raquo;</a>
                 </li>
             </c:if>
         </ul>
