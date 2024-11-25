@@ -17,6 +17,12 @@ import java.util.List;
 @Repository
 public class BookJdbc implements BookHandler {
     private final String COUNT_TOTAL = "select COUNT(*) from Book";
+    private final String COUNT_BY_CATEGORY = "select COUNT(*) from " +
+            "(select b.* from Book b natural join Category_Item ci where ci.name in (?) ) " +
+            "as cb natural join Item i";
+    private final String COUNT_BY_TITLE = "select COUNT(*) from Book b natural join Item i where i.title like ? ";
+    private final String COUNT_BY_AUTHORS = "select COUNT(*) from Book b natural join Item i where b.authors like ? ";
+    private final String COUNT_BY_PUBLISHER = "select COUNT(*) from Book b natural join Item i where b.publisher like ? ";
     private final String INSERT_BOOK = "insert into Book values(?,?,?,?)";
     private final String DELETE_BOOK = "delete from Book where iid = ?";
     private final String UPDATE_BOOK = "update Book set `authors` = ?,`publisher` = ?,`introduction` = ?  where iid = ?;";
@@ -99,7 +105,8 @@ public class BookJdbc implements BookHandler {
 
     @Override
     public int countByCategories(List<String> NameOfCategories) {
-        return 0;
+        String categories = String.join(",", NameOfCategories);
+        return jdbcTemplate.queryForInt(COUNT_BY_CATEGORY,categories);
     }
 
     @Override
@@ -111,7 +118,7 @@ public class BookJdbc implements BookHandler {
 
     @Override
     public int countByTitle(String title) {
-        return 0;
+        return jdbcTemplate.queryForInt(COUNT_BY_TITLE,"%" + title + "%");
     }
 
     @Override
@@ -123,7 +130,7 @@ public class BookJdbc implements BookHandler {
 
     @Override
     public int countByAuthors(String authors) {
-        return 0;
+        return jdbcTemplate.queryForInt(COUNT_BY_AUTHORS,"%" + authors + "%");
     }
 
     @Override
@@ -135,7 +142,7 @@ public class BookJdbc implements BookHandler {
 
     @Override
     public int countByPublisher(String publisher) {
-        return 0;
+        return jdbcTemplate.queryForInt(COUNT_BY_PUBLISHER,"%" + publisher + "%");
     }
 
     private static final class BookRowMapper implements RowMapper<Book> {

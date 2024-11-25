@@ -28,4 +28,16 @@
             <type>int</type>
         </attribute>
     </tag>
+
+    <tag>
+        <name>rating</name>
+        <tag-class>cmt.tag.RatingTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>rating</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>double</type>
+        </attribute>
+    </tag>
 </taglib>

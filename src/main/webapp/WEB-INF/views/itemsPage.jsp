@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tld/csTag.tld" prefix="cs" %>
-<%@ include file="header.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="banner.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,7 +68,7 @@
     <!-- Sidebar for Categories -->
     <div class="col-md-3">
       <div class="sidebar">
-        <h4>Categories</h4>
+        <h4>作品种类</h4>
         <ul>
           <c:forEach var="category" items="${categories}">
             <li onclick="location.href='<c:url value='/items?category=${category}' />'">
@@ -75,6 +76,10 @@
             </li>
           </c:forEach>
         </ul>
+      </div>
+      <br>
+      <div class="sidebar">
+
       </div>
     </div>
 
@@ -89,7 +94,8 @@
                 <h5><a href="<c:url value='/item-details?id=${item.iid}&category=${category}' />" class="text-dark">${item.title}</a></h5>
                 <p>${item.releaseDate}</p>
                 <!-- Display Rating -->
-                <div class="rating">${item.rating}</div>
+                <div class="rating"><fmt:formatNumber value="${item.rating}" pattern="#.0" type="number"/></div>
+                <cs:rating rating="${item.rating}"/>
               </div>
             </div>
           </div>
@@ -98,7 +104,7 @@
     </div>
     <!-- Pagination -->
     <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
-      <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="1"/>
+      <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="3"/>
       <ul class="pagination">
         <c:if test="${hasLast == true}">
           <a class="page-link" href="<c:url value='/items?page=${currentPage-1}&category=${category}' />"><c:out value="<" escapeXml="true"/></a>

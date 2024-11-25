@@ -15,6 +15,12 @@ import java.util.List;
 @Repository
 public class CommentJdbc implements CommentHandler {
     private final String COUNT_TOTAL = "select COUNT(*) from Comment";
+    private final String COUNT_BY_UID = "select count(*)\n" +
+            "from  `comment` c join `item` i on(c.iid = i.iid) join `user` u on(c.uid = u.uid) " +
+            "where c.uid = ?;";
+    private final String COUNT_BY_IID = "select count(*)\n" +
+            "from  `comment` c join `item` i on(c.iid = i.iid) join `user` u on(c.uid = u.uid) " +
+            "where c.iid = ?;";
     private final String INSERT_COMMENT = "insert into Comment(`iid`, `uid`,`cdate`, `content`,rating) values(?, ?, ?, ?,?);";
     private final String DELETE_COMMENT = "delete from Comment where `iid` = ? and `uid` = ?;";
     private final String UPDATE_COMMENT_CONTENT = "update Comment set `content` = ?,rating = ? where iid = ? and uid = ?;";
@@ -73,7 +79,7 @@ public class CommentJdbc implements CommentHandler {
 
     @Override
     public int countByItemId(long iid) {
-        return 0;
+        return jdbcTemplate.queryForInt(COUNT_BY_IID,iid);
     }
 
     @Override
@@ -83,7 +89,7 @@ public class CommentJdbc implements CommentHandler {
 
     @Override
     public int countByUserId(long uid) {
-        return 0;
+        return jdbcTemplate.queryForInt(COUNT_BY_UID,uid);
     }
 
     private static final class CommentRowMapper implements RowMapper<Comment> {

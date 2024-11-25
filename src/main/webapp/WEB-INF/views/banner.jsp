@@ -1,64 +1,172 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Header and Footer</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <style>
-    /* 自定义导航栏样式 */
-    .navbar {
-      background-color: #007bff; /* 深蓝色背景 */
-    }
-    .navbar-brand, .nav-link {
-      color: #ffffff !important; /* 白色文字 */
-    }
-    .nav-link:hover {
-      color: #ffdd57 !important; /* 悬停时黄色文字 */
-    }
-    /* 页脚样式 */
-    footer {
-      background-color: #f8f9fa; /* 浅灰色背景 */
-      color: #6c757d; /* 灰色文字 */
-      border-top: 1px solid #dee2e6; /* 分割线 */
-    }
-  </style>
-</head>
-<body>
-<header>
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-      <a class="navbar-brand" href="/">Book, Movie, Music Reviews</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <c:choose>
-            <c:when test="${empty user}">
-              <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-              <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-            </c:when>
-            <c:otherwise>
-              <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
-              <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
-            </c:otherwise>
-          </c:choose>
-        </ul>
-      </div>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<nav class="navbar navbar-expand-lg navbar-dark shadow-lg" style="background-color: #1a2b4f; font-family: 'Arial', sans-serif;">
+  <div class="container-fluid">
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center" href="<c:url value='/' />">
+      <img src="<c:url value='/imagines/IID1cover.jpg' />" alt="Logo" style="height: 50px;" class="rounded-circle me-2">
+      <span style="font-size: 20px; font-weight: bold;">Comment System</span>
+    </a>
+    <!-- Mobile Menu Button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Navbar Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <!-- 管理员管理入口 -->
+        <c:if test="${not empty sessionScope.admin}">
+          <li class="nav-item"><a class="nav-link" href="<c:url value='/adminmanage' />">管理员管理</a></li>
+        </c:if>
+        <!-- 普通用户分类入口 -->
+        <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Movie' />">电影</a></li>
+        <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Book' />">书籍</a></li>
+        <li class="nav-item"><a class="nav-link" href="<c:url value='/items?category=Music' />">音乐</a></li>
+      </ul>
+
+      <form class="d-flex align-items-center w-100 py-2" action="<c:url value='/search' />" method="get">
+        <!-- 搜索类型选择 -->
+        <select class="form-select me-2 search-type" name="type">
+          <option value="Movie">电影</option>
+          <option value="Book">书籍</option>
+          <option value="Music">音乐</option>
+        </select>
+        <!-- 搜索框 -->
+        <input class="form-control me-2 search-bar" type="search" placeholder="搜索" name="query" value="请输入作品名称">
+        <!-- 搜索按钮 -->
+        <button class="btn btn-outline-light search-btn" type="submit">
+          <i class="fas fa-search"></i> 搜索
+        </button>
+      </form>
+
+
+      <!-- 用户和管理员登录逻辑 -->
+      <ul class="navbar-nav ms-3">
+        <c:choose>
+          <c:when test="${empty sessionScope.user && empty sessionScope.admin}">
+            <li class="nav-item"><a class="nav-link" href="<c:url value='/login' />">登录</a></li>
+            <li class="nav-item"><a class="nav-link" href="<c:url value='/register' />">注册</a></li>
+          </c:when>
+          <c:when test="${not empty sessionScope.admin}">
+            <li class="nav-item"><a class="nav-link" href="<c:url value='/admindashboard' />">管理员中心</a></li>
+            <li class="nav-item"><a class="nav-link" href="<c:url value='/logout' />">退出</a></li>
+          </c:when>
+          <c:otherwise>
+            <li class="nav-item d-flex align-items-center">
+              <h5 style="font-style: oblique;color: white">${user.nickname}</h5>
+              <a href="<c:url value='/profile' />" class="d-inline-block me-2">
+                <img src="<c:url value='/imagines/${user.avatar}' />" alt="Profile Picture" style="height: 50px; width: 50px; border-radius: 50%;">
+              </a>
+              <div>
+                <a class="nav-link" href="<c:url value='/profile' />">个人信息</a>
+                <a class="nav-link" href="<c:url value='/logout' />">退出</a>
+              </div>
+            </li>
+          </c:otherwise>
+        </c:choose>
+      </ul>
     </div>
-  </nav>
-</header>
+  </div>
+</nav>
 
-<!-- Page Content Here -->
+<style>
+  /* Navbar Styles */
+  .navbar {
+    padding: 15px 20px;
+  }
 
-<footer class="text-center py-3">
-  <p>&copy; 2024 Book, Movie, Music Reviews. All rights reserved.</p>
-</footer>
+  .navbar-brand img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+  .navbar-brand span {
+    color: #fff;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 16px;
+    margin-right: 10px;
+    font-family: 'Verdana', sans-serif;
+    transition: color 0.3s ease;
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: #ffc107;
+  }
+
+  /* 搜索类型选择框 */
+  .search-type {
+    height: 40px;
+    font-size: 16px;
+    border-radius: 20px;
+    flex-grow: 1; /* 较少的比例空间 */
+    min-width: 120px; /* 限制选择框的最小宽度 */
+    max-width: 150px; /* 限制选择框的最大宽度 */
+  }
+
+  /* 搜索框 */
+  .search-bar {
+    height: 40px;
+    font-size: 16px;
+    border-radius: 20px;
+    flex-grow: 4; /* 占据主要比例空间 */
+    min-width: 300px; /* 确保搜索框宽度主要部分 */
+  }
+
+  /* 搜索按钮 */
+  .search-btn {
+    height: 40px;
+    font-size: 16px;
+    border-radius: 20px;
+    flex-grow: 1; /* 按钮较少比例 */
+    min-width: 100px; /* 最小宽度适配内容 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* 防止文字换行 */
+  }
+
+  /* 搜索部分整体样式 */
+  form.d-flex {
+    max-width: 700px; /* 搜索部分的最大宽度 */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* 搜索栏上下边距修正 */
+  .navbar .d-flex {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  /* 垂直对齐调整 */
+  .navbar-nav.ms-3 .nav-item {
+    display: flex;
+    align-items: center;
+  }
+
+  /* 调整头像间距 */
+  .navbar-nav .nav-item img {
+    margin-right: 10px;
+  }
+
+  /* 移动端适配 */
+  @media (max-width: 768px) {
+    form.d-flex {
+      max-width: 100%;
+      flex-direction: column; /* 垂直排列 */
+    }
+
+    .search-bar,
+    .search-type,
+    .search-btn {
+      width: 100%; /* 占满一行 */
+      margin-bottom: 10px; /* 每个元素间距 */
+    }
+  }
+</style>

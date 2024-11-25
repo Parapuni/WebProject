@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.net.MalformedURLException;
@@ -33,9 +36,31 @@ public class HomeController {
     private MovieJdbc movieJdbc;
     @Autowired
     private MusicJdbc musicJdbc;
-
+    @Autowired
+    private ItemJdbc itemJdbc;
     @RequestMapping(method = GET)
-    public String showHomePage(Model model) {
+    public String showHomePage(HttpServletRequest request,HttpServletResponse response,HttpSession session,Model model) {
+        /*
+        cookie记忆登陆状态
+        若已登陆过，记录"hasLogin"，session结束前取消自动登录
+         */
+        if(session.getAttribute("user") == null && session.getAttribute("hasLogin")==null) {
+            Cookie[] cookies = request.getCookies();
+            String[] userInfo = null;
+            if (cookies != null)
+                for (Cookie cookie : cookies) {
+                    if ("userinfo".equals(cookie.getName()))
+                        userInfo = cookie.getValue().split("_");
+                }
+            if (userInfo != null) {
+                User user = userJdbc.findUserById(Long.parseLong(userInfo[0]));
+                session.setAttribute("user", user);
+                session.setAttribute("hasLogin",true);
+            }
+        }
+
+        List<SimpleItem> ten = itemJdbc.getRecommendedItems();
+        model.addAttribute("ten",ten);
         List<Book> recentBooks = bookJdbc.findBooks(0,4);
         model.addAttribute("recentBooks",recentBooks);
         List<Movie> recentMovies = movieJdbc.findMovies(0,4);
@@ -59,6 +84,8 @@ public class HomeController {
             return "redirect:/login";
         }
         model.addAttribute("user", user);
+        List<Comment> comments = commentJdbc.findCommentsByUserId(user.getUid(),0, 99999);
+        model.addAttribute("comments", comments);
         return "profile";
     }
 
@@ -77,12 +104,6 @@ public class HomeController {
         return "register";
     }
 
-    @RequestMapping(value = "/reviews", method = GET)
-    public String showReviewsPage(Model model) {
-        // TODO: 2024/11/20 Add reviews to model
-        return "reviews";
-    }
-
     @RequestMapping(value = "/submit-review", method = GET)
     public String showSubmitReviewPage(Model model) {
         return "submit-review";
@@ -93,12 +114,24 @@ public class HomeController {
     @RequestMapping(value = "/login", method = POST)
     public String processLogin(@RequestParam(value = "username", defaultValue = "") String userName,
                                @RequestParam(value = "password", defaultValue = "") String password,
-                               HttpSession session) {
+                               HttpServletRequest request,
+                               HttpServletResponse response,
+                               HttpSession session, Model model) {
         User user = userJdbc.findUserByNameAndPassword(userName, password);
         if (user != null) {
+            /*
+            设置cookie，寿命1天
+             */
+            Cookie cookie = new Cookie("userinfo",Long.toString(user.getUid())+"_"+user.getNickname());
+            cookie.setMaxAge(3600*24);
+            cookie.setPath(request.getContextPath());
+            System.out.println(cookie.getPath());
+            response.addCookie(cookie);
             session.setAttribute("user", user);
+            session.setAttribute("hasLogin",true);
             return "redirect:/";
         } else {
+            model.addAttribute("error", "Invalid username or password");
             return "login";
         }
     }
@@ -123,4 +156,6 @@ public class HomeController {
             return "redirect:profile";
         }
     }
+
+
 }
