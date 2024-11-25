@@ -1,0 +1,98 @@
+/* Navbar Styles */
+.navbar {
+    padding: 15px 20px;
+}
+
+.navbar-brand img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.navbar-brand span {
+    color: #fff;
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    margin-right: 10px;
+    font-family: 'Verdana', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffc107;
+}
+
+/* 搜索类型选择框 */
+.search-type {
+    height: 40px;
+    font-size: 16px;
+    border-radius: 20px;
+    flex-grow: 1; /* 较少的比例空间 */
+    min-width: 120px; /* 限制选择框的最小宽度 */
+    max-width: 150px; /* 限制选择框的最大宽度 */
+}
+
+/* 搜索框 */
+.search-bar {
+    height: 40px;
+    font-size: 16px;
+    border-radius: 20px;
+    flex-grow: 4; /* 占据主要比例空间 */
+    min-width: 300px; /* 确保搜索框宽度主要部分 */
+}
+
+/* 搜索按钮 */
+.search-btn {
+    height: 40px;
+    font-size: 16px;
+    border-radius: 20px;
+    flex-grow: 1; /* 按钮较少比例 */
+    min-width: 100px; /* 最小宽度适配内容 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* 防止文字换行 */
+}
+
+/* 搜索部分整体样式 */
+form.d-flex {
+    max-width: 700px; /* 搜索部分的最大宽度 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 搜索栏上下边距修正 */
+.navbar .d-flex {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* 垂直对齐调整 */
+.navbar-nav.ms-3 .nav-item {
+    display: flex;
+    align-items: center;
+}
+
+/* 调整头像间距 */
+.navbar-nav .nav-item img {
+    margin-right: 10px;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    form.d-flex {
+        max-width: 100%;
+        flex-direction: column; /* 垂直排列 */
+    }
+
+    .search-bar,
+    .search-type,
+    .search-btn {
+        width: 100%; /* 占满一行 */
+        margin-bottom: 10px; /* 每个元素间距 */
+    }
+}

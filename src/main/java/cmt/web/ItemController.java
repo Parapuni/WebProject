@@ -125,6 +125,7 @@ public class ItemController {
                 model.addAttribute("items", musics);
                 model.addAttribute("currentPage", page);
                 model.addAttribute("totalPages", (int) Math.ceil((double) musicJdbc.countByCategories(selectedTags) / PAGE_SIZE));
+                break;
             default:
                 model.addAttribute("categoryName", "Unknown");
         }
@@ -148,6 +149,9 @@ public class ItemController {
         categories.add("Movie");
         categories.add("Music");
         model.addAttribute("categories", categories);
+
+        List<String> tags = categoryJdbc.getTagLib();
+        model.addAttribute("tags", tags);
 
         if (query == null || query.trim().isEmpty()){
             model.addAttribute("error", "Search query cannot be empty.");
