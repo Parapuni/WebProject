@@ -89,7 +89,7 @@ public class ItemController {
 
     @RequestMapping(value = "/filt_items", method = GET)
     public String processFiltTiems(@RequestParam(value = "category") String category,
-                                   @RequestParam(value = "tags") List<String> tags,
+                                   @RequestParam(value = "tags",defaultValue = "") List<String> tags,
                                    @RequestParam(value = "page", defaultValue = "1") Integer page,
                                    Model model) {
         List<String> categories = new ArrayList<String>();
@@ -140,7 +140,7 @@ public class ItemController {
 
     @RequestMapping(value = "/search", method = GET)
     public String processSearching(@RequestParam(value = "type") String category,
-                                   @RequestParam(value = "query") String query,
+                                   @RequestParam(value = "query",defaultValue = "") String query,
                                    @RequestParam(value = "page", defaultValue = "1") Integer page,
                                    Model model) {
         model.addAttribute("category", category);
@@ -155,7 +155,7 @@ public class ItemController {
 
         if (query == null || query.trim().isEmpty()){
             model.addAttribute("error", "Search query cannot be empty.");
-            return "/";
+            return "redirect:/";
         }
         switch (category){
             case "Book":
@@ -214,7 +214,7 @@ public class ItemController {
         model.addAttribute("category", category);
         model.addAttribute("totalPages", (int) Math.ceil((double) commentJdbc.countByItemId(iid) / PAGE_SIZE));
 
-        return "itemReview";
+        return "itemComment";
     }
 
     @RequestMapping(value = "/toPage", method = GET)

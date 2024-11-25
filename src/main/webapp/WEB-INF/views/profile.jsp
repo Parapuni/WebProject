@@ -49,7 +49,7 @@
       color: #555;
     }
 
-    .reviews-section {
+    .comments-section {
       background-color: #ffffff;
       padding: 20px;
       border: 1px solid #ddd;
@@ -57,31 +57,31 @@
       margin-top: 20px;
     }
 
-    .reviews-section h3 {
+    .comments-section h3 {
       margin-bottom: 20px;
     }
 
-    .review-item {
+    .comment-item {
       padding: 10px 0;
       border-bottom: 1px solid #ddd;
     }
 
-    .review-item:last-child {
+    .comment-item:last-child {
       border-bottom: none;
     }
 
-    .review-title {
+    .comment-title {
       font-weight: bold;
       margin-bottom: 5px;
     }
 
-    .review-actions a {
+    .comment-actions a {
       margin-right: 10px;
       color: #007bff;
       text-decoration: none;
     }
 
-    .review-actions a:hover {
+    .comment-actions a:hover {
       text-decoration: underline;
     }
   </style>
@@ -110,13 +110,13 @@
 
     <!-- Right Content -->
     <div class="col-md-9">
-      <div class="reviews-section">
+      <div class="comments-section">
         <h3>My Comments</h3>
         <c:if test="${empty comments}">
-          <p class="text-muted">No comments yet. Be the first to review!</p>
+          <p class="text-muted">No comments yet. Be the first to comment!</p>
         </c:if>
         <c:forEach items="${comments}" var="comment">
-          <div class="review p-3 mb-3 border rounded shadow-sm bg-light">
+          <div class="comment p-3 mb-3 border rounded shadow-sm bg-light">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span class="text-dark fw-bold">${comment.userName}</span>
               <span class="text-muted">${comment.cdate}</span>
@@ -124,7 +124,7 @@
 
             <strong><p class="text-secondary">${comment.itemTitle}</p></strong>
 
-            <div class="review-rating text-warning mb-2">
+            <div class="comment-rating text-warning mb-2">
               <c:forEach var="star" begin="1" end="${comment.rating}">
                 ★
               </c:forEach>

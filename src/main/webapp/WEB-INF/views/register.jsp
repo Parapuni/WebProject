@@ -49,6 +49,11 @@
 </head>
 <body>
 <div class="container mt-5">
+    <c:if test="${not empty rError}">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error:</strong> ${rError}
+        </div>
+    </c:if>
     <h2 class="text-center">Register</h2>
     <form action="register" method="POST">
         <!-- 必填字段 -->
@@ -84,10 +89,6 @@
         <div class="form-group">
             <label for="birthday">Birthday</label>
             <input type="date" class="form-control" id="birthday" name="birthday">
-        </div>
-        <div class="form-group">
-            <label for="avatar">Avatar</label>
-            <input type="file" class="form-control-file" id="avatar" name="avatar">
         </div>
         <button type="submit" class="btn btn-primary btn-block">Register</button>
     </form>

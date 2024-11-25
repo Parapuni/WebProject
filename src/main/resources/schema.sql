@@ -8,8 +8,8 @@ create table `User`
     `firstName` varchar(50),
     `lastName`  varchar(50),
     `birthday`  date,
-    `email`     varchar(50) unique not null,
-    `number`    varchar(20) unique,
+    `email`     varchar(50)  not null,
+    `number`    varchar(20) ,
     `avatar`    varchar(255)
 );
 
@@ -82,10 +82,15 @@ create table Category_Item
 );
 
 INSERT INTO `User` (`nickname`, `password`, `firstName`, `lastName`, `birthday`, `email`, `number`, `avatar`)
-            VALUES ('FuckGLP', '1', 'G', 'LP', '2000-02-29', 'Fuck@GLP.com', '123456789', 'UID1avatar.png');
+            VALUES ('us', '1', 'U', 's', '2000-02-29', 'user@qq.com', '123456789', 'UID1avatar.png');
+
+
+INSERT INTO `Admin` (`adminName`, `password`,`email`, `number`, `avatar`)
+            VALUES ('ad', '1', 'user@qq.com', '12345678', 'AID1avatar.jpg');
+
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-VALUES (1, '打上花火', '2024-8-9', '[1,0,0,0,1]', 3.0, 'y6.jpg');
+VALUES (1, '打上花火', '2024-8-9', '[1,0,0,1,1]', 3.0, 'y6.jpg');
 INSERT INTO `Music` (`iid`,`artists`,`lyrics`,`album`)
             VALUES(1,'米津玄师','あの日见渡した渚を，a no hi mi wa ta shi ta na gi sa wo，那天所眺望的海岸，今も思い出すんだ，i ma mo o mo i da su n da，直至今日仍能想起，砂の上に刻んだ言叶，su na no o e ni ki za n da ko to ba， 在沙滩上刻下的话语，君の後ろ姿，ki mi no o shi ro su ga ta，和你的背影，寄り返す波が，yo ri da su na mi ga，涌动的波浪，足元をよぎり何かを攫う，yo gi ri na ni ka o sa ra u，掠过脚边究竟掠走了什么，夕凪の中，yuu na gi no na ka，风平浪静之中，日暮れだけが通り过ぎて行く，hi gu re da ke ga to o ri su gi te i ku，只有黄昏悄悄地流逝，パッと光って咲いた，ba tto hi ka tte sa i ta，光芒怦然绽放，花火を见ていた，ha na bi wo mi te e ta，烟花映入眼帘，きっとまだ 终わらない夏が，ki tto ma da o wa ra na i na tsu da，一定是夏天还未结束，暧昧な心を 解かして繋いだ，a i ma i na kokoro o too ka shi te tsu nai da，将暧昧的心结解开再紧紧相连，この夜が 続いて欲しかった，ko no yo ru ga tsu zu i te ho shi ka tta，愿今夜永不结束，「あと何度君と同じ花火を，a to nan do ki mi to o na ji，还能与你一起看几次，见られるかな」って，ha na bi o mi ra re ru ka na tte，同样的烟花呢，笑う颜に何ができるだろうか，wa ra u ka o ni na ni ga de ki ru da ro o ka，面对你的笑容 我又能做些什么呢，伤つくこと 喜ぶこと，ki zu tsu ku ko to yo ro ko bu ko to，受伤亦或是喜悦，缲り返す波と情动，ku ri ka e su na mi to jyo o doo syoo soo，浪来浪去与情动，焦燥 最终列车の音，sai syoo re ssya no o to，焦躁 响起了末班列车的声音，何度でも 言叶にして君を呼ぶよ，na n do de mo ko to ba ni shi te ki mi o yo bu yo，无数次用言语呼唤着你，波间を选び もう一度...，na mi bo e ra bi mo o i chi do，向着海浪 再一次，もう二度と悲しまずに済むように，mo ni do to ka na shi ma zu ni su mu yo u ni，祈祷不再感受那份悲伤，はっと息を饮めば，ha tto i ki o no me ba，呼吸骤然停滞，消えちゃいそうな光が，ki e cya soo na hi ka ri ga，那快要消失的光芒，きっとまだ 胸に住んでいた，ki tto ma da mu ne ni sun de i ta，一定仍留存在心中，手を伸ばせば触れた，te o no ba se ba hu re ta，伸出手就能触及，あったかい未来は，a tta ka i mi ra i wa，那温暖的未来，ひそかに二人を见ていた，hi so ka ni hu ta ri o mi te i ta，默默地守望着两人，パッと花火が（パッと花火が）, ba tto ha na bi ga     ( ba tto ha na bi ga ), 怦然绽放的烟花，夜に咲いた（夜に咲いた）, yo ru ni sa i ta       ( yo ru ni sa i ta ), 在夜空中绽放后，夜に咲いて（夜に咲いて）, yo ru ni sa i te       (yo ru ni sa i te), 在夜空中绽放后，静かに消えた（静かに消えた）, shi zu ka ni ki e ta      (shi zu ka ni ki e ta), 又静静地消失，离さないで（离れないで）, ha na sa na i de   (ha na re na i de), 请不要离开，もう少しだけ（もう少しだけ）, mo o su ko shi da ke (mo o su ko shi da ke）, 再给一点点时间，もう少しだけ，mo o su ko shi da ke，再给一点点时间，このままで，ko no ma ma de，就这样一直，あの日见渡した渚を，a no hi mi wa ta shi ta na gi sa wo，那天所眺望的海岸，今も思い出すんだ，i ma mo o mo i da sun da，直至今日仍能想起，砂の上に刻んだ言叶，su na noo e ni ki zan da ko to ba， 在沙滩上刻下的话语，君の後ろ姿，ki mi noo shi ro su ga ta，和你的背影，パッと光って咲いた，ba tto hi ka tte sa i ta，光芒怦然绽放，花火を见ていた，ha na bi wo mi te i ta，烟花映入眼帘，きっとまだ 终わらない夏が，ki tto ma da o wa ra na i na tsu ga，还未结束的夏天 一定会将，暧昧な心を 解かして繋いだ，a i ma i na ko ko ro wo too ka shi te tsu na i da，暧昧的心结融化相连在一起，この夜が 続いて欲しかった，ko no yo ru ga tsu zu i te ho shi ka tta，愿今夜永不结束。','《菊花》');
 INSERT INTO Category_Item(iid,`name`)
@@ -99,13 +104,18 @@ INSERT INTO Category_Item(iid,`name`)
 
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-VALUES (2, '美女视频', '2023-11-23', '[0,0,0,0,10]', 5.0, '1_OIP-C.jpg');
+VALUES (2, '爱情公寓', '2023-11-23', '[0,0,0,0,10]', 5.0, 'ai.jpg');
 INSERT INTO `Movie` (`iid`,`director`,`writers`,`cast`,`introduction`)
-            VALUES(2,'kobe man!','glp','菊花,耳朵','这个很好看');
+            VALUES(2,'韦正','汪远','陈赫、娄艺潇、孙艺洲、李金铭、王传君、邓家佳、李佳航、金世佳','《爱情公寓4》是都市爱情爆笑喜剧《爱情公寓》系列的第四部，讲述了一群不同身份背景的年轻男女在并不奢华的爱情公寓里，上演的一幕幕搞笑、离奇、浪漫、感人的有趣故事 。');
 INSERT INTO Category_Item(iid,`name`)
-            VALUES(2,'鬼畜');
+            VALUES(2,'爱情');
 INSERT INTO Category_Item(iid,`name`)
-            VALUES(2,'热血');
+            VALUES(2,'喜剧');
+INSERT INTO Category_Item(iid,`name`)
+            VALUES(2,'电视剧');
+
+
+
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
 VALUES (3, '龙族', '2024-11-10', '[0,0,1,1,0]', 3.5, 'long.jpg');

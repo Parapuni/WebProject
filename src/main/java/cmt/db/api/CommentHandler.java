@@ -9,6 +9,7 @@ import java.util.List;
  * Comment数据操作接口
  */
 public interface CommentHandler {
+    public  List<Comment> findAll(int limit , int offset);
     int countTotal();
     void addComment(Comment comment);
 

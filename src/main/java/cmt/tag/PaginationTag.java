@@ -37,7 +37,7 @@ public class PaginationTag extends SimpleTagSupport {
      * 计算分页栏首尾页码
      * 控制页码数为不超过maxPagesVisible+1，
      * example：
-     * 1 2 3 4 5 6 --> 5 6 7 8 9 10
+     * < 1 2 3 4 5 > --> < 5 6 7 8 9 10 > --> < 9 10 11 12 13 >
      * @throws IOException
      * @throws JspException
      */

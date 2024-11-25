@@ -68,10 +68,10 @@ public class HomeController {
         List<Music> recentMusics = musicJdbc.findMusics(0,4);
         model.addAttribute("recentMusics",recentMusics);
 
-        String welcomeMessage = "Welcome to the Reviews System!";
+        String welcomeMessage = "Welcome to the comments System!";
         model.addAttribute("welcomeMessage", welcomeMessage);
 
-        String platformDescription = "This platform allows you to submit reviews for books, movies, and music.";
+        String platformDescription = "This platform allows you to submit comments for books, movies, and music.";
         model.addAttribute("platformDescription", platformDescription);
 
         return "home";
@@ -104,9 +104,9 @@ public class HomeController {
         return "register";
     }
 
-    @RequestMapping(value = "/submit-review", method = GET)
-    public String showSubmitReviewPage(Model model) {
-        return "submit-review";
+    @RequestMapping(value = "/submit-comment", method = GET)
+    public String showSubmitcommentPage(Model model) {
+        return "submit-comment";
     }
 
 
@@ -148,13 +148,17 @@ public class HomeController {
                                   @RequestParam(value = "email", defaultValue = "") String email,
                                   @RequestParam(value = "confirmPassword", defaultValue = "") String passwordConfirm,
                                   HttpSession session) throws MalformedURLException {
-        if (!password.equals(passwordConfirm)) {
+        if (userJdbc.isExists(nickname)){
+            session.setAttribute("rError","用户名已存在");
             return "register";
-        } else {
-            User user = new User(nickname, password, email);
-            userJdbc.addUser(user);
-            return "redirect:profile";
         }
+        if (!password.equals(passwordConfirm)) {
+            session.setAttribute("rError","两次密码不同");
+            return "register";
+        }
+        User user = new User(nickname, password, email);
+        userJdbc.addUser(user);
+        return "redirect:/profile";
     }
 
 
