@@ -131,18 +131,20 @@
             </div>
             <div class="d-flex justify-content-between align-items-center mb-2">
               <p class="text-secondary">${comment.content}</p>
+              <div>
               <form action="delete-comment" method="post" class="mt-2">
                 <input type="hidden" name="commentId" value="${comment.iid}">
                 <button type="submit" class="btn btn-danger btn-sm">
                   <i class="fas fa-trash-alt"></i> Delete
                 </button>
-                <button type="submit" class="btn btn-submit btn-sm" >
-                  <a href="<c:url value="/toPage?iid=${comment.iid}"/>">
-                     Goto
-                  </a>
-                  <i class="fa fa-mail-forward"></i>
-                </button>
               </form>
+              <button type="submit" class="btn btn-submit btn-sm" >
+                <a href="<c:url value="/toPage?iid=${comment.iid}"/>">
+                  Goto
+                </a>
+                <i class="fa fa-mail-forward"></i>
+              </button>
+              </div>
             </div>
 
           </div>

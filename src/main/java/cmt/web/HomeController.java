@@ -151,7 +151,7 @@ public class HomeController {
             return "redirect:admin/dashboard";
         } else {
             model.addAttribute("error", "Invalid username or password");
-            return "adminLogin";
+            return "admin/adminLogin";
         }
     }
 
