@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tld/csTag.tld" prefix="cs" %>
-<%@ include file="../banner.jsp" %>
+<%@ include file="/WEB-INF/views/banner.jsp" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
