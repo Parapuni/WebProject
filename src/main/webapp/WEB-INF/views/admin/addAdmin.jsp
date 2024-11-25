@@ -26,7 +26,7 @@
 <body>
 <div class="container">
   <h2 class="text-center">添加管理员</h2>
-  <form action="<c:url value='/saveadmin' />" method="post">
+  <form action="<c:url value='/admin/saveadmin' />" method="post">
     <div class="mb-3">
       <label for="nickname" class="form-label">昵称</label>
       <input type="text" class="form-control" id="nickname" name="nickname" required>

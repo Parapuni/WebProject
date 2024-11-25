@@ -27,7 +27,7 @@
 <div class="container">
   <h1 class="mb-4">编辑用户</h1>
   <!-- 用户编辑表单 -->
-  <form action="<c:url value='/updateuser' />" method="post">
+  <form action="<c:url value='/admin/updateuser' />" method="post">
     <!-- UID（不可编辑） -->
     <div class="mb-3">
       <label for="uid" class="form-label">用户 ID</label>

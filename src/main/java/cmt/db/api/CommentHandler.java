@@ -12,6 +12,7 @@ public interface CommentHandler {
     /**
      * @return 评论的总数
      */
+    public  List<Comment> findAll(int limit , int offset);
     int countTotal();
 
     /**
