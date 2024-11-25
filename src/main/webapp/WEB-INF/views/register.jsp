@@ -90,10 +90,6 @@
             <label for="birthday">Birthday</label>
             <input type="date" class="form-control" id="birthday" name="birthday">
         </div>
-        <div class="form-group">
-            <label for="avatar">Avatar</label>
-            <input type="file" class="form-control-file" id="avatar" name="avatar">
-        </div>
         <button type="submit" class="btn btn-primary btn-block">Register</button>
     </form>
     <div class="mt-3 text-center">
