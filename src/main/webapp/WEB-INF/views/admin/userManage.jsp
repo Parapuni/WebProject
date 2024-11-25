@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tld/csTag.tld" prefix="cs" %>
 <%@ include file="../banner.jsp" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -37,9 +38,10 @@
     </div>
 
     <!-- 删除/操作提示信息 -->
-    <c:if test="${not empty message}">
+    <c:if test="${not empty sessionScope.message}">
         <div class="alert alert-success">
-                ${message}
+                ${sessionScope.message}
+            <c:set var="message" value="" scope="session" />
         </div>
     </c:if>
 
@@ -70,31 +72,23 @@
         </tbody>
     </table>
 
-    <!-- 分页 -->
-    <nav aria-label="分页导航" class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+        <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="3"/>
         <ul class="pagination">
-            <!-- 上一页 -->
-            <c:if test="${currentPage > 1}">
-                <li class="page-item">
-                    <a class="page-link" href="<c:url value='/admin/usermanage?page=${currentPage - 1}' />">&laquo;</a>
-                </li>
+            <c:if test="${hasLast == true}">
+                <a class="page-link" href="<c:url value='/admin/manageUsers?page=${currentPage-1}' />"><c:out value="<" escapeXml="true"/></a>
             </c:if>
-
-            <!-- 页码 -->
             <c:forEach var="i" begin="${start}" end="${end}">
                 <li class="page-item ${i == currentPage ? 'active' : ''}">
-                    <a class="page-link" href="<c:url value='/admin/usermanage?page=${i}' />">${i}</a>
+                    <a class="page-link" href="<c:url value='/admin/manageUsers?page=${i}' />">${i}</a>
                 </li>
             </c:forEach>
-
-            <!-- 下一页 -->
-            <c:if test="${currentPage < totalPages}">
-                <li class="page-item">
-                    <a class="page-link" href="<c:url value='/admin/usermanage?page=${currentPage + 1}' />">&raquo;</a>
-                </li>
+            <c:if test="${hasNext == true}">
+                <a class="page-link" href="<c:url value='/admin/manageUsers?page=${currentPage+1}' />"><c:out value=">" escapeXml="true"/></a>
             </c:if>
         </ul>
     </nav>
 </div>
+<jsp:include page="../footer.jsp" />
 </body>
 </html>

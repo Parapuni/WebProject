@@ -89,9 +89,6 @@ INSERT INTO `Admin` (`adminName`, `password`,`email`, `number`, `avatar`)
             VALUES ('ad', '1', 'user@qq.com', '12345678', 'AID1avatar.jpg');
 
 
-INSERT INTO `Admin` (`adminName`, `password`,`email`, `number`, `avatar`)
-VALUES ('ad', '1', 'user@qq.com', '12345678', 'AID1avatar.jpg');
-
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
 VALUES (1, '打上花火', '2024-8-9', '[1,0,0,0,1]', 3.0, 'y6.jpg');
 INSERT INTO `Music` (`iid`,`artists`,`lyrics`,`album`)

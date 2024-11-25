@@ -25,19 +25,16 @@
 </head>
 <body>
 <div class="container">
+  <c:if test="${not empty sessionScope.message}">
+    <div class="alert alert-success">
+        ${sessionScope.message}
+      <c:set var="message" value="" scope="session" />
+    </div>
+  </c:if>
   <h1 class="mb-4">编辑用户</h1>
   <!-- 用户编辑表单 -->
   <form action="<c:url value='/admin/updateuser' />" method="post">
-    <!-- UID（不可编辑） -->
-    <div class="mb-3">
-      <label for="uid" class="form-label">用户 ID</label>
-      <input type="text" class="form-control" id="uid" name="uid" value="${user.uid}" readonly>
-    </div>
-    <!-- 密码 -->
-    <div class="mb-3">
-      <label for="password" class="form-label">密码</label>
-      <input type="password" class="form-control" id="password" name="password" value="${user.password}">
-    </div>
+    <input type="hidden" class="form-control" id="uid" name="uid" value="${user.uid}">
     <!-- 昵称 -->
     <div class="mb-3">
       <label for="nickname" class="form-label">昵称</label>
