@@ -29,7 +29,7 @@
     <h2 class="text-center">评论管理</h2>
 
     <!-- 筛选用户评论 -->
-    <form id="filterForm" class="filter-user d-flex justify-content-end">
+    <form action=" <c:url value="/admin/selectcomments"/>" id="filterForm" class="filter-user d-flex justify-content-end">
         <input type="text" class="form-control w-25 me-2" id="filterUserId" placeholder="输入用户ID">
         <button type="button" class="btn btn-primary" onclick="filterComments()">筛选</button>
     </form>

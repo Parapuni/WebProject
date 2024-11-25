@@ -8,9 +8,10 @@ import java.io.IOException;
 import java.util.Date;
 
 /**
- * 控制浏览器缓存静态图片资源，设置寿命为2小时
+ * 控制浏览器缓存静态资源，设置寿命为2小时
+ * 只缓存.js .css .jpg .png文件
  */
-@WebFilter(urlPatterns = "/*")
+@WebFilter(urlPatterns = {"*.js","*.css","*.jpg","*.png"})
 public class ResponseCacheFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

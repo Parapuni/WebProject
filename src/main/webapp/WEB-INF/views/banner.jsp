@@ -58,10 +58,8 @@
               <a href="<c:url value='/profile' />" class="d-inline-block me-2">
                 <img src="<c:url value='/imagines/${user.avatar}' />" alt="Profile Picture" style="height: 50px; width: 50px; border-radius: 50%;">
               </a>
-              <div>
-                <a class="nav-link" href="<c:url value='/profile' />">个人信息</a>
-                <a class="nav-link" href="<c:url value='/logout' />">退出</a>
-              </div>
+              <a class="nav-link" href="<c:url value='/profile' />">个人信息</a>
+              <a class="nav-link" href="<c:url value='/logout' />">退出</a>
             </li>
           </c:otherwise>
         </c:choose>
