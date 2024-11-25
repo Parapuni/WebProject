@@ -33,11 +33,9 @@ public class TestController {
         mockAdmin.setEmail("admin@example.com");
         mockAdmin.setPassword("adminPassword");
 
-
-
         session.setAttribute("admin", mockAdmin);
         session.removeAttribute("user");  // 确保 user 属性被清除
-        return "redirect:/home.jsp";
+        return "redirect:/";
     }
 
     @RequestMapping("/simulateLogout")

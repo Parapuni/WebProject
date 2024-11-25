@@ -84,6 +84,9 @@ create table Category_Item
 INSERT INTO `User` (`nickname`, `password`, `firstName`, `lastName`, `birthday`, `email`, `number`, `avatar`)
             VALUES ('FuckGLP', '1', 'G', 'LP', '2000-02-29', 'Fuck@GLP.com', '123456789', 'UID1avatar.png');
 
+INSERT INTO `Admin` (`adminName`, `password`,`email`, `number`, `avatar`)
+VALUES ('ad', '1', 'user@qq.com', '12345678', 'AID1avatar.jpg');
+
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
 VALUES (1, '打上花火', '2024-8-9', '[1,0,0,0,1]', 3.0, 'y6.jpg');
 INSERT INTO `Music` (`iid`,`artists`,`lyrics`,`album`)

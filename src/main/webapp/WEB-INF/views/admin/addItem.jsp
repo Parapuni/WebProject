@@ -107,5 +107,6 @@
 <script>
   document.addEventListener('DOMContentLoaded', updateFormFields);
 </script>
+<jsp:include page="../footer.jsp"/>
 </body>
 </html>

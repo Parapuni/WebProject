@@ -58,5 +58,6 @@
     <button type="submit" class="btn btn-primary w-100">添加管理员</button>
   </form>
 </div>
+<jsp:include page="../footer.jsp"/>
 </body>
 </html>
