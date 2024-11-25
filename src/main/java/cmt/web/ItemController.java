@@ -214,7 +214,7 @@ public class ItemController {
         model.addAttribute("category", category);
         model.addAttribute("totalPages", (int) Math.ceil((double) commentJdbc.countByItemId(iid) / PAGE_SIZE));
 
-        return "itemReview";
+        return "itemcomment";
     }
 
     @RequestMapping(value = "/toPage", method = GET)
