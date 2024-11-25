@@ -40,8 +40,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     /**
      * 启用默认静态资源处理
-     *
-     * @param configurer
      */
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -50,8 +48,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     /**
      * 图像默认处理
-     *
-     * @param registry
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

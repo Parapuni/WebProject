@@ -17,8 +17,6 @@ import javax.servlet.ServletRegistration;
 public class CommentSystemInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     /**
      * 指定Root配置
-     *
-     * @return
      */
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -27,8 +25,6 @@ public class CommentSystemInitializer extends AbstractAnnotationConfigDispatcher
 
     /**
      * 指定DispatcherServlet的配置
-     *
-     * @return
      */
     @Override
     protected Class<?>[] getServletConfigClasses() {
@@ -38,8 +34,6 @@ public class CommentSystemInitializer extends AbstractAnnotationConfigDispatcher
     /**
      * 将DispatcherServlet映射到“/”
      * 使其成为默认servlet，处理所有进入应用的请求
-     *
-     * @return
      */
     @Override
     protected String[] getServletMappings() {
