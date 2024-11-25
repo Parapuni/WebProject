@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="header.jsp" %>
+<%@ include file="../banner.jsp" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>添加用户</title>
+  <title>添加管理员</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     .container {
@@ -25,8 +25,8 @@
 </head>
 <body>
 <div class="container">
-  <h2 class="text-center">添加用户</h2>
-  <form action="<c:url value='/admin/saveuser' />" method="post">
+  <h2 class="text-center">添加管理员</h2>
+  <form action="<c:url value='/saveadmin' />" method="post">
     <div class="mb-3">
       <label for="nickname" class="form-label">昵称</label>
       <input type="text" class="form-control" id="nickname" name="nickname" required>
@@ -55,7 +55,7 @@
       <label for="birthday" class="form-label">生日</label>
       <input type="date" class="form-control" id="birthday" name="birthday">
     </div>
-    <button type="submit" class="btn btn-primary w-100">添加用户</button>
+    <button type="submit" class="btn btn-primary w-100">添加管理员</button>
   </form>
 </div>
 </body>
