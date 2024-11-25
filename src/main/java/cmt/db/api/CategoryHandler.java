@@ -5,6 +5,7 @@ import cmt.entity.Item;
 import java.util.List;
 
 public interface CategoryHandler {
+    List<String> getTagLib();
     /**
      * 获取指定Item的分类
      *

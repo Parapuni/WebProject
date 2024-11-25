@@ -1,8 +1,10 @@
 package cmt.db.api;
 
 
+import cmt.entity.Book;
 import cmt.entity.Music;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,4 +39,8 @@ public interface MusicHandler {
     List<Music> findMusicsByAlbum(int offset, int length, String Album);
 
     int countByAlbum(String Album);
+
+    List<Music> findMusicsByYear(int year);
+
+    int countByYear(int year);
 }

@@ -15,6 +15,7 @@ import java.util.List;
 
 @Repository
 public class CategoryJdbc implements CategoryHandler {
+    private final String GET_TAGLIB = "select name from Category_Item";
     private final String SELECT_CATEGORIES_BY_ID = "select name from Category_Item where iid = ?";
     private final String ADD_ITEM_CATEGORIES = "insert into Category_Item values(iid,`name`)";
     private final String DELETE_ITEM_CATEGORIES = "delete from Category_Item where iid = ?";
@@ -33,6 +34,11 @@ public class CategoryJdbc implements CategoryHandler {
 
     public void setCategory(Item item) {
         item.setCategories(getCategories(item.getIid()));
+    }
+
+    @Override
+    public List<String> getTagLib() {
+        return jdbcTemplate.query(GET_TAGLIB,new StringRowMapper());
     }
 
     public List<String> getCategories(long iid) {

@@ -2,6 +2,7 @@ package cmt.db.jdbc;
 
 import cmt.db.api.BookHandler;
 import cmt.entity.Book;
+import cmt.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -23,6 +25,7 @@ public class BookJdbc implements BookHandler {
     private final String COUNT_BY_TITLE = "select COUNT(*) from Book b natural join Item i where i.title like ? ";
     private final String COUNT_BY_AUTHORS = "select COUNT(*) from Book b natural join Item i where b.authors like ? ";
     private final String COUNT_BY_PUBLISHER = "select COUNT(*) from Book b natural join Item i where b.publisher like ? ";
+    private final String COUNT_BY_YEAR = "select count(*) from Book b natural join Item i where Year(i.releaseDate) = ? ";
     private final String INSERT_BOOK = "insert into Book values(?,?,?,?)";
     private final String DELETE_BOOK = "delete from Book where iid = ?";
     private final String UPDATE_BOOK = "update Book set `authors` = ?,`publisher` = ?,`introduction` = ?  where iid = ?;";
@@ -34,6 +37,7 @@ public class BookJdbc implements BookHandler {
     private final String SELECT_BOOKS_BY_TITLE = "select * from Book b natural join Item i where i.title like ? limit ? offset ?";
     private final String SELECT_BOOKS_BY_AUTHORS = "select * from Book b natural join Item i where b.authors like ? limit ? offset ?";
     private final String SELECT_BOOKS_BY_PUBLISHER = "select * from Book b natural join Item i where b.publisher like ? limit ? offset ?";
+    private final String SELECT_BOOKS_BY_YEAR = "select * from Book b natural join Item i where Year(i.releaseDate) = ? ";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private CategoryJdbc categoryJdbc;
@@ -144,6 +148,19 @@ public class BookJdbc implements BookHandler {
     public int countByPublisher(String publisher) {
         return jdbcTemplate.queryForInt(COUNT_BY_PUBLISHER,"%" + publisher + "%");
     }
+
+    @Override
+    public List<Book> findBooksByYear(int year) {
+        List<Book> books = jdbcTemplate.query(SELECT_BOOKS_BY_YEAR,new BookRowMapper(),year);
+        categoryJdbc.setCategory(books);
+        return books;
+    }
+
+    @Override
+    public int countByYear(int year) {
+        return jdbcTemplate.queryForInt(COUNT_BY_YEAR,year);
+    }
+
 
     private static final class BookRowMapper implements RowMapper<Book> {
         @Override

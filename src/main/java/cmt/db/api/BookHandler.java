@@ -3,6 +3,7 @@ package cmt.db.api;
 
 import cmt.entity.Book;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,4 +38,8 @@ public interface BookHandler {
     List<Book> findBooksByPublisher(int offset, int length, String publisher);
 
     int countByPublisher(String publisher);
+
+    List<Book> findBooksByYear(int year);
+
+    int countByYear(int year);
 }
