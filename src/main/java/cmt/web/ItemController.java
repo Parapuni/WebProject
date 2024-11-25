@@ -36,6 +36,8 @@ public class ItemController {
     private MusicJdbc musicJdbc;
     @Autowired
     private CommentJdbc commentJdbc;
+    @Autowired
+    private CategoryJdbc categoryJdbc;
 
     private List<Book> books = new ArrayList<Book>();
     private List<Movie> movies = new ArrayList<Movie>();
@@ -56,6 +58,9 @@ public class ItemController {
         categories.add("Movie");
         categories.add("Music");
         model.addAttribute("categories", categories);
+
+        List<String> tags = categoryJdbc.getTagLib();
+        model.addAttribute("tags", tags);
 
         switch (category) {
             case "Book":
@@ -79,9 +84,60 @@ public class ItemController {
             default:
                 model.addAttribute("categoryName", "Unknown");
         }
+        return "itemsPage";
+    }
+
+    @RequestMapping(value = "/filt_items", method = GET)
+    public String processFiltTiems(@RequestParam(value = "category") String category,
+                                   @RequestParam(value = "tags") List<String> tags,
+                                   @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                   Model model) {
+        List<String> categories = new ArrayList<String>();
+        categories.add("Movie");
+        categories.add("Book");
+        categories.add("Music");
+        model.addAttribute("categories", categories);
+        //每次传进来的category是在之前的category字符串前面插入新内容，如Movie,Book，新插入的是Movie，需要分割取最前的内容
+        String[] t = category.split(",");
+        category = t[0];
+
+        List<String> selectedTags = tags != null ? tags : new ArrayList<>();
+        model.addAttribute("selectedTags", selectedTags);
+        model.addAttribute("category", category);
+        model.addAttribute("currentCategory", category);
+
+        switch (category) {
+            case "Book":
+                books = bookJdbc.findBooksByCategories((page - 1) * PAGE_SIZE, PAGE_SIZE, selectedTags);
+                model.addAttribute("items", books);
+                model.addAttribute("currentPage", page);
+                model.addAttribute("totalPages", (int) Math.ceil((double) bookJdbc.countTotal() / PAGE_SIZE));
+                break;
+            case "Movie":
+                movies = movieJdbc.findMoviesByCategories((page - 1) * PAGE_SIZE, PAGE_SIZE, selectedTags);
+                model.addAttribute("items", movies);
+                model.addAttribute("currentPage", page);
+                model.addAttribute("totalPages", (int) Math.ceil((double) movieJdbc.countTotal() / PAGE_SIZE));
+                break;
+            case "Music":
+                musics = musicJdbc.findMusicsByCategories((page - 1) * PAGE_SIZE, PAGE_SIZE, selectedTags);
+                System.out.println(musics.size());
+                model.addAttribute("items", musics);
+                model.addAttribute("currentPage", page);
+                model.addAttribute("totalPages", (int) Math.ceil((double) musicJdbc.countTotal() / PAGE_SIZE));
+                break;
+            default:
+                model.addAttribute("categoryName", "Unknown");
+        }
+
+        tags = categoryJdbc.getTagLib();
+        model.addAttribute("tags", tags);
+        selectedTags = new ArrayList<>();
+        model.addAttribute("selectedTags", selectedTags);
 
         return "itemsPage";
     }
+
     @RequestMapping(value = "/search", method = GET)
     public String processSearching(@RequestParam(value = "type") String category,
                                    @RequestParam(value = "query") String query,
