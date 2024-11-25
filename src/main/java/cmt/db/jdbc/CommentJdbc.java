@@ -14,6 +14,7 @@ import java.util.List;
 
 @Repository
 public class CommentJdbc implements CommentHandler {
+    private final String SELECT_ALL = "select * from `comment` c join `item` i on(c.iid = i.iid) join `user` u on(c.uid = u.uid) limit ? offset ?";
     private final String COUNT_TOTAL = "select COUNT(*) from Comment";
     private final String COUNT_BY_UID = "select count(*)\n" +
             "from  `comment` c join `item` i on(c.iid = i.iid) join `user` u on(c.uid = u.uid) " +
@@ -41,6 +42,10 @@ public class CommentJdbc implements CommentHandler {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
+    public  List<Comment> findAll(int limit , int offset){
+        return jdbcTemplate.query(SELECT_ALL,new CommentRowMapper(),limit,offset);
+    }
     @Override
     public int countTotal() {
         return jdbcTemplate.queryForInt(COUNT_TOTAL);

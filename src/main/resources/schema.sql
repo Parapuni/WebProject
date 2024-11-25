@@ -8,8 +8,8 @@ create table `User`
     `firstName` varchar(50),
     `lastName`  varchar(50),
     `birthday`  date,
-    `email`     varchar(50) unique not null,
-    `number`    varchar(20) unique,
+    `email`     varchar(50)  not null,
+    `number`    varchar(20) ,
     `avatar`    varchar(255)
 );
 
@@ -82,7 +82,12 @@ create table Category_Item
 );
 
 INSERT INTO `User` (`nickname`, `password`, `firstName`, `lastName`, `birthday`, `email`, `number`, `avatar`)
-            VALUES ('FuckGLP', '1', 'G', 'LP', '2000-02-29', 'Fuck@GLP.com', '123456789', 'UID1avatar.png');
+            VALUES ('us', '1', 'U', 's', '2000-02-29', 'user@qq.com', '123456789', 'UID1avatar.png');
+
+
+INSERT INTO `Admin` (`adminName`, `password`,`email`, `number`, `avatar`)
+            VALUES ('ad', '1', 'user@qq.com', '12345678', 'AID1avatar.jpg');
+
 
 INSERT INTO `Admin` (`adminName`, `password`,`email`, `number`, `avatar`)
 VALUES ('ad', '1', 'user@qq.com', '12345678', 'AID1avatar.jpg');
@@ -102,13 +107,18 @@ INSERT INTO Category_Item(iid,`name`)
 
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
-VALUES (2, '美女视频', '2023-11-23', '[0,0,0,0,10]', 5.0, '1_OIP-C.jpg');
+VALUES (2, '爱情公寓', '2023-11-23', '[0,0,0,0,10]', 5.0, 'ai.jpg');
 INSERT INTO `Movie` (`iid`,`director`,`writers`,`cast`,`introduction`)
-            VALUES(2,'kobe man!','glp','菊花,耳朵','这个很好看');
+            VALUES(2,'韦正','汪远','陈赫、娄艺潇、孙艺洲、李金铭、王传君、邓家佳、李佳航、金世佳','《爱情公寓4》是都市爱情爆笑喜剧《爱情公寓》系列的第四部，讲述了一群不同身份背景的年轻男女在并不奢华的爱情公寓里，上演的一幕幕搞笑、离奇、浪漫、感人的有趣故事 。');
 INSERT INTO Category_Item(iid,`name`)
-            VALUES(2,'鬼畜');
+            VALUES(2,'爱情');
 INSERT INTO Category_Item(iid,`name`)
-            VALUES(2,'热血');
+            VALUES(2,'喜剧');
+INSERT INTO Category_Item(iid,`name`)
+            VALUES(2,'电视剧');
+
+
+
 
 INSERT INTO `Item` (`iid`, `title`,`releaseDate`,`stars`,`rating`,`coverImagine`)
 VALUES (3, '龙族', '2024-11-10', '[0,0,1,1,0]', 3.5, 'long.jpg');

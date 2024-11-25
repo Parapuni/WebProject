@@ -27,6 +27,7 @@ public class UserJdbc implements UserHandler {
     private final String SELECT_USER_BY_ID = "select * from User where uid = ?;";
     private final String SELECT_USER_BY_NAME_AND_PASSWORD = "select * from User where nickname = ? and `password` = ?;";
     private final String SELECT_USERS = "select * from User limit ? offset ?;";
+    private final String IS_EXISTS = "select * from User where nickname = ?;";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -39,6 +40,15 @@ public class UserJdbc implements UserHandler {
         return jdbcTemplate.queryForInt(COUNT_TOTAL);
     }
 
+    public boolean isExists(String nickname){
+        boolean flag = true;
+        try{
+            jdbcTemplate.queryForObject(IS_EXISTS,new UserRowMapper(),nickname);
+        }catch (DataAccessException dae){
+            flag = false;
+        }
+        return flag;
+    }
     /**
      * 添加一个User
      *
