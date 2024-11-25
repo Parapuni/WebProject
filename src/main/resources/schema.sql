@@ -8,8 +8,8 @@ create table `User`
     `firstName` varchar(50),
     `lastName`  varchar(50),
     `birthday`  date,
-    `email`     varchar(50) unique not null,
-    `number`    varchar(20) unique,
+    `email`     varchar(50)  not null,
+    `number`    varchar(20) ,
     `avatar`    varchar(255)
 );
 

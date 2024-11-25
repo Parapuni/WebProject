@@ -148,13 +148,17 @@ public class HomeController {
                                   @RequestParam(value = "email", defaultValue = "") String email,
                                   @RequestParam(value = "confirmPassword", defaultValue = "") String passwordConfirm,
                                   HttpSession session) throws MalformedURLException {
-        if (!password.equals(passwordConfirm)) {
+        if (userJdbc.isExists(nickname)){
+            session.setAttribute("rError","用户名已存在");
             return "register";
-        } else {
-            User user = new User(nickname, password, email);
-            userJdbc.addUser(user);
-            return "redirect:profile";
         }
+        if (!password.equals(passwordConfirm)) {
+            session.setAttribute("rError","两次密码不同");
+            return "register";
+        }
+        User user = new User(nickname, password, email);
+        userJdbc.addUser(user);
+        return "redirect:/profile";
     }
 
 
