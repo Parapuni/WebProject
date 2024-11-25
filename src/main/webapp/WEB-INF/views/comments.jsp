@@ -1,9 +1,9 @@
 <%@ include file="banner.jsp" %>
 <div class="container mt-5">
-  <h2 class="text-center mb-4">Reviews</h2>
+  <h2 class="text-center mb-4">comments</h2>
 
   <!-- 筛选表单 -->
-  <form action="filter-reviews.jsp" method="post" class="mb-4">
+  <form action="filter-comments.jsp" method="post" class="mb-4">
     <div class="form-group">
       <label for="type">Select Content Type</label>
       <select id="type" name="type" class="form-control">
@@ -17,17 +17,17 @@
 
   <!-- 评论列表 -->
   <div>
-    <h3 class="mb-3">Reviews List</h3>
+    <h3 class="mb-3">comments List</h3>
     <table class="table table-striped table-hover">
       <thead class="thead-dark">
       <tr>
         <th>Title</th>
-        <th>Review</th>
+        <th>comment</th>
         <th>Rating</th>
       </tr>
       </thead>
       <tbody>
-      <c:forEach var="comment" items="${reviews}">
+      <c:forEach var="comment" items="${comments}">
         <tr>
           <td>${comment.title}</td>
           <td>${comment.text}</td>

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Submit Review</title>
+  <title>Submit comment</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     /* 页面背景色 */
@@ -38,8 +38,8 @@
 </head>
 <body>
 <div class="container">
-  <h2 class="text-center my-4">Submit a Review</h2>
-  <form action="submit-review" method="post">
+  <h2 class="text-center my-4">Submit a comment</h2>
+  <form action="submit-comment" method="post">
     <div class="mb-3">
       <label for="itemType" class="form-label">Type</label>
       <select id="itemType" name="itemType" class="form-select">
@@ -53,14 +53,14 @@
       <input type="text" class="form-control" id="title" name="title" required>
     </div>
     <div class="mb-3">
-      <label for="reviewText" class="form-label">Review</label>
-      <textarea id="reviewText" name="reviewText" class="form-control" rows="4" required></textarea>
+      <label for="commentText" class="form-label">comment</label>
+      <textarea id="commentText" name="commentText" class="form-control" rows="4" required></textarea>
     </div>
     <div class="mb-3">
       <label for="rating" class="form-label">Rating</label>
       <input type="number" id="rating" name="rating" min="1" max="5" class="form-control" required>
     </div>
-    <button type="submit" class="btn btn-primary w-100">Submit Review</button>
+    <button type="submit" class="btn btn-primary w-100">Submit comment</button>
   </form>
 </div>
 </body>

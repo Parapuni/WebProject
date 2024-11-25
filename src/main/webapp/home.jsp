@@ -131,7 +131,7 @@
       <div class="weekly-recommendation">
         <ul>
           <!-- 将第一个推荐项改为 book1，并添加超链接到 itemComment.jsp -->
-          <li><a href="<c:url value='/itemReview.jsp?itemId=book1' />">奶龙娘</a></li>
+          <li><a href="<c:url value='/itemcomment.jsp?itemId=book1' />">奶龙娘</a></li>
           <li>推荐2</li>
           <li>推荐3</li>
           <li>推荐4</li>

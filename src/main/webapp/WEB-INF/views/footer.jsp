@@ -29,7 +29,7 @@
 </head>
 <body>
 <footer class="text-white text-center">
-  <p>&copy; 2024 Book, Movie, and Music Reviews System</p>
+  <p>&copy; 2024 Book, Movie, and Music comments System</p>
 </footer>
 </body>
 </html>

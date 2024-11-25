@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${item.title} - Write a Review</title>
+  <title>${item.title} - Write a comment</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill/dist/quill.snow.css">
   <style>
@@ -129,13 +129,13 @@
     <input type="hidden" id="ratingInput" name="rating" value="0">
   </div>
 
-  <!-- Review Editor -->
+  <!-- comment Editor -->
   <div class="editor-container mt-4 p-3">
     <h3 class="text-primary">Write Your Comments</h3>
-    <form action="submit-review" method="post" class="comment-form">
+    <form action="submit-comment" method="post" class="comment-form">
       <input type="hidden" name="id" value="${item.iid}">
       <div class="form-group">
-        <textarea class="form-control comment-box shadow-sm" name="reviewContent" id="reviewContent" rows="5" placeholder="Write your review here..."></textarea>
+        <textarea class="form-control comment-box shadow-sm" name="commentContent" id="commentContent" rows="5" placeholder="Write your comment here..."></textarea>
       </div>
       <input type="hidden" id="ratingInputHidden" name="rating" value="0">
       <button type="submit" class="btn btn-primary w-100 submit-btn">Submit Comment</button>
@@ -156,11 +156,11 @@
           <p>You have already submitted a comment for this item. Do you want to overwrite it?</p>
         </div>
         <div class="modal-footer">
-          <form action="update-review" method="post">
+          <form action="update-comment" method="post">
             <input type="hidden" name="id" value="${iid}">
             <input type="hidden" name="rating" value="${rating}">
             <input type="hidden" name="originalRating" value="${originalRating}">
-            <textarea name="reviewContent" hidden>${content}</textarea>
+            <textarea name="commentContent" hidden>${content}</textarea>
             <button type="submit" class="btn btn-primary">Overwrite</button>
           </form>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hideModal()">Cancel</button>
@@ -182,7 +182,7 @@
   // Initialize Quill editor
   const quill = new Quill('#editor', {
     theme: 'snow',
-    placeholder: 'Write your review here...',
+    placeholder: 'Write your comment here...',
     modules: {
       toolbar: [
         ['bold', 'italic', 'underline'],
@@ -194,9 +194,9 @@
 
   // Sync Quill content with the hidden textarea
   const form = document.querySelector('form');
-  const reviewContent = document.querySelector('#reviewContent');
+  const commentContent = document.querySelector('#commentContent');
   form.addEventListener('submit', () => {
-    reviewContent.value = quill.root.innerHTML;
+    commentContent.value = quill.root.innerHTML;
   });
 
   // Star Rating Interaction

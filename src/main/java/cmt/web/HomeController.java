@@ -68,10 +68,10 @@ public class HomeController {
         List<Music> recentMusics = musicJdbc.findMusics(0,4);
         model.addAttribute("recentMusics",recentMusics);
 
-        String welcomeMessage = "Welcome to the Reviews System!";
+        String welcomeMessage = "Welcome to the comments System!";
         model.addAttribute("welcomeMessage", welcomeMessage);
 
-        String platformDescription = "This platform allows you to submit reviews for books, movies, and music.";
+        String platformDescription = "This platform allows you to submit comments for books, movies, and music.";
         model.addAttribute("platformDescription", platformDescription);
 
         return "home";
@@ -104,9 +104,9 @@ public class HomeController {
         return "register";
     }
 
-    @RequestMapping(value = "/submit-review", method = GET)
-    public String showSubmitReviewPage(Model model) {
-        return "submit-review";
+    @RequestMapping(value = "/submit-comment", method = GET)
+    public String showSubmitcommentPage(Model model) {
+        return "submit-comment";
     }
 
 
