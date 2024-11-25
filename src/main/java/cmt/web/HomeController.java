@@ -99,6 +99,11 @@ public class HomeController {
         return "login";
     }
 
+    @RequestMapping(value = "/adminLogin", method = GET)
+    public String showAdminLoginForm() {
+        return "admin/adminLogin";
+    }
+
     @RequestMapping(value = "/register", method = GET)
     public String showRegisterForm() {
         return "register";
@@ -136,8 +141,30 @@ public class HomeController {
         }
     }
 
+    @RequestMapping(value = "/adminLogin", method = POST)
+    public String processAdminLogin(@RequestParam(value = "username", defaultValue = "") String userName,
+                                    @RequestParam(value = "password", defaultValue = "") String password,
+                                    HttpSession session, Model model) {
+        Admin admin = adminJdbc.findAdminByNameAndPassword(userName, password);
+        if (admin != null) {
+            session.setAttribute("admin", admin);
+            return "redirect:admin/dashboard";
+        } else {
+            model.addAttribute("error", "Invalid username or password");
+            return "adminLogin";
+        }
+    }
+
     @RequestMapping(value = "/logout", method = GET)
     public String logout(HttpSession session) {
+        session.removeAttribute("admin");
+        session.removeAttribute("user");
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/adminLogout", method = GET)
+    public String adminLogout(HttpSession session) {
+        session.removeAttribute("admin");
         session.removeAttribute("user");
         return "redirect:/";
     }
