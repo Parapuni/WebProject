@@ -67,21 +67,43 @@
   <div class="row">
     <!-- Sidebar for Categories -->
     <div class="col-md-3">
-      <div class="sidebar">
-        <h4>作品种类</h4>
-        <ul>
+      <div class="sidebar p-3 mb-4 border rounded shadow-sm">
+        <h4 class="mb-3">选择作品种类</h4>
+        <ul class="list-group">
           <c:forEach var="category" items="${categories}">
-            <li onclick="location.href='<c:url value='/items?category=${category}' />'">
+            <li
+                    class="list-group-item list-group-item-action"
+                    style="cursor: pointer;"
+                    onclick="location.href='<c:url value='/filt_items?category=${category}' />'">
                 ${category}
             </li>
           </c:forEach>
         </ul>
       </div>
-      <br>
-      <div class="sidebar">
 
+      <div class="sidebar p-3 mb-4 border rounded shadow-sm">
+        <h4 class="mb-3">选择标签</h4>
+        <form action="<c:url value='/filt_items' />" method="get" id="tagForm">
+          <input type="hidden" name="category" value="${currentCategory}" />
+          <c:forEach var="tag" items="${tags}">
+            <div class="form-check">
+              <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="tags"
+                      value="${tag}"
+                      id="tag-${tag}"
+                      <c:if test="${selectedTags contains tag}">checked</c:if>>
+              <label class="form-check-label" for="tag-${tag}">
+                  ${tag}
+              </label>
+            </div>
+          </c:forEach>
+          <button type="submit" class="btn btn-primary mt-3 w-100">筛选</button>
+        </form>
       </div>
     </div>
+
 
     <!-- Item List -->
     <div class="col-md-9">

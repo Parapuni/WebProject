@@ -82,6 +82,20 @@ public class ItemController {
 
         return "itemsPage";
     }
+
+    @RequestMapping(value = "/filt_items", method = GET)
+    public String processFiltTiems(@RequestParam(value = "category") String category,
+                                   @RequestParam(value = "tags") List<String> tags,
+                                   @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                   Model model) {
+        List<String> selectedTags = tags != null ? tags : new ArrayList<>();
+        model.addAttribute("selectedTags", selectedTags);
+        model.addAttribute("category", category);
+        model.addAttribute("currentCategory", category);
+
+        return "itemsPage";
+    }
+
     @RequestMapping(value = "/search", method = GET)
     public String processSearching(@RequestParam(value = "type") String category,
                                    @RequestParam(value = "query") String query,
