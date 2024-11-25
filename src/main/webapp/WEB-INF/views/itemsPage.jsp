@@ -68,7 +68,7 @@
     <!-- Sidebar for Categories -->
     <div class="col-md-3">
       <div class="sidebar">
-        <h4>Categories</h4>
+        <h4>作品种类</h4>
         <ul>
           <c:forEach var="category" items="${categories}">
             <li onclick="location.href='<c:url value='/items?category=${category}' />'">
@@ -76,6 +76,10 @@
             </li>
           </c:forEach>
         </ul>
+      </div>
+      <br>
+      <div class="sidebar">
+
       </div>
     </div>
 
@@ -100,7 +104,7 @@
     </div>
     <!-- Pagination -->
     <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
-      <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="1"/>
+      <cs:page index="${currentPage}" pageNum="${totalPages}" maxPagesVisible="3"/>
       <ul class="pagination">
         <c:if test="${hasLast == true}">
           <a class="page-link" href="<c:url value='/items?page=${currentPage-1}&category=${category}' />"><c:out value="<" escapeXml="true"/></a>
