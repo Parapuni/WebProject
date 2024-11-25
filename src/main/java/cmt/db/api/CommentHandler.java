@@ -9,10 +9,17 @@ import java.util.List;
  * Comment数据操作接口
  */
 public interface CommentHandler {
+
+    /**
+     * 获取所有的评论
+     * @param limit 上限
+     * @param offset 偏移量
+     * @return 评论列表
+     */
+    List<Comment> findAll(int limit , int offset);
     /**
      * @return 评论的总数
      */
-    public  List<Comment> findAll(int limit , int offset);
     int countTotal();
 
     /**
