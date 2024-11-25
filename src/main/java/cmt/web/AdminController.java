@@ -176,13 +176,13 @@ public class AdminController {
     /**
      * 删除评论
      */
-    @RequestMapping(value = "/deletecomment", method = RequestMethod.GET)
-    public String deleteComment(@RequestParam("iid") Long iid,
-                                @RequestParam("uid") Long uid,
-                                Model model) {
-        commentJdbc.removeComment(iid, uid);
-        model.addAttribute("message", "评论删除成功！");
-        return "redirect:/admin/managecomments";
+    @RequestMapping(value = "/deleteComment", method = RequestMethod.GET)
+    public String deleteComment(@RequestParam("iid") long iid,
+                                @RequestParam("uid") long uid,
+                                HttpSession session) {
+        commentJdbc.removeComment(iid,uid);
+        session.setAttribute("message","删除成功");
+        return "redirect:/admin/manageComments";
     }
 
     // -----------------------------------

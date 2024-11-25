@@ -30,8 +30,14 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2 class="text-center">评论管理</h2>
 
+    <h2 class="text-center">评论管理</h2>
+    <c:if test="${not empty sessionScope.message}">
+        <div class="alert alert-success">
+                ${sessionScope.message}
+            <c:set var="message" value="" scope="session" />
+        </div>
+    </c:if>
     <!-- 筛选用户评论 -->
     <form action=" <c:url value="/admin/selectcomments"/>" id="filterForm" class="filter-user d-flex justify-content-end">
         <input type="text" class="form-control w-25 me-2" id="filterUserId" placeholder="输入用户ID">
@@ -63,7 +69,7 @@
                 <td>${comment.cdate}</td>
                 <td>${comment.content}</td>
                 <td>
-                    <a href="<c:url value='/admin/deleteComment?id=${comment.iid}' />" class="btn btn-danger btn-sm">删除</a>
+                    <a href="<c:url value='/admin/deleteComment?iid=${comment.iid}&uid=${comment.uid}' />" class="btn btn-danger btn-sm">删除</a>
                 </td>
             </tr>
         </c:forEach>
