@@ -7,13 +7,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import cmt.db.jdbc.*;
 import cmt.entity.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,6 +37,8 @@ public class AdminController {
     private MovieJdbc movieJdbc;
     @Autowired
     private MusicJdbc musicJdbc;
+    @Autowired
+    private ItemJdbc itemJdbc;
 
     /**
      * 管理员仪表盘
@@ -190,84 +196,427 @@ public class AdminController {
     // -----------------------------------
 
     /**
-     * 作品管理页面
+     * 书本管理页面
      */
-    @RequestMapping(value = "/manageItem", method = RequestMethod.GET)
-    public String manageItems(@RequestParam(value = "category", defaultValue = "All") String category,
-                              @RequestParam(value = "page", defaultValue = "1") int page,
-                              @RequestParam(value = "size", defaultValue = "10") int size,
+    @RequestMapping(value = "/manageBook", method = RequestMethod.GET)
+    public String manageItems(@RequestParam(value = "page", defaultValue = "1") int page,
                               Model model) {
-        int offset = (page - 1) * size;
-
+        int offset = (page - 1) * PAGE_SIZE;
         List<?> items;
         int totalItems;
 
-        switch (category) {
-            case "Book":
-                items = bookJdbc.findBooks(offset, size);
-                totalItems = bookJdbc.countTotal();
-                break;
-            case "Movie":
-                items = movieJdbc.findMovies(offset, size);
-                totalItems = movieJdbc.countTotal();
-                break;
-            case "Music":
-                items = musicJdbc.findMusics(offset, size);
-                totalItems = musicJdbc.countTotal();
-                break;
-            default:
-                items = Collections.emptyList();
-                totalItems = 0;
-                break;
-        }
+        items = bookJdbc.findBooks(offset, PAGE_SIZE);
+        totalItems = bookJdbc.countTotal();
 
-        int totalPages = (int) Math.ceil((double) totalItems / size);
+        int totalPages = (int) Math.ceil((double) totalItems / PAGE_SIZE);
 
         model.addAttribute("items", items);
-        model.addAttribute("category", category);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
 
-        return "itemmanage";
+        return "admin/bookManage";
     }
 
-    /**
-     * 添加作品页面
-     */
-    @RequestMapping(value = "/additem", method = RequestMethod.GET)
-    public String showAddItemPage() {
-        return "additem";
+    @RequestMapping(value = "/addBook", method = RequestMethod.GET)
+    public String showAddBookPage() {
+        return "admin/addBook";
     }
 
     /**
      * 处理添加作品请求
      */
-    @RequestMapping(value = "/saveitem", method = RequestMethod.POST)
-    public String saveItem(@ModelAttribute Book book, Model model) {
+    @RequestMapping(value = "/saveBook", method = RequestMethod.POST)
+    public String saveBook(@RequestParam("title") String title,
+                           @RequestParam("releaseDate") Date releaseDate,
+                           @RequestParam("tags") String tags,
+                           @RequestParam("authors") String authors,
+                           @RequestParam("publisher") String publisher,
+                           @RequestParam("introduction") String introduction,
+                           HttpSession session) {
+        Book book = new Book();
+        book.setTitle(title);
+        book.setReleaseDate(releaseDate);
+        book.setAuthors(authors);
+        book.setPublisher(publisher);
+        book.setIntroduction(introduction);
+
+        //处理tags
+        String[] tagArray = tags.split(",");
+        List<String> tagList = Arrays.asList(tagArray);
+        book.setCategories(tagList);
+
         bookJdbc.addBook(book);
-        model.addAttribute("message", "作品添加成功！");
-        return "redirect:/admin/itemmanage?category=Book";
+        session.setAttribute("message", "书籍添加成功！");
+
+        return "redirect:/admin/manageBook";
     }
 
     /**
      * 删除作品
      */
-    @RequestMapping(value = "/deleteitem", method = RequestMethod.GET)
-    public String deleteItem(@RequestParam("iid") Long iid,
-                             @RequestParam("category") String category,
-                             Model model) {
-        switch (category) {
-            case "Book":
-                bookJdbc.removeBook(iid);
-                break;
-            case "Movie":
-                movieJdbc.removeMovie(iid);
-                break;
-            case "Music":
-                musicJdbc.removeMusic(iid);
-                break;
+    @RequestMapping(value = "/deleteBook", method = RequestMethod.GET)
+    public String deleteBook(@RequestParam("id") Long iid, HttpSession session) {
+        bookJdbc.removeBook(iid);
+        session.setAttribute("message", "作品删除成功！");
+        return "redirect:/admin/manageBook";
+    }
+
+    @RequestMapping(value = "/editBook", method = RequestMethod.GET)
+    public String editBook(@RequestParam("id") Long iid,
+                           HttpSession session) {
+        Book book = bookJdbc.findBookById(iid);
+        session.setAttribute("book", book);
+        return "admin/editBook";
+    }
+
+    @RequestMapping(value = "/updateBook", method = RequestMethod.POST)
+    public String updateBook(@RequestParam("iid") Long iid,
+                             @RequestParam("title") String title,
+                             @RequestParam("releaseDate") Date releaseDate,
+                             @RequestParam("tags") String tags,
+                             @RequestParam("authors") String authors,
+                             @RequestParam("publisher") String publisher,
+                             @RequestParam("introduction") String introduction,
+                             HttpSession session) {
+        Book book = bookJdbc.findBookById(iid);
+        System.out.println(Arrays.toString(book.getStars()));
+
+        book.setTitle(title);
+        book.setReleaseDate(releaseDate);
+        book.setAuthors(authors);
+        book.setPublisher(publisher);
+        book.setIntroduction(introduction);
+
+        //处理tags
+        tags = tags.replace("[", "").replace("]", "").trim();
+        String[] tagArray = tags.split(",");
+        List<String> tagList = Arrays.asList(tagArray);
+        book.setCategories(tagList);
+
+        System.out.println("stars");
+        System.out.println(book.getStars().length);
+        for (int i = 0; i < book.getStars().length; i ++) {
+            System.out.println(book.getStars()[i]);
         }
-        model.addAttribute("message", "作品删除成功！");
-        return "redirect:/admin/itemmanage?category=" + category;
+        bookJdbc.updateBook(book);
+        session.setAttribute("message", "书籍信息更新成功！");
+
+        return "redirect:/admin/manageBook";
+    }
+
+
+    @RequestMapping(value = "/changeBookCover", method = RequestMethod.POST)
+    public String changeBookCover(@RequestParam("coverImagine") MultipartFile coverImagine,
+                                     @RequestParam("id") Long iid, HttpSession session) {
+
+        Book book = bookJdbc.findBookById(iid);
+        if (book == null) {
+            session.setAttribute("message", "Book not found.");
+            return "redirect:/admin/manageBook";
+        }
+
+        if (coverImagine.isEmpty()) {
+            session.setAttribute("message", "Please select a file to upload.");
+            return "redirect:/admin/editBook?id=" + book.getIid();
+        }
+
+        try {
+            String uploadDir = getClass().getClassLoader().getResource("").getPath()+"imagines/";
+            String fileName ="IID"+book.getIid()+coverImagine.getOriginalFilename(); // 使用用户ID和原文件名
+            File destination = new File(uploadDir + fileName);
+            coverImagine.transferTo(destination);
+
+            // 更新用户的头像路径
+            book.setCoverImagine(fileName);
+            // 更新数据库记录（假设有 userService）
+            bookJdbc.updateBook(book);
+
+            // 更新会话中的用户信息
+            session.setAttribute("book", book);
+            session.setAttribute("message", "书籍信息更新成功！");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            session.setAttribute("message", "Failed to upload coverImage.");
+            return "redirect:/admin/editBook?id=" + book.getIid();
+        }
+
+        return "redirect:/admin/manageBook";
+    }
+
+
+    /*
+    * 音乐管理部分
+    */
+    @RequestMapping(value = "/manageMusic", method = RequestMethod.GET)
+    public String manageMusic(@RequestParam(value = "page", defaultValue = "1") int page,
+                              Model model) {
+        int offset = (page - 1) * PAGE_SIZE;
+        List<?> items;
+        int totalItems;
+
+        items = musicJdbc.findMusics(offset, PAGE_SIZE);
+        totalItems = musicJdbc.countTotal();
+
+        int totalPages = (int) Math.ceil((double) totalItems / PAGE_SIZE);
+
+        model.addAttribute("items", items);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+
+        return "admin/musicManage";
+    }
+
+    @RequestMapping(value = "/addMusic", method = RequestMethod.GET)
+    public String showAddMusicPage() {
+        return "admin/addMusic";
+    }
+
+    @RequestMapping(value = "/saveMusic", method = RequestMethod.POST)
+    public String saveMusic(@RequestParam("title") String title,
+                            @RequestParam("releaseDate") Date releaseDate,
+                            @RequestParam("tags") String tags,
+                            @RequestParam("artists") String artists,
+                            @RequestParam("album") String album,
+                            @RequestParam("lyrics") String lyrics,
+                            HttpSession session) {
+        Music music = new Music();
+        music.setTitle(title);
+        music.setReleaseDate(releaseDate);
+        music.setArtists(artists);
+        music.setAlbum(album);
+        music.setLyrics(lyrics);
+
+        //处理tags
+        String[] tagArray = tags.split(",");
+        List<String> tagList = Arrays.asList(tagArray);
+        music.setCategories(tagList);
+
+        musicJdbc.addMusic(music);
+        session.setAttribute("message", "音乐添加成功！");
+
+        return "redirect:/admin/manageMusic";
+    }
+
+    @RequestMapping(value = "/deleteMusic", method = RequestMethod.GET)
+    public String deleteMusic(@RequestParam("id") Long iid, HttpSession session) {
+        musicJdbc.removeMusic(iid);
+        session.setAttribute("message", "音乐删除成功！");
+        return "redirect:/admin/manageMusic";
+    }
+
+    @RequestMapping(value = "/editMusic", method = RequestMethod.GET)
+    public String editMusic(@RequestParam("id") Long iid,
+                            HttpSession session) {
+        Music music = musicJdbc.findMusicById(iid);
+        session.setAttribute("music", music);
+        return "admin/editMusic";
+    }
+
+    @RequestMapping(value = "/updateMusic", method = RequestMethod.POST)
+    public String updateMusic(@RequestParam("iid") Long iid,
+                              @RequestParam("title") String title,
+                              @RequestParam("releaseDate") Date releaseDate,
+                              @RequestParam("tags") String tags,
+                              @RequestParam("artists") String artists,
+                              @RequestParam("album") String album,
+                              @RequestParam("lyrics") String lyrics,
+                              HttpSession session) {
+        Music music = musicJdbc.findMusicById(iid);
+        music.setTitle(title);
+        music.setReleaseDate(releaseDate);
+        music.setArtists(artists);
+        music.setAlbum(album);
+        music.setLyrics(lyrics);
+
+        //处理tags
+        tags = tags.replace("[", "").replace("]", "").trim();
+        String[] tagArray = tags.split(",");
+        List<String> tagList = Arrays.asList(tagArray);
+        music.setCategories(tagList);
+
+        musicJdbc.updateMusic(music);
+        session.setAttribute("message", "音乐信息更新成功！");
+
+        return "redirect:/admin/manageMusic";
+    }
+
+    @RequestMapping(value = "/changeMusicCover", method = RequestMethod.POST)
+    public String changeMusicCover(@RequestParam("coverImagine") MultipartFile coverImagine,
+                                   @RequestParam("id") Long iid, HttpSession session) {
+
+        Music music = musicJdbc.findMusicById(iid);
+        if (music == null) {
+            session.setAttribute("message", "Music not found.");
+            return "redirect:/admin/manageMusic";
+        }
+
+        if (coverImagine.isEmpty()) {
+            session.setAttribute("message", "Please select a file to upload.");
+            return "redirect:/admin/editMusic?id=" + music.getIid();
+        }
+
+        try {
+            String uploadDir = getClass().getClassLoader().getResource("").getPath()+"imagines/";
+            String fileName ="IID"+music.getIid()+coverImagine.getOriginalFilename(); // 使用用户ID和原文件名
+            File destination = new File(uploadDir + fileName);
+            coverImagine.transferTo(destination);
+
+            // 更新用户的头像路径
+            music.setCoverImagine(fileName);
+            // 更新数据库记录（假设有 userService）
+            musicJdbc.updateMusic(music);
+
+            // 更新会话中的用户信息
+            session.setAttribute("music", music);
+            session.setAttribute("message", "音乐信息更新成功！");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            session.setAttribute("message", "Failed to upload coverImage.");
+            return "redirect:/admin/editMusic?id=" + music.getIid();
+        }
+
+        return "redirect:/admin/manageMusic";
+    }
+
+
+    /*
+    * 电影管理部分
+     */
+    @RequestMapping(value = "/manageMovie", method = RequestMethod.GET)
+    public String manageMovie(@RequestParam(value = "page", defaultValue = "1") int page,
+                              Model model) {
+        int offset = (page - 1) * PAGE_SIZE;
+        List<?> items;
+        int totalItems;
+
+        items = movieJdbc.findMovies(offset, PAGE_SIZE);
+        totalItems = movieJdbc.countTotal();
+
+        int totalPages = (int) Math.ceil((double) totalItems / PAGE_SIZE);
+
+        model.addAttribute("items", items);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+
+        return "admin/movieManage";
+    }
+
+    @RequestMapping(value = "/addMovie", method = RequestMethod.GET)
+    public String showAddMoviePage() {
+        return "admin/addMovie";
+    }
+
+    @RequestMapping(value = "/saveMovie", method = RequestMethod.POST)
+    public String saveMovie(@RequestParam("title") String title,
+                            @RequestParam("releaseDate") Date releaseDate,
+                            @RequestParam("tags") String tags,
+                            @RequestParam("director") String director,
+                            @RequestParam("writers") String writers,
+                            @RequestParam("cast") String cast,
+                            @RequestParam("introduction") String introduction,
+                            HttpSession session) {
+        Movie movie = new Movie();
+        movie.setTitle(title);
+        movie.setReleaseDate(releaseDate);
+        movie.setDirector(director);
+        movie.setWriters(writers);
+        movie.setCast(cast);
+        movie.setIntroduction(introduction);
+
+        //处理tags
+        String[] tagArray = tags.split(",");
+        List<String> tagList = Arrays.asList(tagArray);
+        movie.setCategories(tagList);
+
+        movieJdbc.addMovie(movie);
+        session.setAttribute("message", "电影添加成功！");
+
+        return "redirect:/admin/manageMovie";
+    }
+
+    @RequestMapping(value = "/deleteMovie", method = RequestMethod.GET)
+    public String deleteMovie(@RequestParam("id") Long iid, HttpSession session) {
+        movieJdbc.removeMovie(iid);
+        session.setAttribute("message", "电影删除成功！");
+        return "redirect:/admin/manageMovie";
+    }
+
+    @RequestMapping(value = "/editMovie", method = RequestMethod.GET)
+    public String editMovie(@RequestParam("id") Long iid,
+                            HttpSession session) {
+        Movie movie = movieJdbc.findMovieById(iid);
+        session.setAttribute("movie", movie);
+        return "admin/editMovie";
+    }
+
+    @RequestMapping(value = "/updateMovie", method = RequestMethod.POST)
+    public String updateMovie(@RequestParam("iid") Long iid,
+                              @RequestParam("title") String title,
+                              @RequestParam("releaseDate") Date releaseDate,
+                              @RequestParam("tags") String tags,
+                              @RequestParam("director") String director,
+                              @RequestParam("writers") String writers,
+                              @RequestParam("cast") String cast,
+                              @RequestParam("introduction") String introduction,
+                              HttpSession session) {
+        Movie movie = movieJdbc.findMovieById(iid);
+        movie.setTitle(title);
+        movie.setReleaseDate(releaseDate);
+        movie.setDirector(director);
+        movie.setWriters(writers);
+        movie.setCast(cast);
+        movie.setIntroduction(introduction);
+
+        //处理tags
+        tags = tags.replace("[", "").replace("]", "").trim();
+        String[] tagArray = tags.split(",");
+        List<String> tagList = Arrays.asList(tagArray);
+        movie.setCategories(tagList);
+
+        movieJdbc.updateMovie(movie);
+        session.setAttribute("message", "电影信息更新成功！");
+
+        return "redirect:/admin/manageMovie";
+    }
+
+    @RequestMapping(value = "/changeMovieCover", method = RequestMethod.POST)
+    public String changeMovieCover(@RequestParam("coverImagine") MultipartFile coverImagine,
+                                   @RequestParam("id") Long iid, HttpSession session) {
+
+        Movie movie = movieJdbc.findMovieById(iid);
+        if (movie == null) {
+            session.setAttribute("message", "Movie not found.");
+            return "redirect:/admin/manageMovie";
+        }
+
+        if (coverImagine.isEmpty()) {
+            session.setAttribute("message", "Please select a file to upload.");
+            return "redirect:/admin/editMovie?id=" + movie.getIid();
+        }
+
+        try {
+            String uploadDir = getClass().getClassLoader().getResource("").getPath()+"imagines/";
+            String fileName ="IID"+movie.getIid()+coverImagine.getOriginalFilename(); // 使用用户ID和原文件名
+            File destination = new File(uploadDir + fileName);
+            coverImagine.transferTo(destination);
+
+            // 更新用户的头像路径
+            movie.setCoverImagine(fileName);
+            // 更新数据库记录（假设有 userService）
+            movieJdbc.updateMovie(movie);
+
+            // 更新会话中的用户信息
+            session.setAttribute("movie", movie);
+            session.setAttribute("message", "电影信息更新成功！");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            session.setAttribute("message", "Failed to upload coverImage.");
+            return "redirect:/admin/editMovie?id=" + movie.getIid();
+        }
+
+        return "redirect:/admin/manageMovie";
     }
 }
