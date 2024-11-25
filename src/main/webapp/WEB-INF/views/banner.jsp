@@ -33,7 +33,12 @@
           <option value="Music">音乐</option>
         </select>
         <!-- 搜索框 -->
-        <input class="form-control me-2 search-bar" type="search" placeholder="搜索" name="query" value="请输入作品名称">
+        <input
+                class="form-control me-2 search-bar"
+                type="search"
+                placeholder="请输入作品名称"
+                name="query"
+        >
         <!-- 搜索按钮 -->
         <button class="btn btn-outline-light search-btn" type="submit">
           <i class="fas fa-search"></i> 搜索
