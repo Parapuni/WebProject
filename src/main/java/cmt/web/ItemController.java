@@ -181,9 +181,11 @@ public class ItemController {
 
     @RequestMapping(value = "/item-details", method = GET)
     public String showItemDetials(@RequestParam(value = "id") Integer iid,
-                                  @RequestParam(value = "category") String category,
+                                  @RequestParam(value = "category",defaultValue = "") String category,
                                   @RequestParam(value = "page", defaultValue = "1") Integer page,
                                   Model model) {
+        if("".equals(category))
+            category = itemJdbc.getType(iid);
         System.out.println("Item ID: " + iid);
         switch (category) {
             case "Book":
