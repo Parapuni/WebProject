@@ -5,6 +5,10 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
 import java.io.IOException;
 
+/**
+ * 显示星星的simple tag
+ */
+
 public class RatingTag extends SimpleTagSupport {
     private double rating; // 评分
 

@@ -30,9 +30,6 @@ public class DataSourceConfig {
 
     /**
      * 配置jdbc模板，使用基本模板
-     *
-     * @param dataSource
-     * @return
      */
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {

@@ -4,6 +4,10 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
+/**
+ * 分页simple tag
+ */
+
 public class PaginationTag extends SimpleTagSupport {
     private int maxPagesVisible = 5;
     private int index;

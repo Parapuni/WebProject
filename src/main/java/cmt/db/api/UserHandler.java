@@ -12,15 +12,15 @@ public interface UserHandler {
     /**
      * 添加一个User
      *
-     * @param user
-     * @return
+     * @param user 用户对象
+     * @return 添加的用户对象
      */
     User addUser(User user);
 
     /**
      * 删除一个User
      *
-     * @param id
+     * @param id 用户id
      */
     void removeUser(long id);
 
@@ -34,17 +34,17 @@ public interface UserHandler {
     /**
      * 根据id查找User
      *
-     * @param id
-     * @return
+     * @param id 用户id
+     * @return 用户对象
      */
     User findUserById(long id);
 
     /**
      * 根据用户名（昵称）和密码查找User
      *
-     * @param nickname
-     * @param password
-     * @return
+     * @param nickname 用户昵称
+     * @param password 用户密码
+     * @return 用户对象
      */
     User findUserByNameAndPassword(String nickname, String password);
 
@@ -54,7 +54,7 @@ public interface UserHandler {
      *
      * @param offset 列表起始位置
      * @param length 列表长度
-     * @return
+     * @return 用户列表
      */
     List<User> findUsers(int offset, int length);
 }
