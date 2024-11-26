@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tld/csTag.tld" prefix="cs" %>
 <%@ include file="../banner.jsp" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -58,13 +59,13 @@
             <div class="dashboard-box">
                 <a href="<c:url value='/admin/manageUsers' />">
                     <h4>用户管理</h4>
-                    <p>管理用户信息和权限</p>
+                    <p>管理用户信息</p>
                 </a>
             </div>
         </div>
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/admin/manageBooks' />">
+                <a href="<c:url value='/admin/manageBook'/>">
                     <h4>书籍管理</h4>
                     <p>管理书籍信息</p>
                 </a>
@@ -80,7 +81,7 @@
         </div>
         <div class="col-md-4">
             <div class="dashboard-box">
-                <a href="<c:url value='/admin/manageMovies' />">
+                <a href="<c:url value='/admin/manageMovie' />">
                     <h4>电影管理</h4>
                     <p>管理电影信息</p>
                 </a>

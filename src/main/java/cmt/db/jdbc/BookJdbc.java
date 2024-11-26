@@ -57,6 +57,7 @@ public class BookJdbc implements BookHandler {
     @Override
     public void addBook(Book book) {
         long iid = itemJdbc.addItemReturnPrimaryKey(book);
+        System.out.println(iid);
         jdbcTemplate.update(INSERT_BOOK, iid, book.getAuthors(), book.getPublisher(), book.getIntroduction());
         categoryJdbc.addItemCategories(iid, book.getCategories());
     }

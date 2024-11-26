@@ -17,7 +17,7 @@ import java.util.List;
 public class CategoryJdbc implements CategoryHandler {
     private final String GET_TAGLIB = "select distinct name from Category_Item";
     private final String SELECT_CATEGORIES_BY_ID = "select name from Category_Item where iid = ?";
-    private final String ADD_ITEM_CATEGORIES = "insert into Category_Item values(iid,`name`)";
+    private final String ADD_ITEM_CATEGORIES = "insert into Category_Item(iid,`name`) values(?,?)";
     private final String DELETE_ITEM_CATEGORIES = "delete from Category_Item where iid = ?";
     private JdbcTemplate jdbcTemplate;
 
@@ -53,9 +53,11 @@ public class CategoryJdbc implements CategoryHandler {
      */
     @Override
     public void addItemCategories(long iid, List<String> categories) {
+        System.out.println(iid + " " + String.join(",", categories));
         jdbcTemplate.batchUpdate(ADD_ITEM_CATEGORIES, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+
                 preparedStatement.setLong(1, iid);
                 preparedStatement.setString(2, categories.get(i));
             }
@@ -76,6 +78,7 @@ public class CategoryJdbc implements CategoryHandler {
     public void updateItemCategories(Item item) {
         removeItem(item.getIid());
         addItemCategories(item.getIid(), item.getCategories());
+
     }
 
     private static final class StringRowMapper implements RowMapper<String> {

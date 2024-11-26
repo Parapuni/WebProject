@@ -22,6 +22,7 @@ public abstract class Item {
     public Item() {
         this.stars = new int[5];
         totalRating = 1;
+        coverImagine = "YMCA.jpg";
     }
 
     /**
