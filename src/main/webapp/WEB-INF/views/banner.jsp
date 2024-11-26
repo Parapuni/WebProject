@@ -42,15 +42,16 @@
       </form>
 
 
-      <!-- 用户和管理员登录逻辑 -->
-      <ul class="navbar-nav ms-3">
+      <!-- 用户和管理员登录逻辑 使用session记录登录状态 -->
+      <ul class="navbar-nav ms-3 align-items-center">
         <c:choose>
           <c:when test="${empty sessionScope.user && empty sessionScope.admin}">
             <li class="nav-item"><a class="nav-link" href="<c:url value='/login' />">登录</a></li>
             <li class="nav-item"><a class="nav-link" href="<c:url value='/register' />">注册</a></li>
           </c:when>
           <c:when test="${not empty sessionScope.admin}">
-            <h5 style="font-style: oblique;color: white">欢迎管理员${sessionScope.admin.adminName}</h5>
+            <h5  style="font-style: oblique;color: white">管理员${sessionScope.admin.adminName}</h5>
+            <img src="<c:url value='/imagines/${sessionScope.admin.avatar}' />" alt="Profile Picture" style="height: 50px; width: 50px; border-radius: 50%;">
             <li class="nav-item"><a class="nav-link" href="<c:url value='/admin/dashboard' />">管理员中心</a></li>
             <li class="nav-item"><a class="nav-link" href="<c:url value='/adminLogout' />">退出</a></li>
           </c:when>

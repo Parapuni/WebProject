@@ -59,7 +59,7 @@
             <div class="dashboard-box">
                 <a href="<c:url value='/admin/manageUsers' />">
                     <h4>用户管理</h4>
-                    <p>管理用户信息和权限</p>
+                    <p>管理用户信息</p>
                 </a>
             </div>
         </div>
