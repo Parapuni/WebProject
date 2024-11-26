@@ -167,10 +167,10 @@ public class AdminController {
     public String manageComments(@RequestParam(value = "page", defaultValue = "1") int page,
                                  @RequestParam(value = "size", defaultValue = "10") int size,
                                  Model model) {
+        int totalComments = commentJdbc.countTotal();
+        int totalPages = (int) Math.ceil((double) totalComments / PAGE_SIZE);
         int offset = (page - 1) * size;
         List<Comment> comments = commentJdbc.findAll(PAGE_SIZE, (page - 1) * PAGE_SIZE);
-        int totalComments = commentJdbc.countTotal();
-        int totalPages = (int) Math.ceil((double) totalComments / size);
 
         model.addAttribute("comments", comments);
         model.addAttribute("currentPage", page);
