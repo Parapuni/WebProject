@@ -69,8 +69,6 @@ create table `Comment`
     rating int        not null ,
     `content` varchar(255),
     primary key (uid, iid),
-    foreign key (uid) references `User` (uid),
-    foreign key (iid) references Item (iid)
 );
 
 create table Category_Item
